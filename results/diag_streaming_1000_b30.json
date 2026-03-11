@@ -1,0 +1,26 @@
+[
+  {
+    "task": "niah",
+    "policy": "streaming",
+    "budget": 0.3,
+    "haystack_length": 1000,
+    "needle_position": 0.5,
+    "needle_fact": "The secret project code name is Operation Starlight and it was initiated on March 15th.",
+    "question": "What is the secret project code name and when was it initiated?",
+    "answer_keywords": [
+      "Operation Starlight",
+      "March 15"
+    ],
+    "correct": false,
+    "output_text": "The secret project code name of the secret project code name of the secret project code name of the secret project code name of the secret project code name of the secret project code name of the secret project code name of the secret was the secret project code name of the secret project code name and regular regular regular now answer answer is the secret was initiated?",
+    "output_preview": "The secret project code name of the secret project code name of the secret project code name of the secret project code name of the secret project code name of the secret project code name of the secr",
+    "elapsed_time": 6.554881811141968,
+    "generated_tokens": 70,
+    "initial_seq_len": 676,
+    "cache_budget_tokens": 202,
+    "cache_budget_ratio": 0.3,
+    "current_cache_len": 202,
+    "total_evicted": 542,
+    "eviction_steps": 69
+  }
+]
