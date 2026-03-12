@@ -45,6 +45,8 @@ class CacheConfig:
     alpha: float = 0.4
     beta: float = 0.3
     gamma: float = 0.3
+    query_weight: float = 0.25
+    factual_weight: float = 0.2
 
     # Always keep the newest generated tokens to preserve decode stability
     semantic_recent_window: int = 64

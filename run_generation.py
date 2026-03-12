@@ -84,6 +84,8 @@ def build_policy(cache_cfg: CacheConfig, tracker: AttentionTracker, analyzer: Se
             alpha=cache_cfg.alpha,
             beta=cache_cfg.beta,
             gamma=cache_cfg.gamma,
+            query_weight=cache_cfg.query_weight,
+            factual_weight=cache_cfg.factual_weight,
             pin_system=cache_cfg.pin_system,
             pin_latest_user=cache_cfg.pin_latest_user,
             recent_window_size=cache_cfg.semantic_recent_window,
@@ -104,6 +106,29 @@ def _update_tracker_or_raise(attentions, tracker: AttentionTracker, policy_name:
             f"Model did not return attentions during {phase}. "
             "Set ModelConfig.attn_implementation='eager'."
         )
+
+
+def _extract_latest_user_query(messages: list[dict]) -> str:
+    """Extract the actual question text from the latest user message when possible."""
+    latest_user_content = ""
+    for message in reversed(messages):
+        if message.get("role") == "user":
+            latest_user_content = message.get("content", "")
+            break
+
+    if not latest_user_content:
+        return ""
+
+    markers = [
+        "Now answer this question:",
+        "Question:",
+        "Q:",
+    ]
+    for marker in markers:
+        if marker in latest_user_content:
+            return latest_user_content.rsplit(marker, maxsplit=1)[-1].strip()
+
+    return latest_user_content
 
 
 @torch.no_grad()
@@ -152,7 +177,10 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
     cache_manager.set_initial_seq_len(prompt_len)
 
     if isinstance(policy, SemantiCachePolicy):
-        policy.setup_semantic_signals(input_ids[0])
+        policy.setup_semantic_signals(
+            input_ids[0],
+            latest_query_text=_extract_latest_user_query(messages),
+        )
 
     next_token_logits = outputs.logits[:, -1, :]
     past_key_values = outputs.past_key_values

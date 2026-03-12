@@ -102,6 +102,8 @@ class SemantiCachePolicy(EvictionPolicy):
         alpha: float = 0.4,
         beta: float = 0.3,
         gamma: float = 0.3,
+        query_weight: float = 0.25,
+        factual_weight: float = 0.2,
         pin_system: bool = True,
         pin_latest_user: bool = True,
         recent_window_size: int = 64,
@@ -113,6 +115,8 @@ class SemantiCachePolicy(EvictionPolicy):
         self.alpha = alpha
         self.beta = beta
         self.gamma = gamma
+        self.query_weight = query_weight
+        self.factual_weight = factual_weight
         self.pin_system = pin_system
         self.pin_latest_user = pin_latest_user
         self.recent_window_size = recent_window_size
@@ -121,12 +125,16 @@ class SemantiCachePolicy(EvictionPolicy):
 
         self.role_tags: Optional[torch.Tensor] = None
         self.info_density: Optional[torch.Tensor] = None
+        self.query_relevance: Optional[torch.Tensor] = None
+        self.factual_bonus: Optional[torch.Tensor] = None
         self.pinned_mask: Optional[torch.Tensor] = None
 
-    def setup_semantic_signals(self, input_ids: torch.Tensor) -> None:
+    def setup_semantic_signals(self, input_ids: torch.Tensor, latest_query_text: str = "") -> None:
         """Compute semantic signals once after prefill."""
         self.role_tags = self.analyzer.compute_role_tags(input_ids)
         self.info_density = self.analyzer.compute_info_density(input_ids)
+        self.query_relevance = self.analyzer.compute_query_relevance(input_ids, latest_query_text)
+        self.factual_bonus = self.analyzer.compute_factual_bonus(input_ids)
         self.pinned_mask = self.analyzer.get_pinned_mask(
             self.role_tags,
             self.pin_system,
@@ -143,6 +151,14 @@ class SemantiCachePolicy(EvictionPolicy):
         if self.info_density is not None:
             new_density = torch.full((num_new_tokens,), 0.5, dtype=torch.float32)
             self.info_density = torch.cat([self.info_density, new_density])
+
+        if self.query_relevance is not None:
+            new_query = torch.zeros(num_new_tokens, dtype=torch.float32)
+            self.query_relevance = torch.cat([self.query_relevance, new_query])
+
+        if self.factual_bonus is not None:
+            new_factual = torch.zeros(num_new_tokens, dtype=torch.float32)
+            self.factual_bonus = torch.cat([self.factual_bonus, new_factual])
 
         if self.pinned_mask is not None:
             new_pinned = torch.zeros(num_new_tokens, dtype=torch.bool)
@@ -170,6 +186,18 @@ class SemantiCachePolicy(EvictionPolicy):
             ent_max = ent.max().clamp(min=1e-10)
             ent_norm = ent / ent_max
             scores += self.gamma * (1.0 - ent_norm).cpu()
+
+        if self.query_relevance is not None and len(self.query_relevance) >= seq_len:
+            query = self.query_relevance[:seq_len]
+            query_max = query.max().clamp(min=1e-10)
+            query_norm = query / query_max
+            scores += self.query_weight * (1.0 - query_norm)
+
+        if self.factual_bonus is not None and len(self.factual_bonus) >= seq_len:
+            factual = self.factual_bonus[:seq_len]
+            factual_max = factual.max().clamp(min=1e-10)
+            factual_norm = factual / factual_max
+            scores += self.factual_weight * (1.0 - factual_norm)
 
         if self.pinned_mask is not None and len(self.pinned_mask) >= seq_len:
             scores[self.pinned_mask[:seq_len]] = -torch.inf
@@ -245,5 +273,9 @@ class SemantiCachePolicy(EvictionPolicy):
             self.role_tags = self.role_tags[keep_mask]
         if self.info_density is not None:
             self.info_density = self.info_density[keep_mask]
+        if self.query_relevance is not None:
+            self.query_relevance = self.query_relevance[keep_mask]
+        if self.factual_bonus is not None:
+            self.factual_bonus = self.factual_bonus[keep_mask]
         if self.pinned_mask is not None:
             self.pinned_mask = self.pinned_mask[keep_mask]

@@ -6,6 +6,7 @@ This module provides two static signals computed from the prefill prompt:
 2. Token-local information density scores.
 """
 
+import re
 from enum import IntEnum
 from typing import Optional
 
@@ -57,8 +58,24 @@ class SemanticAnalyzer:
         self.is_digit_token = torch.zeros(feature_size, dtype=torch.bool)
         self.is_punct_token = torch.zeros(feature_size, dtype=torch.bool)
         self.is_code_token = torch.zeros(feature_size, dtype=torch.bool)
+        self.is_upper_token = torch.zeros(feature_size, dtype=torch.bool)
+        self.is_month_token = torch.zeros(feature_size, dtype=torch.bool)
 
         code_chars = set("{}[]()=><;:#_/\\@$%^&*|~`")
+        month_names = {
+            "january",
+            "february",
+            "march",
+            "april",
+            "may",
+            "june",
+            "july",
+            "august",
+            "september",
+            "october",
+            "november",
+            "december",
+        }
         for token_id in range(feature_size):
             try:
                 token_str = self.tokenizer.decode([token_id])
@@ -74,6 +91,13 @@ class SemanticAnalyzer:
 
             if any(char in code_chars for char in token_str):
                 self.is_code_token[token_id] = True
+
+            if any(char.isupper() for char in token_str):
+                self.is_upper_token[token_id] = True
+
+            normalized = re.sub(r"[^a-z]", "", token_str.lower())
+            if normalized in month_names:
+                self.is_month_token[token_id] = True
 
     @staticmethod
     def _feature_ratio(feature_table: torch.Tensor, token_ids: torch.Tensor) -> float:
@@ -183,6 +207,61 @@ class SemanticAnalyzer:
             density[i] = max(0.0, min(1.0, score))
 
         return density
+
+    def compute_query_relevance(
+        self,
+        input_ids: torch.Tensor,
+        query_text: str,
+        window_size: int = 32,
+    ) -> torch.Tensor:
+        """Estimate token-level relevance to the final question text."""
+        seq_len = input_ids.shape[0]
+        relevance = torch.zeros(seq_len, dtype=torch.float32)
+        query_text = query_text.strip()
+        if not query_text:
+            return relevance
+
+        query_token_ids = set(self.tokenizer.encode(query_text, add_special_tokens=False))
+        if not query_token_ids:
+            return relevance
+
+        ids = input_ids.cpu().tolist()
+        for i in range(seq_len):
+            start = max(0, i - window_size // 2)
+            end = min(seq_len, i + window_size // 2)
+            window = ids[start:end]
+            if not window:
+                continue
+
+            overlap = sum(1 for token_id in window if token_id in query_token_ids)
+            relevance[i] = overlap / len(window)
+
+        return relevance
+
+    def compute_factual_bonus(
+        self,
+        input_ids: torch.Tensor,
+        window_size: int = 32,
+    ) -> torch.Tensor:
+        """Estimate how likely each position belongs to a factual span."""
+        ids = input_ids.cpu()
+        seq_len = len(ids)
+        bonus = torch.zeros(seq_len, dtype=torch.float32)
+
+        for i in range(seq_len):
+            start = max(0, i - window_size // 2)
+            end = min(seq_len, i + window_size // 2)
+            window = ids[start:end]
+            w_len = len(window)
+            if w_len == 0:
+                continue
+
+            digit_ratio = self._feature_ratio(self.is_digit_token, window)
+            upper_ratio = self._feature_ratio(self.is_upper_token, window)
+            month_ratio = self._feature_ratio(self.is_month_token, window)
+            bonus[i] = min(1.0, 0.45 * digit_ratio + 0.30 * upper_ratio + 0.45 * month_ratio)
+
+        return bonus
 
     def get_pinned_mask(
         self,

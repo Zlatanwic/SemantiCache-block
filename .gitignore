@@ -1,10 +1,59 @@
-# Python-generated files
+# Python bytecode and caches
 __pycache__/
-*.py[oc]
+*.py[cod]
+*$py.class
+.python-version
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.pyre/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+
+# Build and packaging artifacts
 build/
 dist/
+site/
 wheels/
-*.egg-info
+pip-wheel-metadata/
+*.egg
+*.egg-info/
+.eggs/
 
 # Virtual environments
-.venv
+.venv/
+venv/
+env/
+ENV/
+
+# Notebook and local analysis artifacts
+.ipynb_checkpoints/
+
+# Logs and runtime files
+*.log
+*.out
+*.err
+*.pid
+*.pid.lock
+
+# Editor and OS files
+.idea/
+.vscode/
+*.swp
+*.swo
+Thumbs.db
+.DS_Store
+
+# Local experiment outputs and large artifacts
+checkpoints/
+runs/
+outputs/
+tmp/
+temp/
+
+# Environment files
+.env
+.env.*
+!.env.example
