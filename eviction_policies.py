@@ -121,7 +121,7 @@ class SemantiCachePolicy(EvictionPolicy):
         self.pin_latest_user = pin_latest_user
         self.recent_window_size = recent_window_size
         self.block_size = min(block_size, 4)
-        self.latest_user_tail_tokens = latest_user_tail_tokens
+        self.latest_user_tail_tokens = min(latest_user_tail_tokens, 56)
 
         self.role_tags: Optional[torch.Tensor] = None
         self.info_density: Optional[torch.Tensor] = None
