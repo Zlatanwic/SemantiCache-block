@@ -235,7 +235,7 @@ class SemantiCachePolicy(EvictionPolicy):
             if candidate_positions.numel() == 0:
                 continue
 
-            block_score = scores[candidate_positions].mean().item()
+            block_score = scores[candidate_positions].min().item()
             candidate_blocks.append((block_score, candidate_positions.tolist()))
 
         candidate_blocks.sort(key=lambda item: item[0])
