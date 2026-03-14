@@ -60,6 +60,7 @@ class SemanticAnalyzer:
         self.is_code_token = torch.zeros(feature_size, dtype=torch.bool)
         self.is_upper_token = torch.zeros(feature_size, dtype=torch.bool)
         self.is_month_token = torch.zeros(feature_size, dtype=torch.bool)
+        self.is_fact_unit_token = torch.zeros(feature_size, dtype=torch.bool)
 
         code_chars = set("{}[]()=><;:#_/\\@$%^&*|~`")
         month_names = {
@@ -75,6 +76,23 @@ class SemanticAnalyzer:
             "october",
             "november",
             "december",
+        }
+        fact_units = {
+            "am",
+            "pm",
+            "utc",
+            "hour",
+            "hours",
+            "hr",
+            "hrs",
+            "minute",
+            "minutes",
+            "min",
+            "mins",
+            "degree",
+            "degrees",
+            "celsius",
+            "fahrenheit",
         }
         for token_id in range(feature_size):
             try:
@@ -98,6 +116,8 @@ class SemanticAnalyzer:
             normalized = re.sub(r"[^a-z]", "", token_str.lower())
             if normalized in month_names:
                 self.is_month_token[token_id] = True
+            if normalized in fact_units:
+                self.is_fact_unit_token[token_id] = True
 
     @staticmethod
     def _feature_ratio(feature_table: torch.Tensor, token_ids: torch.Tensor) -> float:
@@ -259,7 +279,14 @@ class SemanticAnalyzer:
             digit_ratio = self._feature_ratio(self.is_digit_token, window)
             upper_ratio = self._feature_ratio(self.is_upper_token, window)
             month_ratio = self._feature_ratio(self.is_month_token, window)
-            bonus[i] = min(1.0, 0.45 * digit_ratio + 0.30 * upper_ratio + 0.45 * month_ratio)
+            fact_unit_ratio = self._feature_ratio(self.is_fact_unit_token, window)
+            bonus[i] = min(
+                1.0,
+                0.35 * digit_ratio
+                + 0.20 * upper_ratio
+                + 0.30 * month_ratio
+                + 0.35 * fact_unit_ratio,
+            )
 
         return bonus
 
