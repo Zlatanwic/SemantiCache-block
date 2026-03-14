@@ -248,7 +248,10 @@ class SemantiCachePolicy(EvictionPolicy):
                 keep_indices.extend(block_positions)
                 remaining_budget -= len(block_positions)
             else:
-                keep_indices.extend(block_positions[-remaining_budget:])
+                block_tensor = torch.tensor(block_positions, device=scores.device, dtype=torch.long)
+                block_scores = scores[block_tensor]
+                _, best_local = block_scores.topk(remaining_budget, largest=False)
+                keep_indices.extend(block_tensor[best_local].sort().values.tolist())
                 remaining_budget = 0
 
         if remaining_budget > 0:
