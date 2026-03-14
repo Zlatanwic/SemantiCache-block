@@ -129,6 +129,16 @@ class SemantiCachePolicy(EvictionPolicy):
         self.factual_bonus: Optional[torch.Tensor] = None
         self.pinned_mask: Optional[torch.Tensor] = None
 
+    @staticmethod
+    def _inverse_normalize(values: Optional[torch.Tensor], seq_len: int) -> Optional[torch.Tensor]:
+        """Map a signal to eviction pressure where larger source values are safer to keep."""
+        if values is None or len(values) < seq_len:
+            return None
+
+        window = values[:seq_len]
+        scale = window.max().clamp(min=1e-10)
+        return 1.0 - (window / scale)
+
     def setup_semantic_signals(self, input_ids: torch.Tensor, latest_query_text: str = "") -> None:
         """Compute semantic signals once after prefill."""
         self.role_tags = self.analyzer.compute_role_tags(input_ids)
@@ -167,37 +177,25 @@ class SemantiCachePolicy(EvictionPolicy):
     def compute_eviction_scores(self, seq_len: int, **kwargs) -> torch.Tensor:
         scores = torch.zeros(seq_len, dtype=torch.float32)
 
-        cumulative = self.tracker.get_cumulative_scores()
-        if len(cumulative) >= seq_len:
-            attn = cumulative[:seq_len]
-            attn_max = attn.max().clamp(min=1e-10)
-            attn_norm = attn / attn_max
-            scores += self.alpha * (1.0 - attn_norm).cpu()
+        attn_pressure = self._inverse_normalize(self.tracker.get_cumulative_scores(), seq_len)
+        if attn_pressure is not None:
+            scores += self.alpha * attn_pressure.cpu()
 
-        if self.info_density is not None and len(self.info_density) >= seq_len:
-            density = self.info_density[:seq_len]
-            density_max = density.max().clamp(min=1e-10)
-            density_norm = density / density_max
-            scores += self.beta * (1.0 - density_norm)
+        density_pressure = self._inverse_normalize(self.info_density, seq_len)
+        if density_pressure is not None:
+            scores += self.beta * density_pressure
 
-        entropy = self.tracker.get_head_entropy()
-        if len(entropy) >= seq_len:
-            ent = entropy[:seq_len]
-            ent_max = ent.max().clamp(min=1e-10)
-            ent_norm = ent / ent_max
-            scores += self.gamma * (1.0 - ent_norm).cpu()
+        entropy_pressure = self._inverse_normalize(self.tracker.get_head_entropy(), seq_len)
+        if entropy_pressure is not None:
+            scores += self.gamma * entropy_pressure.cpu()
 
-        if self.query_relevance is not None and len(self.query_relevance) >= seq_len:
-            query = self.query_relevance[:seq_len]
-            query_max = query.max().clamp(min=1e-10)
-            query_norm = query / query_max
-            scores += self.query_weight * (1.0 - query_norm)
+        query_pressure = self._inverse_normalize(self.query_relevance, seq_len)
+        if query_pressure is not None:
+            scores += self.query_weight * query_pressure
 
-        if self.factual_bonus is not None and len(self.factual_bonus) >= seq_len:
-            factual = self.factual_bonus[:seq_len]
-            factual_max = factual.max().clamp(min=1e-10)
-            factual_norm = factual / factual_max
-            scores += self.factual_weight * (1.0 - factual_norm)
+        factual_pressure = self._inverse_normalize(self.factual_bonus, seq_len)
+        if factual_pressure is not None:
+            scores += self.factual_weight * factual_pressure
 
         if self.pinned_mask is not None and len(self.pinned_mask) >= seq_len:
             scores[self.pinned_mask[:seq_len]] = -torch.inf
