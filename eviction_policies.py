@@ -115,7 +115,7 @@ class SemantiCachePolicy(EvictionPolicy):
         self.alpha = alpha
         self.beta = beta
         self.gamma = gamma
-        self.query_weight = query_weight
+        self.query_weight = max(query_weight, 0.30)
         self.factual_weight = max(factual_weight, 0.35)
         self.pin_system = pin_system
         self.pin_latest_user = pin_latest_user
