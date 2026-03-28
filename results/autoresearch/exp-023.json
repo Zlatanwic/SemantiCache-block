@@ -1,0 +1,2643 @@
+{
+  "suite": "gauntlet",
+  "policy": "semantic",
+  "summary": {
+    "case_count": 90,
+    "correct_count": 84,
+    "accuracy": 0.9333333333333333,
+    "hard_case_count": 30,
+    "hard_correct_count": 30,
+    "hard_accuracy": 1.0,
+    "avg_time_s": 7.340104415681627
+  },
+  "results": [
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 3.5334525108337402,
+      "generated_tokens": 31,
+      "initial_seq_len": 1368,
+      "cache_budget_tokens": 273,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 273,
+      "total_evicted": 1124,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 2.2852401733398438,
+      "generated_tokens": 23,
+      "initial_seq_len": 1351,
+      "cache_budget_tokens": 270,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 270,
+      "total_evicted": 1102,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 2.6768178939819336,
+      "generated_tokens": 29,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 274,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 274,
+      "total_evicted": 1123,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 2.780393362045288,
+      "generated_tokens": 33,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 274,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 274,
+      "total_evicted": 1127,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 2.807131290435791,
+      "generated_tokens": 32,
+      "initial_seq_len": 1361,
+      "cache_budget_tokens": 272,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 272,
+      "total_evicted": 1119,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 2.8399970531463623,
+      "generated_tokens": 31,
+      "initial_seq_len": 1368,
+      "cache_budget_tokens": 273,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 273,
+      "total_evicted": 1124,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 2.2776410579681396,
+      "generated_tokens": 23,
+      "initial_seq_len": 1351,
+      "cache_budget_tokens": 270,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 270,
+      "total_evicted": 1102,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 2.5585052967071533,
+      "generated_tokens": 29,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 274,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 274,
+      "total_evicted": 1123,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 2.928574562072754,
+      "generated_tokens": 33,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 274,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 274,
+      "total_evicted": 1127,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 2.807429313659668,
+      "generated_tokens": 32,
+      "initial_seq_len": 1361,
+      "cache_budget_tokens": 272,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 272,
+      "total_evicted": 1119,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 2.7646257877349854,
+      "generated_tokens": 31,
+      "initial_seq_len": 1368,
+      "cache_budget_tokens": 273,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 273,
+      "total_evicted": 1124,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 2.3227570056915283,
+      "generated_tokens": 23,
+      "initial_seq_len": 1351,
+      "cache_budget_tokens": 270,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 270,
+      "total_evicted": 1102,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and the downtime required is exactly 4 hours.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and the downtime required is exactly 4 hours.",
+      "elapsed_time": 2.747568130493164,
+      "generated_tokens": 30,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 274,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 274,
+      "total_evicted": 1124,
+      "eviction_steps": 29,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 2.7617151737213135,
+      "generated_tokens": 33,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 274,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 274,
+      "total_evicted": 1127,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 2.7774064540863037,
+      "generated_tokens": 32,
+      "initial_seq_len": 1361,
+      "cache_budget_tokens": 272,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 272,
+      "total_evicted": 1119,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 2.8403329849243164,
+      "generated_tokens": 31,
+      "initial_seq_len": 1368,
+      "cache_budget_tokens": 205,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 205,
+      "total_evicted": 1192,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 2.3258795738220215,
+      "generated_tokens": 23,
+      "initial_seq_len": 1351,
+      "cache_budget_tokens": 202,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 202,
+      "total_evicted": 1170,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 2.467482328414917,
+      "generated_tokens": 29,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 205,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 205,
+      "total_evicted": 1192,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 2.8451924324035645,
+      "generated_tokens": 33,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 205,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 205,
+      "total_evicted": 1196,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 2.8625035285949707,
+      "generated_tokens": 32,
+      "initial_seq_len": 1361,
+      "cache_budget_tokens": 204,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 204,
+      "total_evicted": 1187,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 2.8483588695526123,
+      "generated_tokens": 31,
+      "initial_seq_len": 1368,
+      "cache_budget_tokens": 205,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 205,
+      "total_evicted": 1192,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 2.3692686557769775,
+      "generated_tokens": 23,
+      "initial_seq_len": 1351,
+      "cache_budget_tokens": 202,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 202,
+      "total_evicted": 1170,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 2.5970520973205566,
+      "generated_tokens": 29,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 205,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 205,
+      "total_evicted": 1192,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 2.844949722290039,
+      "generated_tokens": 33,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 205,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 205,
+      "total_evicted": 1196,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 2.763887405395508,
+      "generated_tokens": 32,
+      "initial_seq_len": 1361,
+      "cache_budget_tokens": 204,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 204,
+      "total_evicted": 1187,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 2.8171286582946777,
+      "generated_tokens": 31,
+      "initial_seq_len": 1368,
+      "cache_budget_tokens": 205,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 205,
+      "total_evicted": 1192,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 2.3688342571258545,
+      "generated_tokens": 23,
+      "initial_seq_len": 1351,
+      "cache_budget_tokens": 202,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 202,
+      "total_evicted": 1170,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and the downtime required is exactly 4 hours.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and the downtime required is exactly 4 hours.",
+      "elapsed_time": 2.716719388961792,
+      "generated_tokens": 30,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 205,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 205,
+      "total_evicted": 1193,
+      "eviction_steps": 29,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 2.8608360290527344,
+      "generated_tokens": 33,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 205,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 205,
+      "total_evicted": 1196,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 2.783076524734497,
+      "generated_tokens": 32,
+      "initial_seq_len": 1361,
+      "cache_budget_tokens": 204,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 204,
+      "total_evicted": 1187,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 2.8137478828430176,
+      "generated_tokens": 31,
+      "initial_seq_len": 1368,
+      "cache_budget_tokens": 136,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 136,
+      "total_evicted": 1261,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18. forget it, the exact temperature is 18.5 degrees.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18. forget it, the exact temperature is 18.5 degrees.",
+      "elapsed_time": 2.877366065979004,
+      "generated_tokens": 33,
+      "initial_seq_len": 1351,
+      "cache_budget_tokens": 135,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 135,
+      "total_evicted": 1247,
+      "eviction_steps": 32,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": false,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and the downtime is scheduled to be 1 hour.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and the downtime is scheduled to be 1 hour.",
+      "elapsed_time": 2.6203341484069824,
+      "generated_tokens": 31,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 137,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 137,
+      "total_evicted": 1262,
+      "eviction_steps": 30,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": false,
+      "output_text": "The current incident bridge uses channel Delta-24. It opens at 09:30 AM UTC and remains active for 6 hours.",
+      "output_preview": "The current incident bridge uses channel Delta-24. It opens at 09:30 AM UTC and remains active for 6 hours.",
+      "elapsed_time": 2.5977840423583984,
+      "generated_tokens": 31,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 137,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 137,
+      "total_evicted": 1262,
+      "eviction_steps": 30,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 UTC.",
+      "elapsed_time": 2.7676703929901123,
+      "generated_tokens": 31,
+      "initial_seq_len": 1361,
+      "cache_budget_tokens": 136,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 136,
+      "total_evicted": 1254,
+      "eviction_steps": 30,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15.",
+      "elapsed_time": 2.775559902191162,
+      "generated_tokens": 30,
+      "initial_seq_len": 1368,
+      "cache_budget_tokens": 136,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 136,
+      "total_evicted": 1260,
+      "eviction_steps": 29,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 2.2610998153686523,
+      "generated_tokens": 23,
+      "initial_seq_len": 1351,
+      "cache_budget_tokens": 135,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 135,
+      "total_evicted": 1237,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": false,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and the downtime is 1 hour.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and the downtime is 1 hour.",
+      "elapsed_time": 2.531959295272827,
+      "generated_tokens": 28,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 137,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 137,
+      "total_evicted": 1259,
+      "eviction_steps": 27,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": false,
+      "output_text": "The current incident bridge uses channel 42. It opens at 09:30 AM UTC and remains active for 2 hours.",
+      "output_preview": "The current incident bridge uses channel 42. It opens at 09:30 AM UTC and remains active for 2 hours.",
+      "elapsed_time": 2.7709524631500244,
+      "generated_tokens": 30,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 137,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 137,
+      "total_evicted": 1261,
+      "eviction_steps": 29,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30.",
+      "elapsed_time": 3.145495891571045,
+      "generated_tokens": 30,
+      "initial_seq_len": 1361,
+      "cache_budget_tokens": 136,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 136,
+      "total_evicted": 1253,
+      "eviction_steps": 29,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 3.873211622238159,
+      "generated_tokens": 31,
+      "initial_seq_len": 1368,
+      "cache_budget_tokens": 136,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 136,
+      "total_evicted": 1261,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18. forget it, the exact temperature is 18.5 degrees.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18. forget it, the exact temperature is 18.5 degrees.",
+      "elapsed_time": 3.4294674396514893,
+      "generated_tokens": 33,
+      "initial_seq_len": 1351,
+      "cache_budget_tokens": 135,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 135,
+      "total_evicted": 1247,
+      "eviction_steps": 32,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": false,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and the downtime required is 1 hour.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and the downtime required is 1 hour.",
+      "elapsed_time": 3.0552775859832764,
+      "generated_tokens": 29,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 137,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 137,
+      "total_evicted": 1260,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": false,
+      "output_text": "The current incident bridge uses channel 24. It opens at 09:30 AM UTC and remains active for 1 hour.",
+      "output_preview": "The current incident bridge uses channel 24. It opens at 09:30 AM UTC and remains active for 1 hour.",
+      "elapsed_time": 3.4072017669677734,
+      "generated_tokens": 30,
+      "initial_seq_len": 1370,
+      "cache_budget_tokens": 137,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 137,
+      "total_evicted": 1261,
+      "eviction_steps": 29,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 2000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 3.351484537124634,
+      "generated_tokens": 32,
+      "initial_seq_len": 1361,
+      "cache_budget_tokens": 136,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 136,
+      "total_evicted": 1255,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 11.338383436203003,
+      "generated_tokens": 31,
+      "initial_seq_len": 2578,
+      "cache_budget_tokens": 515,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 515,
+      "total_evicted": 2092,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 14.223562002182007,
+      "generated_tokens": 23,
+      "initial_seq_len": 2561,
+      "cache_budget_tokens": 512,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 512,
+      "total_evicted": 2070,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 9.198971509933472,
+      "generated_tokens": 29,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 516,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 516,
+      "total_evicted": 2091,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 10.210577249526978,
+      "generated_tokens": 33,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 516,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 516,
+      "total_evicted": 2095,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 14.626641750335693,
+      "generated_tokens": 32,
+      "initial_seq_len": 2571,
+      "cache_budget_tokens": 514,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 514,
+      "total_evicted": 2087,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 11.100520849227905,
+      "generated_tokens": 31,
+      "initial_seq_len": 2578,
+      "cache_budget_tokens": 515,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 515,
+      "total_evicted": 2092,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 13.486112117767334,
+      "generated_tokens": 23,
+      "initial_seq_len": 2561,
+      "cache_budget_tokens": 512,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 512,
+      "total_evicted": 2070,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 9.607681035995483,
+      "generated_tokens": 29,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 516,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 516,
+      "total_evicted": 2091,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 9.795792579650879,
+      "generated_tokens": 33,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 516,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 516,
+      "total_evicted": 2095,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 13.822275161743164,
+      "generated_tokens": 32,
+      "initial_seq_len": 2571,
+      "cache_budget_tokens": 514,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 514,
+      "total_evicted": 2087,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 11.037178039550781,
+      "generated_tokens": 31,
+      "initial_seq_len": 2578,
+      "cache_budget_tokens": 515,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 515,
+      "total_evicted": 2092,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 13.578140020370483,
+      "generated_tokens": 23,
+      "initial_seq_len": 2561,
+      "cache_budget_tokens": 512,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 512,
+      "total_evicted": 2070,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 10.037502527236938,
+      "generated_tokens": 29,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 516,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 516,
+      "total_evicted": 2091,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 9.797094583511353,
+      "generated_tokens": 33,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 516,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 516,
+      "total_evicted": 2095,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.2,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 13.839517831802368,
+      "generated_tokens": 32,
+      "initial_seq_len": 2571,
+      "cache_budget_tokens": 514,
+      "cache_budget_ratio": 0.2,
+      "current_cache_len": 514,
+      "total_evicted": 2087,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 11.020527601242065,
+      "generated_tokens": 31,
+      "initial_seq_len": 2578,
+      "cache_budget_tokens": 386,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 386,
+      "total_evicted": 2221,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 13.535207748413086,
+      "generated_tokens": 23,
+      "initial_seq_len": 2561,
+      "cache_budget_tokens": 384,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 384,
+      "total_evicted": 2198,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 9.643160581588745,
+      "generated_tokens": 29,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 387,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 387,
+      "total_evicted": 2220,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 9.8384370803833,
+      "generated_tokens": 33,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 387,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 387,
+      "total_evicted": 2224,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 13.748827457427979,
+      "generated_tokens": 32,
+      "initial_seq_len": 2571,
+      "cache_budget_tokens": 385,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 385,
+      "total_evicted": 2216,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 11.032608032226562,
+      "generated_tokens": 31,
+      "initial_seq_len": 2578,
+      "cache_budget_tokens": 386,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 386,
+      "total_evicted": 2221,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 13.562995433807373,
+      "generated_tokens": 23,
+      "initial_seq_len": 2561,
+      "cache_budget_tokens": 384,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 384,
+      "total_evicted": 2198,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 9.579890012741089,
+      "generated_tokens": 29,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 387,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 387,
+      "total_evicted": 2220,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 10.130494356155396,
+      "generated_tokens": 33,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 387,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 387,
+      "total_evicted": 2224,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 13.854204654693604,
+      "generated_tokens": 32,
+      "initial_seq_len": 2571,
+      "cache_budget_tokens": 385,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 385,
+      "total_evicted": 2216,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 11.061906099319458,
+      "generated_tokens": 31,
+      "initial_seq_len": 2578,
+      "cache_budget_tokens": 386,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 386,
+      "total_evicted": 2221,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 13.562470436096191,
+      "generated_tokens": 23,
+      "initial_seq_len": 2561,
+      "cache_budget_tokens": 384,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 384,
+      "total_evicted": 2198,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 9.61877179145813,
+      "generated_tokens": 29,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 387,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 387,
+      "total_evicted": 2220,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 9.826901912689209,
+      "generated_tokens": 33,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 387,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 387,
+      "total_evicted": 2224,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.15,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 13.857889413833618,
+      "generated_tokens": 32,
+      "initial_seq_len": 2571,
+      "cache_budget_tokens": 385,
+      "cache_budget_ratio": 0.15,
+      "current_cache_len": 385,
+      "total_evicted": 2216,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 10.96571397781372,
+      "generated_tokens": 31,
+      "initial_seq_len": 2578,
+      "cache_budget_tokens": 257,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 257,
+      "total_evicted": 2350,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 13.519025802612305,
+      "generated_tokens": 23,
+      "initial_seq_len": 2561,
+      "cache_budget_tokens": 256,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 256,
+      "total_evicted": 2326,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 9.598211765289307,
+      "generated_tokens": 29,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 258,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 258,
+      "total_evicted": 2349,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 11.187363386154175,
+      "generated_tokens": 33,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 258,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 258,
+      "total_evicted": 2353,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.1,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 15.09290337562561,
+      "generated_tokens": 32,
+      "initial_seq_len": 2571,
+      "cache_budget_tokens": 257,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 257,
+      "total_evicted": 2344,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 12.265684604644775,
+      "generated_tokens": 31,
+      "initial_seq_len": 2578,
+      "cache_budget_tokens": 257,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 257,
+      "total_evicted": 2350,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 14.843031883239746,
+      "generated_tokens": 23,
+      "initial_seq_len": 2561,
+      "cache_budget_tokens": 256,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 256,
+      "total_evicted": 2326,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 10.717285394668579,
+      "generated_tokens": 29,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 258,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 258,
+      "total_evicted": 2349,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 11.055989503860474,
+      "generated_tokens": 33,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 258,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 258,
+      "total_evicted": 2353,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.5,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 14.424568176269531,
+      "generated_tokens": 32,
+      "initial_seq_len": 2571,
+      "cache_budget_tokens": 257,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 257,
+      "total_evicted": 2344,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The current source-of-truth memo states that the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "question": "According to the current source-of-truth memo, what is the secret project code name and when was it initiated?",
+      "answer_keywords": [
+        "Operation Starlight",
+        "March 15"
+      ],
+      "correct": true,
+      "output_text": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "output_preview": "According to the current source-of-truth memo, the secret project code name is Operation Starlight and it was initiated on March 15th.",
+      "elapsed_time": 11.502127885818481,
+      "generated_tokens": 31,
+      "initial_seq_len": 2578,
+      "cache_budget_tokens": 257,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 257,
+      "total_evicted": 2350,
+      "eviction_steps": 30,
+      "case_name": "project_codename_current",
+      "distractors": [
+        "An outdated planning note incorrectly says the project code name was Operation Daybreak and that it began on March 1st.",
+        "A rehearsal document once referred to Operation Starlight but paired it with March 1st instead of the real initiation date."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative facilities note says the server room temperature must be maintained at exactly 18.5 degrees Celsius for optimal performance.",
+      "question": "What exact temperature does the authoritative facilities note require for the server room?",
+      "answer_keywords": [
+        "18.5"
+      ],
+      "correct": true,
+      "output_text": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "output_preview": "The authoritative facilities note requires the server room temperature to be maintained at exactly 18.5 degrees Celsius.",
+      "elapsed_time": 14.449135303497314,
+      "generated_tokens": 23,
+      "initial_seq_len": 2561,
+      "cache_budget_tokens": 256,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 256,
+      "total_evicted": 2326,
+      "eviction_steps": 22,
+      "case_name": "server_temperature_authoritative",
+      "distractors": [
+        "A stale maintenance checklist still mentions 19.5 degrees Celsius, but it is marked superseded.",
+        "An onboarding slide once rounded the target to 18 degrees Celsius, which is no longer the approved value."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The approved migration plan says the database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "question": "In the approved migration plan, when is the database migration scheduled and how long is the downtime?",
+      "answer_keywords": [
+        "November 27",
+        "3:00 AM",
+        "4 hours"
+      ],
+      "correct": true,
+      "output_text": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "output_preview": "The database migration is scheduled for November 27th at 3:00 AM UTC and requires exactly 4 hours of downtime.",
+      "elapsed_time": 10.465639352798462,
+      "generated_tokens": 29,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 258,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 258,
+      "total_evicted": 2349,
+      "eviction_steps": 28,
+      "case_name": "migration_schedule_authoritative",
+      "distractors": [
+        "A canceled rehearsal plan mentioned November 27th at 3:00 AM UTC but only 1 hour of downtime.",
+        "An obsolete draft referred to 4 hours of downtime but listed the start time as 2:00 AM UTC."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The current incident bridge opens on channel Delta-42 at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "question": "Which channel does the current incident bridge use, when does it open, and how long does it remain active?",
+      "answer_keywords": [
+        "Delta-42",
+        "09:30",
+        "90 minutes"
+      ],
+      "correct": true,
+      "output_text": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "output_preview": "The current incident bridge uses channel Delta-42. It opens at 09:30 AM UTC and remains active for exactly 90 minutes.",
+      "elapsed_time": 10.653021812438965,
+      "generated_tokens": 33,
+      "initial_seq_len": 2580,
+      "cache_budget_tokens": 258,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 258,
+      "total_evicted": 2353,
+      "eviction_steps": 32,
+      "case_name": "incident_bridge_authoritative",
+      "distractors": [
+        "An old runbook still lists channel Delta-24 at 09:00 AM UTC for 60 minutes.",
+        "A rehearsal script used Delta-42 at 09:00 AM UTC for only 45 minutes."
+      ]
+    },
+    {
+      "task": "niah_adversarial",
+      "policy": "semantic",
+      "budget": 0.1,
+      "haystack_length": 4000,
+      "needle_position": 0.9,
+      "needle_fact": "The authoritative retention policy says encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "question": "According to the authoritative retention policy, how long are encrypted backups retained and when does the export window open?",
+      "answer_keywords": [
+        "37 days",
+        "02:30"
+      ],
+      "correct": true,
+      "output_text": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "output_preview": "According to the authoritative retention policy, encrypted backups are retained for 37 days and the export window opens at 02:30 AM UTC.",
+      "elapsed_time": 14.836081504821777,
+      "generated_tokens": 32,
+      "initial_seq_len": 2571,
+      "cache_budget_tokens": 257,
+      "cache_budget_ratio": 0.1,
+      "current_cache_len": 257,
+      "total_evicted": 2344,
+      "eviction_steps": 31,
+      "case_name": "backup_window_authoritative",
+      "distractors": [
+        "A superseded checklist still mentions 30 days and an export window at 02:00 AM UTC.",
+        "A temporary incident waiver once used 14 days of retention while keeping the same export window."
+      ]
+    }
+  ]
+}

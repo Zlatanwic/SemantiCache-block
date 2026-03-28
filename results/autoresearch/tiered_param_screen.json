@@ -1,0 +1,110 @@
+[
+  {
+    "hot_ratio": 0.6,
+    "warm_top_k": 8,
+    "heuristic_score": 0.5,
+    "contains_novaos": false,
+    "repetition_ratio": 0.0,
+    "elapsed_time": 7.104856014251709,
+    "tok_per_s": 6.755942682542232,
+    "warm_cache_len": 14,
+    "last_promoted_warm_count": 8,
+    "output_preview": "OfSyscall\nIITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITIT"
+  },
+  {
+    "hot_ratio": 0.7,
+    "warm_top_k": 2,
+    "heuristic_score": 0.5,
+    "contains_novaos": false,
+    "repetition_ratio": 0.0,
+    "elapsed_time": 7.118469715118408,
+    "tok_per_s": 6.74302229565664,
+    "warm_cache_len": 11,
+    "last_promoted_warm_count": 2,
+    "output_preview": "OfSyscall\nIITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITIT"
+  },
+  {
+    "hot_ratio": 0.7,
+    "warm_top_k": 4,
+    "heuristic_score": 0.5,
+    "contains_novaos": false,
+    "repetition_ratio": 0.0,
+    "elapsed_time": 7.791746377944946,
+    "tok_per_s": 6.160364784955934,
+    "warm_cache_len": 11,
+    "last_promoted_warm_count": 4,
+    "output_preview": "OfSyscall\nIITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITITIT"
+  },
+  {
+    "hot_ratio": 0.7,
+    "warm_top_k": 8,
+    "heuristic_score": 0.5,
+    "contains_novaos": false,
+    "repetition_ratio": 0.0,
+    "elapsed_time": 1.0102016925811768,
+    "tok_per_s": 4.949506654680461,
+    "warm_cache_len": 11,
+    "last_promoted_warm_count": 8,
+    "output_preview": "OfThe syscall."
+  },
+  {
+    "hot_ratio": 0.5,
+    "warm_top_k": 2,
+    "heuristic_score": -3.0,
+    "contains_novaos": false,
+    "repetition_ratio": 1.0,
+    "elapsed_time": 7.717558145523071,
+    "tok_per_s": 6.219583849568355,
+    "warm_cache_len": 18,
+    "last_promoted_warm_count": 2,
+    "output_preview": "OfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOf"
+  },
+  {
+    "hot_ratio": 0.5,
+    "warm_top_k": 4,
+    "heuristic_score": -3.0,
+    "contains_novaos": false,
+    "repetition_ratio": 1.0,
+    "elapsed_time": 5.598102331161499,
+    "tok_per_s": 8.57433415120172,
+    "warm_cache_len": 18,
+    "last_promoted_warm_count": 4,
+    "output_preview": "OfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOf"
+  },
+  {
+    "hot_ratio": 0.5,
+    "warm_top_k": 8,
+    "heuristic_score": -3.0,
+    "contains_novaos": false,
+    "repetition_ratio": 1.0,
+    "elapsed_time": 7.3965065479278564,
+    "tok_per_s": 6.489550125991206,
+    "warm_cache_len": 18,
+    "last_promoted_warm_count": 8,
+    "output_preview": "OfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOf"
+  },
+  {
+    "hot_ratio": 0.6,
+    "warm_top_k": 2,
+    "heuristic_score": -3.0,
+    "contains_novaos": false,
+    "repetition_ratio": 1.0,
+    "elapsed_time": 7.6424760818481445,
+    "tok_per_s": 6.280686977091904,
+    "warm_cache_len": 14,
+    "last_promoted_warm_count": 2,
+    "output_preview": "OfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOf"
+  },
+  {
+    "hot_ratio": 0.6,
+    "warm_top_k": 4,
+    "heuristic_score": -3.0,
+    "contains_novaos": false,
+    "repetition_ratio": 1.0,
+    "elapsed_time": 7.668782472610474,
+    "tok_per_s": 6.259142200399469,
+    "warm_cache_len": 14,
+    "last_promoted_warm_count": 4,
+    "output_preview": "OfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOfOf"
+  }
+]

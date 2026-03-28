@@ -1,0 +1,43 @@
+[
+  {
+    "task": "niah",
+    "policy": "tiered_semantic",
+    "budget": 0.3,
+    "haystack_length": 2000,
+    "needle_position": 0.5,
+    "needle_fact": "The secret project code name is Operation Starlight and it was initiated on March 15th.",
+    "question": "What is the secret project code name and when was it initiated?",
+    "answer_keywords": [
+      "Operation Starlight",
+      "March 15"
+    ],
+    "correct": false,
+    "output_text": "The project's need for simplicity, stability, security, usability, and scalability, and scalability, and scalability, and maintain. and maintain. and maintain. and scalability. The documentation.",
+    "output_preview": "The project's need for simplicity, stability, security, usability, and scalability, and scalability, and scalability, and maintain. and maintain. and maintain. and scalability. The documentation.",
+    "elapsed_time": 7.700915813446045,
+    "generated_tokens": 38,
+    "initial_seq_len": 1288,
+    "cache_budget_tokens": 386,
+    "cache_budget_ratio": 0.3,
+    "current_cache_len": 387,
+    "hot_cache_len": 271,
+    "warm_cache_len": 116,
+    "cold_cache_len": 1,
+    "peak_hot_cache_len": 1288,
+    "peak_warm_cache_len": 116,
+    "peak_cold_cache_len": 902,
+    "hot_budget_tokens": 270,
+    "hot_ratio": 0.7,
+    "warm_top_k": 8,
+    "warm_quantize_time_s": 0.48965500004123896,
+    "warm_dequantize_time_s": 0.6337516994972248,
+    "warm_quantize_ops": 37,
+    "warm_dequantize_ops": 3204,
+    "materialization_steps": 37,
+    "last_promoted_warm_count": 8,
+    "peak_promoted_warm_count": 8,
+    "promotion_steps": 37,
+    "total_evicted": 938,
+    "eviction_steps": 37
+  }
+]

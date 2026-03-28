@@ -1,0 +1,17 @@
+{
+  "updated_at": "2026-03-15T04:14:59Z",
+  "mode": "running",
+  "error": "No effective change in eviction_policies.py",
+  "frontier_commit": "8aa4074",
+  "experiment_id": "exp-043",
+  "candidate": "eviction_policies: cap semantic block size at 3",
+  "noop_skip_by_frontier": {
+    "8aa4074": [
+      "eviction_policies: raise factual-weight floor to 0.40",
+      "eviction_policies: raise query-weight floor to 0.30"
+    ]
+  },
+  "accuracy": "0.922222",
+  "hard_accuracy": "1.000000",
+  "avg_time_s": "6.903627"
+}

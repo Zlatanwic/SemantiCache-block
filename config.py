@@ -27,13 +27,17 @@ class ModelConfig:
     max_new_tokens: int = 256
     temperature: float = 0.7
     do_sample: bool = True
+    mask_polite_openers: bool = False
+    demo_stop_on_repeat: bool = False
+    stop_when_output_contains: list[str] = field(default_factory=list)
+    show_progress_bar: bool = False
 
 
 @dataclass
 class CacheConfig:
     # Fraction of the prefill prompt length retained in the KV cache
     cache_budget: float = 0.5
-    policy: Literal["full", "window", "streaming", "h2o", "semantic"] = "full"
+    policy: Literal["full", "window", "streaming", "h2o", "snapkv", "kvzip", "defensivekv", "semantic", "tiered_semantic"] = "full"
 
     # StreamingLLM
     sink_tokens: int = 4
@@ -51,7 +55,24 @@ class CacheConfig:
     # Always keep the newest generated tokens to preserve decode stability
     semantic_recent_window: int = 64
     semantic_block_size: int = 16
-    semantic_latest_user_tail_tokens: int = 64
+    semantic_latest_user_tail_tokens: int = 16
+    semantic_hot_ratio: float = 0.5
+    semantic_hot_block_size: int = 6
+    semantic_warm_device: Literal["cpu", "same"] = "cpu"
+    semantic_warm_bits: Literal[8] = 8
+    semantic_warm_top_k: int = 16
+    semantic_warm_promotable_reserve: int = 8
+    semantic_generated_retention_window: int = 12
+    semantic_hot_recent_window: int = 8
+    semantic_promotion_block_size: int = 4
+    semantic_promotion_min_gap: int = 4
+    semantic_debug_promotion: bool = False
+    semantic_debug_promotion_every: int = 25
+    semantic_debug_promotion_top_n: int = 4
+    semantic_debug_tiers: bool = False
+    semantic_debug_tiers_top_n: int = 8
+    semantic_debug_logits_top_n: int = 0
+    semantic_follow_token_bias: float = 4.0
 
     # Hard protection for semantic roles
     pin_system: bool = True

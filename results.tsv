@@ -1,0 +1,33 @@
+experiment_id	frontier_commit	suite	accuracy	hard_accuracy	avg_time_s	status	description	output_json
+exp-001	6fcc926	smoke	1.000000	1.000000	1.982727	keep	baseline semantic policy on fixed 6-case NIAH slice	results/autoresearch/exp-001.json
+exp-002	6fcc926	smoke	1.000000	1.000000	2.048108	discard	vectorize block ranking in select_keep_indices	results/autoresearch/exp-002.json
+exp-003	6fcc926	smoke	1.000000	1.000000	1.923214	keep	simplify pressure normalization in compute_eviction_scores	results/autoresearch/exp-003.json
+exp-004	a976c5b	smoke	1.000000	1.000000	1.956757	discard	tighten latest-user tail pinning from 64 to 48 tokens	results/autoresearch/exp-004.json
+exp-005	a976c5b	frontier	0.955556	1.000000	2.714832	keep	frontier suite baseline after expanding benchmark to 90 cases	results/autoresearch/exp-005.json
+exp-006	a976c5b	frontier	0.955556	1.000000	2.297512	keep	raise minimum factual weight from 0.20 to 0.35	results/autoresearch/exp-006.json
+exp-007	4cb6031	frontier	0.966667	1.000000	2.439396	keep	expand factual bonus to time and unit tokens	results/autoresearch/exp-007.json
+exp-008	983226c	frontier	0.966667	1.000000	2.360489	discard	smooth factual bonus across short local spans	results/autoresearch/exp-008.json
+exp-009	983226c	frontier	0.988889	1.000000	2.400710	keep	reduce semantic block size from 16 to 8	results/autoresearch/exp-009.json
+exp-010	8f9c85d	frontier	0.988889	1.000000	2.436842	discard	add ordinal suffix tokens to factual-unit detection	results/autoresearch/exp-010.json
+exp-011	8f9c85d	frontier	1.000000	1.000000	2.371531	keep	reduce semantic block size from 8 to 4	results/autoresearch/exp-011.json
+exp-012	10d359d	frontier	1.000000	1.000000	2.581018	discard	reduce recent decode protection window from 64 to 48	results/autoresearch/exp-012.json
+exp-013	10d359d	frontier	0.988889	1.000000	2.352110	discard	relax semantic block size from 4 to 6	results/autoresearch/exp-013.json
+exp-014	10d359d	frontier	0.988889	1.000000	2.555587	discard	relax semantic block size from 4 to 5	results/autoresearch/exp-014.json
+exp-015	10d359d	frontier	1.000000	1.000000	2.318179	keep	reduce latest-user tail pinning from 64 to 56	results/autoresearch/exp-015.json
+exp-016	80b1c78	frontier	1.000000	1.000000	2.845951	discard	reduce latest-user tail pinning from 56 to 52	results/autoresearch/exp-016.json
+exp-017	80b1c78	frontier	1.000000	1.000000	2.433056	discard	reduce latest-user tail pinning from 56 to 54	results/autoresearch/exp-017.json
+exp-018	80b1c78	frontier	1.000000	1.000000	4.918106	discard	relax latest-user tail pinning from 56 to 58	results/autoresearch/exp-018.json
+exp-019	80b1c78	gauntlet	0.922222	1.000000	8.223390	keep	gauntlet suite baseline after adding adversarial harder tests	results/autoresearch/exp-019.json
+exp-020	80b1c78	gauntlet	0.844444	1.000000	8.476585	discard	semantic_analyzer: add authority and structured-identifier factual features	results/autoresearch/exp-020.json
+exp-021	80b1c78	gauntlet	0.922222	1.000000	7.909499	discard	eviction_policies: choose best-scoring tokens when only part of a block fits the budget	results/autoresearch/exp-021.json
+exp-022	80b1c78	gauntlet	0.922222	1.000000	6.821975	keep	eviction_policies: rank blocks by their safest token instead of mean block score	results/autoresearch/exp-022.json
+exp-023	ca45321	gauntlet	0.933333	1.000000	7.340104	keep	eviction_policies: combine safest-block ranking with best-token partial block selection	results/autoresearch/exp-023.json
+exp-024	84b8e7d	gauntlet	0.000000	0.000000	0.0	crash	eviction_policies: raise factual-weight floor to 0.40	results\autoresearch\exp-024.json
+exp-036	84b8e7d	gauntlet	0.922222	1.000000	20.849444	discard	semantic_analyzer: add day and days to factual unit detection	results\autoresearch\exp-036.json
+exp-025	84b8e7d	gauntlet	0.000000	0.000000	0.0	crash	eviction_policies: raise factual-weight floor to 0.45	results\autoresearch\exp-025.json
+exp-037	84b8e7d	gauntlet	0.933333	1.000000	6.932372	keep	eviction_policies: raise query-weight floor to 0.30	results\autoresearch\exp-037.json
+exp-038	5f812e8	gauntlet	0.933333	1.000000	7.262574	keep	eviction_policies: raise factual-weight floor to 0.40	results\autoresearch\exp-038.json
+exp-039	8aa4074	gauntlet	0.000000	0.000000	0.0	crash	eviction_policies: raise factual-weight floor to 0.45	results\autoresearch\exp-039.json
+exp-040	8aa4074	gauntlet	0.922222	1.000000	7.222675	discard	eviction_policies: raise query-weight floor to 0.35	results\autoresearch\exp-040.json
+exp-041	8aa4074	gauntlet	0.911111	1.000000	7.050913	discard	eviction_policies: enforce recent decode protection floor of 72 tokens	results\autoresearch\exp-041.json
+exp-042	8aa4074	gauntlet	0.922222	1.000000	6.903627	discard	eviction_policies: enforce recent decode protection floor of 80 tokens	results\autoresearch\exp-042.json

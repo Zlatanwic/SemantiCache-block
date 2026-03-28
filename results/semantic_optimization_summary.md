@@ -56,3 +56,32 @@ You can summarize the full optimization path like this:
 3. After adding explicit position handling and switching to contiguous semantic retention, the method became stable.
 4. Under tighter budgets, generic semantic importance was still not enough, so we added query-aware and factual signals.
 5. This final version preserved both stability and retrieval quality under low KV budgets.
+
+## 4. 2026-03-28 Follow-up Updates
+
+Recent follow-up work extended the prototype in two directions:
+
+- short-answer benchmark stabilization
+- benchmark usability and observability
+
+High-level changes:
+
+- Added retained follow-token biasing for `tiered_semantic`, including
+  normalized token-text matching and suffix continuation support.
+- Stopped treating a single space token as disposable template noise, which
+  fixed date-span fragmentation such as `March 15`.
+- Improved partial-block retention and warm-tier rescue behavior so short
+  structured answers survive more reliably under tight budgets.
+- Added a dedicated short memory-recall benchmark with case/policy filtering,
+  resume support, ETA/progress logging, and per-case `max_new_tokens`.
+- Added benchmark-oriented early stopping once the expected answer substring is
+  already present in the generated text.
+
+Representative new targeted results:
+
+- `launch_date` under `tiered_semantic` now returns `March 15.`
+- `language` under `tiered_semantic` now returns `Rust`
+
+Detailed session notes are recorded in:
+
+- `results/session_2026-03-28_memory_recall_and_benchmark_updates.md`

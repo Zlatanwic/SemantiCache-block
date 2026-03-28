@@ -1,0 +1,120 @@
+\documentclass[sigplan,nonacm]{acmart}
+\settopmatter{printfolios=true}
+
+\begin{document}
+
+\title{SemantiCache: Query-Aware Semantic KV Cache Retention for Long-Context LLM Serving Under Tight Memory Budgets}
+
+\author{Anonymous Author(s)}
+\affiliation{
+  \institution{Anonymous Institution}
+}
+\renewcommand{\shortauthors}{Anonymous Author(s)}
+
+\begin{abstract}
+Long-context large language model (LLM) serving is increasingly limited by the memory growth of the key-value (KV) cache during prefill and decoding. Existing retention policies largely favor recency or generic attention salience, but these signals can fail when the answer depends on a small factual span surrounded by confusable distractors. This paper presents SemantiCache, a query-aware semantic KV-cache retention mechanism for long-context LLM serving. SemantiCache combines attention-based importance, information-density signals, query relevance, factual-token cues, and role-aware protection of system instructions and the latest user-query tail. To preserve decoding stability, it retains contiguous semantic blocks instead of arbitrarily sparse token subsets and falls back to within-block token ranking only when a block partially fits the budget. We implement the policy in a reproducible evaluation harness and study it on both diagnostic Needle-in-a-Haystack retrieval cases and a harder adversarial benchmark with authoritative and distractor spans. At the retained frontier, SemantiCache reaches 84/90 accuracy on the adversarial suite while preserving perfect hard-slice accuracy (30/30), and it recovers correct low-budget retrieval cases where recency-only baselines collapse.
+\end{abstract}
+
+\keywords{LLM inference, KV cache management, long-context serving, cache eviction, query-aware systems}
+
+\maketitle
+
+\section{Introduction}
+
+The memory cost of the KV cache has become a first-order systems bottleneck for long-context LLM inference. Even when model weights fit on commodity accelerators, long prompts and long generations can cause cache state to dominate memory usage, constraining throughput and forcing systems to trade context length against latency and hardware cost.
+
+Prior work has shown that aggressive KV retention can be effective without retraining. StreamingLLM preserves recent tokens and attention sinks to support streaming generation~\cite{xiao2023streamingllm}. H2O retains recent tokens together with heavy hitters identified by attention statistics~\cite{zhang2023h2o}. These designs are strong generic baselines, but they still expose a failure mode that matters in retrieval-heavy workloads: the answer may depend on a small factual span embedded in a long prompt with nearby distractors. In that setting, recency and generic salience may retain \emph{important} tokens without retaining the \emph{right} tokens for the current query.
+
+This paper studies that problem through SemantiCache, a serving-time KV retention policy for long-context inference under fixed memory budgets. SemantiCache is based on two observations. First, answer-critical tokens in retrieval-oriented workloads are often identifiable through a combination of signals rather than recency alone: query alignment, factual content, attention pressure, and local information density all matter. Second, token selection cannot be arbitrarily sparse. Early token-wise pruning preserved nominally relevant tokens but destabilized generation because it destroyed local positional continuity.
+
+SemantiCache therefore combines query-aware semantic scoring with contiguous block-level retention. The resulting design makes three contributions. First, it formulates query-aware KV retention as a serving-time systems problem for long-context inference under fixed budgets. Second, it introduces a practical policy that combines role-aware pinning, semantic scoring, and block-level retention with partial-block recovery. Third, it shows in a reproducible local harness that the design improves low-budget factual retrieval robustness relative to lightweight baselines while preserving generation stability.
+
+\section{Background and Design Goals}
+
+Recent long-context evaluation work has highlighted that nominal context length alone does not guarantee reliable retrieval. Benchmarks such as LongBench~\cite{bai2023longbench}, RULER~\cite{hsieh2024ruler}, and NoLiMa~\cite{modarressi2025nolima} show that quality can degrade sharply as context length and distraction increase. For KV-cache compression, this motivates a more workload-aware goal than ``retain the most attended tokens.'' The policy studied here targets retrieval-oriented prompts in which the user asks about a fact embedded in long context, so the design objective is to preserve answer-critical spans without destabilizing decoding or introducing excessive serving-time overhead.
+
+\section{SemantiCache}
+
+\subsection{Semantic token scoring}
+
+SemantiCache assigns each cached token a keep-oriented score using five signals: attention-based importance, information density, head entropy, query relevance, and factual-token likelihood. Attention, density, and entropy capture generic importance from model state and local token statistics. Query relevance biases retention toward spans overlapping with the latest user question. Factual-token likelihood boosts structured answer-bearing content such as dates, times, numbers, units, and identifiers.
+
+In the current implementation, attention, density, and entropy are mixed with weights $\alpha{=}0.4$, $\beta{=}0.3$, and $\gamma{=}0.3$. Query and factual signals are protected by minimum weights of 0.30 and 0.40, respectively, to prevent them from becoming negligible under normalization. This makes the policy explicitly favor query-aligned factual spans under tight budgets.
+
+\subsection{Role-aware protection}
+
+Some tokens are too important to participate in generic eviction. Before score-based selection, SemantiCache pins three token classes: all system tokens, the tail of the latest user message, and a recent decode window. This design preserves task intent and local autoregressive stability even when semantic selection becomes aggressive.
+
+\subsection{Contiguous block retention}
+
+Early sparse token-level pruning caused repetitive or collapsed outputs despite preserving apparently important tokens. SemantiCache therefore retains tokens in contiguous semantic blocks rather than arbitrary sparse subsets. Blocks are ranked by the safest token within the block instead of the block-average score so that a single critical token is not drowned out by nearby low-value tokens. When only part of a block fits within the budget, the policy keeps the strongest tokens inside that block and restores their original order.
+
+This block-level design is central to the method. In practice, the strongest improvements came not only from \emph{which} signals were used, but also from \emph{how} retained cache structure was preserved after eviction.
+
+\section{Prototype and Experimental Setup}
+
+SemantiCache is implemented as a serving-time KV retention policy in a lightweight Python research codebase. The prototype includes a cache manager, baseline policies (\texttt{full}, \texttt{window}, \texttt{streaming}, and \texttt{h2o}), a semantic analyzer, and deterministic evaluation harnesses. The underlying model is \texttt{Qwen/Qwen2.5-3B-Instruct}~\cite{qwen2024qwen25}, configured with 4-bit quantization and evaluated on an RTX 5060 Laptop GPU with 8\,GB of VRAM.
+
+The evaluation uses two complementary settings.
+
+\textbf{Diagnostic retrieval cases.} A fixed Needle-in-a-Haystack setup places one authoritative fact in a 1000-token haystack. We report controlled 50\% and 30\% cache-budget runs to expose qualitative failure modes of the baselines.
+
+\textbf{Adversarial gauntlet.} A custom benchmark suite contains five authoritative factual cases, each paired with two nearby distractors. The harness evaluates two haystack lengths (2000 and 4000), three budgets (20\%, 15\%, and 10\%), and three insertion positions (0.1, 0.5, and 0.9), for a total of 90 cases. The hard slice contains the 4000-token prompts at budgets of 15\% or below, yielding 30 stress cases. Accuracy and average response time are the primary metrics.
+
+\section{Results}
+
+Table~\ref{tab:diagnostic} shows the controlled diagnostic retrieval results. At a 50\% budget, both H2O and SemantiCache recover the correct fact, while local-window and streaming retention collapse into degenerate outputs. At a 30\% budget, SemantiCache still returns the exact answer, whereas H2O produces a near-correct but factually wrong date and recency-based methods fail completely.
+
+\begin{table}[t]
+\caption{Diagnostic NIAH retrieval at 1000-token haystack length.}
+\label{tab:diagnostic}
+\begin{tabular}{lcccc}
+\toprule
+Policy & 50\% & Time (s) & 30\% & Time (s) \\
+\midrule
+\texttt{window}    & No  & 8.37 & No  & 11.22 \\
+\texttt{streaming} & No  & 8.42 & No  & 6.55 \\
+\texttt{h2o}       & Yes & 2.03 & No  & 2.00 \\
+\texttt{semantic}  & Yes & 2.06 & Yes & 2.16 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:evolution} summarizes the policy evolution on the adversarial gauntlet. The baseline semantic frontier begins at 83/90 accuracy. Safer block ranking improves runtime without changing accuracy, while partial-block refinement raises the retained frontier to 84/90. Later query and factual floors preserve that frontier, with the query-aware version also yielding the best observed gauntlet latency among the tied top-accuracy variants.
+
+\begin{table}[t]
+\caption{SemantiCache policy evolution on the adversarial gauntlet.}
+\label{tab:evolution}
+\begin{tabular}{lccc}
+\toprule
+Variant & Accuracy & Hard & Time (s) \\
+\midrule
+Baseline semantic frontier & 83/90 & 30/30 & 8.22 \\
++ safer block ranking & 83/90 & 30/30 & 6.82 \\
++ partial-block refinement & 84/90 & 30/30 & 7.34 \\
++ query floor 0.30 & 84/90 & 30/30 & 6.93 \\
++ factual floor 0.40 & 84/90 & 30/30 & 7.26 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The current retained frontier therefore reaches 84/90 accuracy (0.933) with perfect hard-slice accuracy of 30/30. The remaining failures are concentrated at the tightest 10\% budget, where the model often preserves the correct topic but binds one attribute to a nearby distractor.
+
+These results support three observations. First, generic recency is insufficient for low-budget factual retrieval. Second, query-aware and factual-aware signals matter beyond generic semantic salience alone. Third, retention shape is a systems concern: block-level contiguous retention is necessary to translate token importance into stable generation.
+
+\section{Limitations and Discussion}
+
+This study is intentionally narrow. The current evidence is strongest for retrieval-style factual questions rather than the full space of long-context reasoning tasks. The main adversarial benchmark is custom rather than public, and the prototype has been evaluated primarily on one open 3B model and one commodity GPU setting. Accordingly, the paper should be interpreted as a feasibility result for workload-aware KV retention rather than a final claim of broad superiority.
+
+Two lessons nevertheless emerge clearly. First, KV-cache compression quality depends on structural stability as much as on token ranking. Second, the best retention signals are workload dependent. For retrieval-heavy serving, query alignment and factual cues are more reliable than model-state salience alone.
+
+Future work should extend the evaluation to public suites such as LongBench, RULER, and NoLiMa, as well as to larger model families and explicit overhead studies quantifying retention cost versus memory savings.
+
+\section{Conclusion}
+
+SemantiCache is a query-aware semantic KV-cache retention policy for long-context LLM serving under tight memory budgets. By combining role-aware protection, semantic scoring, and contiguous block retention, it preserves answer-critical spans while maintaining decoding stability. In local adversarial evaluation, the method reaches 84/90 overall accuracy with perfect hard-slice accuracy and recovers low-budget factual retrieval cases that defeat recency-oriented baselines. These results suggest that workload-aware KV retention is a promising systems direction for memory-efficient long-context inference.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{systor_short_paper_refs}
+
+\end{document}
