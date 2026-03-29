@@ -1,0 +1,19 @@
+\begin{table}[t]
+\caption{Systems overhead per policy at $b{=}20\%$ cache budget.
+Averaged over multiple runs on \texttt{Qwen2.5-3B-Instruct} (4-bit NF4).}
+\label{tab:overhead}
+\centering
+\begin{tabular}{lccccc}
+\toprule
+Policy & Prefill (s) & Snap (s) & Evict/step (ms) & Decode (s) & tok/s \\
+\midrule
+Full KV & 0.53 & 0.000 & 0.15 & 0.46 & 6.5 \\
+StreamingLLM & 0.37 & 0.000 & 2.52 & 0.32 & 5.2 \\
+H2O & 0.38 & 0.000 & 2.09 & 0.43 & 7.4 \\
+SnapKV & 0.38 & 0.072 & 0.97 & 0.45 & 7.3 \\
+KVzip & 0.38 & 0.915 & 0.96 & 1.20 & 3.8 \\
+\textbf{SemantiCache} & 0.38 & 0.000 & 8.86 & 1.37 & 3.4 \\
+\textbf{Tiered SemantiCache} & 0.38 & 0.000 & 7.58 & 3.00 & 4.7 \\
+\bottomrule
+\end{tabular}
+\end{table}

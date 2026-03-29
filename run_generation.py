@@ -467,7 +467,8 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
         output_attentions=True,
         return_dict=True,
     )
-    print(f"Prefill: done in {time.time() - prefill_start:.2f}s")
+    prefill_end = time.time()
+    print(f"Prefill: done in {prefill_end - prefill_start:.2f}s")
 
     _update_tracker_or_raise(outputs.attentions, tracker, cache_cfg.policy, "prefill")
     cache_manager.set_initial_seq_len(prompt_len)
@@ -477,6 +478,7 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
             input_ids[0],
             latest_query_text=_extract_latest_user_query(messages),
         )
+    _snapshot_start = time.time()
     if isinstance(policy, SnapKVPolicy):
         policy.snapshot_prefill_attention()
     if isinstance(policy, KVzipPolicy):
@@ -488,6 +490,7 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
         )
     if isinstance(policy, DefensiveKVPolicy):
         policy.snapshot_prefill_attention(attentions=outputs.attentions)
+    _snapshot_time = time.time() - _snapshot_start
 
     next_token_logits = outputs.logits[:, -1, :]
     if cache_cfg.semantic_debug_logits_top_n > 0:
@@ -505,6 +508,9 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
     # cache_position (physical write index) and position_ids (RoPE) must diverge
     # once tokens are evicted: RoPE must continue from the original sequence length.
     next_absolute_position = prompt_len
+    # Fine-grained timing accumulators for systems profiling
+    _eviction_time_total = 0.0
+    _forward_time_total = 0.0
     eos_token_id = tokenizer.eos_token_id
     polite_opener_token_ids = _build_polite_opener_token_ids(tokenizer) if model_cfg.mask_polite_openers else []
     try:
@@ -601,8 +607,10 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
                         )
                     break
 
+            _evict_start = time.time()
             if step == 0 or not cache_manager.uses_tiered_cache:
                 past_key_values = cache_manager.evict(past_key_values)
+            _eviction_time_total += time.time() - _evict_start
             if cache_cfg.semantic_debug_tiers and step == 0:
                 _print_tier_debug(
                     tokenizer,
@@ -643,6 +651,7 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
             if isinstance(policy, SemantiCachePolicy):
                 policy.extend_signals(num_new_tokens=1)
 
+            _fwd_start = time.time()
             outputs = model(
                 input_ids=next_token_id,
                 past_key_values=model_past_key_values,
@@ -652,6 +661,7 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
                 output_attentions=True,
                 return_dict=True,
             )
+            _forward_time_total += time.time() - _fwd_start
             next_absolute_position += 1
 
             _update_tracker_or_raise(
@@ -730,11 +740,21 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
             f"peak={stats['peak_promoted_warm_count']}, steps={stats['promotion_steps']}"
         )
 
+    num_decode_steps = len(generated_ids)
     return {
         "output_text": output_text,
         "output_ids": generated_ids,
         "stats": stats,
         "elapsed_time": elapsed,
+        "prefill_time": prefill_end - prefill_start,
+        "decode_time": elapsed - (prefill_end - prefill_start),
+        "snapshot_time": _snapshot_time,
+        "eviction_time_total": _eviction_time_total,
+        "eviction_time_per_step": _eviction_time_total / max(1, num_decode_steps),
+        "forward_time_total": _forward_time_total,
+        "forward_time_per_step": _forward_time_total / max(1, num_decode_steps),
+        "num_decode_steps": num_decode_steps,
+        "tokens_per_second": num_decode_steps / max(1e-6, elapsed),
     }
 
 
