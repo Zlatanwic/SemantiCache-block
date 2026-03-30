@@ -199,6 +199,7 @@ def run_ruler_suite(
     seed: int = 42,
     max_new_tokens: int = 64,
     output_path: Optional[str] = None,
+    model_cfg: Optional["ModelConfig"] = None,
 ) -> list[dict]:
     """Run a full RULER NIAH evaluation grid."""
     rng = random.Random(seed)
@@ -231,6 +232,8 @@ def run_ruler_suite(
                         )
 
                         cfg = ExperimentConfig()
+                        if model_cfg is not None:
+                            cfg.model = model_cfg
                         cfg.cache.policy = policy
                         cfg.cache.cache_budget = budget
 
@@ -280,6 +283,8 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="RULER-compatible NIAH evaluation")
+    parser.add_argument("--model", type=str, default=None,
+                        help="Model name on ModelScope/HF (e.g. LLM-Research/Meta-Llama-3.1-8B-Instruct)")
     parser.add_argument("--policies", nargs="+", default=["full", "h2o", "snapkv", "kvzip", "streaming", "semantic"])
     parser.add_argument("--budgets", nargs="+", type=float, default=[0.5, 0.3, 0.2])
     parser.add_argument("--target-tokens", nargs="+", type=int, default=[4096])
@@ -295,6 +300,8 @@ if __name__ == "__main__":
 
     from run_generation import load_model
     cfg = ExperimentConfig()
+    if args.model:
+        cfg.model.model_name = args.model
     model, tokenizer = load_model(cfg.model)
 
     run_ruler_suite(
@@ -308,4 +315,5 @@ if __name__ == "__main__":
         seed=args.seed,
         max_new_tokens=args.max_new_tokens,
         output_path=args.output,
+        model_cfg=cfg.model,
     )

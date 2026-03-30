@@ -17,11 +17,11 @@ class ModelConfig:
     bnb_4bit_quant_type: str = "nf4"
     bnb_4bit_use_double_quant: bool = True
 
-    # Qwen2.5-3B architecture
-    num_layers: int = 36
-    num_attention_heads: int = 16
-    num_kv_heads: int = 2
-    head_dim: int = 128
+    # Model architecture (auto-detected from model.config if set to 0)
+    num_layers: int = 0
+    num_attention_heads: int = 0
+    num_kv_heads: int = 0
+    head_dim: int = 0
 
     # Generation settings
     max_new_tokens: int = 256

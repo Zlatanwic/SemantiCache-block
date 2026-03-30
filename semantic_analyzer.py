@@ -31,8 +31,24 @@ class SemanticAnalyzer:
     def __init__(self, tokenizer: PreTrainedTokenizer):
         self.tokenizer = tokenizer
 
+        # Detect chat template format: ChatML (Qwen) vs Llama-style
+        self.chat_format = "chatml"
         self.im_start_id = tokenizer.convert_tokens_to_ids("<|im_start|>")
         self.im_end_id = tokenizer.convert_tokens_to_ids("<|im_end|>")
+
+        if self.im_start_id is None or self.im_end_id is None:
+            # Try Llama-style tokens
+            start_header = tokenizer.convert_tokens_to_ids("<|start_header_id|>")
+            end_header = tokenizer.convert_tokens_to_ids("<|end_header_id|>")
+            eot = tokenizer.convert_tokens_to_ids("<|eot_id|>")
+            if start_header is not None and eot is not None:
+                self.chat_format = "llama"
+                self.im_start_id = start_header
+                self.im_end_id = eot
+                self.llama_end_header_id = end_header
+            else:
+                self.im_start_id = -1
+                self.im_end_id = -1
 
         self.role_token_map: dict[str, list[int]] = {}
         for role_name in ["system", "user", "assistant"]:
@@ -46,9 +62,8 @@ class SemanticAnalyzer:
     def _build_token_features(self) -> None:
         """Precompute token-type features used by information-density scoring."""
         role_token_ids = [token_id for ids in self.role_token_map.values() for token_id in ids]
-        max_known_token_id = max(
-            [self.im_start_id, self.im_end_id, *self.tokenizer.all_special_ids, *role_token_ids, 0]
-        )
+        all_known_ids = [self.im_start_id, self.im_end_id, *self.tokenizer.all_special_ids, *role_token_ids, 0]
+        max_known_token_id = max(tid for tid in all_known_ids if tid is not None and tid >= 0)
         feature_size = max(
             int(getattr(self.tokenizer, "vocab_size", 0)),
             len(self.tokenizer),
@@ -220,14 +235,30 @@ class SemanticAnalyzer:
         return tags
 
     def _detect_role(self, ids: list[int], pos: int) -> str:
-        """Detect the role token sequence immediately after `<|im_start|>`."""
+        """Detect the role token sequence after a header-start token.
+
+        ChatML: <|im_start|>system\\n ...
+        Llama:  <|start_header_id|>system<|end_header_id|>\\n ...
+        """
+        if self.chat_format == "llama":
+            # Scan tokens between start_header and end_header
+            end = pos
+            while end < len(ids) and ids[end] != getattr(self, "llama_end_header_id", -1):
+                end += 1
+            span = ids[pos:end]
+            for role_name, role_ids in self.role_token_map.items():
+                if span == role_ids:
+                    return role_name
+            return "unknown"
+
+        # ChatML: role tokens immediately follow <|im_start|>
         for role_name, role_ids in self.role_token_map.items():
             if pos + len(role_ids) <= len(ids) and ids[pos : pos + len(role_ids)] == role_ids:
                 return role_name
         return "unknown"
 
     def _find_im_end(self, ids: list[int], start: int) -> Optional[int]:
-        """Find the next `<|im_end|>` token index."""
+        """Find the next end-of-turn token index (<|im_end|> or <|eot_id|>)."""
         for idx in range(start, len(ids)):
             if ids[idx] == self.im_end_id:
                 return idx

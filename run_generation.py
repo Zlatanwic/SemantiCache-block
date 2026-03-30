@@ -47,6 +47,22 @@ def _print_console_safe(text: str) -> None:
     print(safe_text)
 
 
+def _auto_detect_architecture(cfg: ModelConfig, model) -> None:
+    """Fill in architecture params from model.config if they are 0 (unset)."""
+    mc = model.config
+    if cfg.num_layers == 0:
+        cfg.num_layers = getattr(mc, "num_hidden_layers", 36)
+    if cfg.num_attention_heads == 0:
+        cfg.num_attention_heads = getattr(mc, "num_attention_heads", 16)
+    if cfg.num_kv_heads == 0:
+        cfg.num_kv_heads = getattr(mc, "num_key_value_heads", cfg.num_attention_heads)
+    if cfg.head_dim == 0:
+        cfg.head_dim = getattr(mc, "head_dim",
+                               getattr(mc, "hidden_size", 2048) // cfg.num_attention_heads)
+    print(f"Architecture: layers={cfg.num_layers}, attn_heads={cfg.num_attention_heads}, "
+          f"kv_heads={cfg.num_kv_heads}, head_dim={cfg.head_dim}")
+
+
 def load_model(cfg: ModelConfig):
     """Load model and tokenizer."""
     print(f"Loading model: {cfg.model_name}")
@@ -71,6 +87,7 @@ def load_model(cfg: ModelConfig):
 
     model = AutoModelForCausalLM.from_pretrained(model_dir, **kwargs)
     model.eval()
+    _auto_detect_architecture(cfg, model)
     print(f"Model loaded. Device: {model.device}")
     return model, tokenizer
 
