@@ -50,7 +50,7 @@ These results demonstrate that query-aware, multi-signal token scoring is a
 practical and effective strategy for memory-efficient long-context inference
 in retrieval-heavy workloads.
 \keywords{KV cache eviction \and Long-context inference \and Query-aware systems \and Memory-efficient serving}
-\end{abstract}
+\end {abstract}
 
 %% ================================================================
 \section{Introduction}
@@ -95,7 +95,7 @@ those most likely to carry the answer.
 
 This paper presents \textbf{SemantiCache}, a serving-time KV cache eviction
 policy designed for retrieval-intensive long-context workloads.
-SemantiCache makes four contributions:
+SemantiCache makes three contributions:
 
 \begin{enumerate}
 \item \textbf{Multi-signal scoring.}
@@ -403,8 +403,11 @@ per-model calibration is performed.
 
 \subsection{Benchmark}
 
-We use the RULER Needle-in-a-Haystack (NIAH)
-protocol~\cite{hsieh2024ruler}: randomized key-value needles (e.g.,
+We evaluate SemantiCache on the RULER Needle-in-a-Haystack benchmark,
+a controlled retrieval task designed to isolate eviction policy quality.
+
+\textbf{RULER Needle-in-a-Haystack (NIAH)}~\cite{hsieh2024ruler}:
+Randomized key-value needles (e.g.,
 ``One of the special magic numbers for Kate is: 24592'') are inserted at
 controlled depths into Paul Graham essay haystacks of approximately 1800
 target tokens.
@@ -413,7 +416,6 @@ or ${\sim}$3400 tokens (Llama).
 Scoring follows the RULER \texttt{string\_match\_all} metric: a run is
 correct if and only if all needle values appear as substrings in the
 model's output.
-
 The NIAH task is specifically designed to stress-test a model's ability to
 locate and retrieve a specific factual span from a long context---exactly
 the scenario where query-agnostic eviction policies fail.
@@ -450,10 +452,9 @@ though it disadvantages methods originally designed for per-head selection
 
 \subsection{Evaluation protocol}
 
-We conduct seven evaluation campaigns totaling ${\sim}$2750 runs:
+We conduct six evaluation campaigns totaling ${\sim}$1800 runs:
 main accuracy (900 runs, 6 policies $\times$ 3 budgets $\times$ 50 trials),
 budget sensitivity (1000 runs, 8-point grid),
-depth analysis (heatmap across policies/budgets),
 multi-needle retrieval (150 Qwen + 90 Llama runs, $k{\in}\{1,2,4\}$),
 ablation (350 runs, 7 variants),
 context scaling (150 runs, 1800--6000\,t),
@@ -483,27 +484,28 @@ removes distractor tokens, concentrating the model's attention on
 answer-critical spans identified by query-aware signals.
 
 \begin{table}[htbp]
-\caption{RULER NIAH retrieval accuracy (\%) across cache budgets on
-\texttt{Qwen2.5-3B-Instruct}.
+\caption{RULER NIAH retrieval accuracy (\%, 95\% confidence interval) across
+cache budgets on \texttt{Qwen2.5-3B-Instruct}.
 Each cell aggregates 50 runs (10 depths $\times$ 5 needles).
-Best per-column in \textbf{bold} (excluding full KV).}
+Best per-column in \textbf{bold} (excluding full KV).%
+$^\dagger$}%
 \label{tab:main}
 \centering
 \begin{tabular}{lcccc}
 \toprule
 Policy & $b{=}50\%$ & $b{=}30\%$ & $b{=}20\%$ & Avg \\
 \midrule
-Full KV (upper bound)                           & 58 & 58 & 58 & 58.0 \\
+Full KV (upper bound)                           & $58.0\pm14.1$ & $58.0\pm14.1$ & $58.0\pm14.1$ & 58.0 \\
 \midrule
-StreamingLLM~\cite{xiao2023streamingllm}\rlap{$^\text{a}$} & 28 & 20 & 10 & 19.3 \\
-H2O~\cite{zhang2023h2o}\rlap{$^\text{b}$}                  & 22 &  8 &  8 & 12.7 \\
-SnapKV~\cite{li2024snapkv}\rlap{$^\text{c}$}               & 60 & 42 & 30 & 44.0 \\
-KVzip~\cite{he2025kvzip}\rlap{$^\text{d}$}                 & 38 & 32 & 12 & 27.3 \\
-\textbf{SemantiCache (ours)}                    & \textbf{60} & \textbf{62} & \textbf{70} & \textbf{64.0} \\
+StreamingLLM~\cite{xiao2023streamingllm}\rlap{$^\text{a}$} & $28.0\pm12.8$ & $20.0\pm11.4$ & $10.0\pm8.6$ & 19.3 \\
+H2O~\cite{zhang2023h2o}\rlap{$^\text{b}$}                  & $22.0\pm11.8$ & $8.0\pm7.8$ & $8.0\pm7.8$ & 12.7 \\
+SnapKV~\cite{li2024snapkv}\rlap{$^\text{c}$}               & $60.0\pm14.0$ & $42.0\pm14.1$ & $30.0\pm13.1$ & 44.0 \\
+KVzip~\cite{he2025kvzip}\rlap{$^\text{d}$}                 & $38.0\pm13.9$ & $32.0\pm13.3$ & $12.0\pm9.3$ & 27.3 \\
+\textbf{SemantiCache (ours)}                    & $\mathbf{60.0\pm14.0}$ & $\mathbf{62.0\pm13.9}$ & $\mathbf{70.0\pm13.1}$ & \textbf{64.0} \\
 \bottomrule
-\multicolumn{5}{l}{\footnotesize $^\text{a}$ICLR 2024\quad $^\text{b}$NeurIPS 2023\quad $^\text{c}$ICML 2024\quad $^\text{d}$NeurIPS 2025}
 \end{tabular}
 \end{table}
+\noindent $^{^\dagger}$Full KV accuracy varies across tables because Table~\ref{tab:main} averages over 10 depths (including challenging mid-context positions where full KV drops to 0\%); Tables~\ref{tab:scaling} and~\ref{tab:multi-needle} use shallower depth ranges where full KV performs near ceiling.
 
 \subsection{Budget sensitivity}
 \label{sec:budget}
@@ -542,19 +544,19 @@ beyond 4000 tokens, indicating sub-linear scaling.
 \begin{table}[htbp]
 \caption{Context length scaling at $b{=}20\%$ on
 \texttt{Qwen2.5-3B-Instruct}.
-Accuracy (\%) on single-needle NIAH; 10 trials per cell.}
+Accuracy (\%, 95\% CI) on single-needle NIAH; 10 trials per cell.}
 \label{tab:scaling}
 \centering
 \begin{tabular}{lccc}
 \toprule
 Policy & 1800\,t & 4000\,t & 6000\,t \\
 \midrule
-Full KV (upper bound)        & 100 & 100 & 100 \\
+Full KV (upper bound)        & $100.0\pm0.0$ & $100.0\pm0.0$ & $100.0\pm0.0$ \\
 \midrule
-StreamingLLM                 &  30 &  10 &  10 \\
-H2O                          & 100 &  90 &  90 \\
-SnapKV                       & 100 & 100 & 100 \\
-\textbf{SemantiCache (ours)} & \textbf{100} & \textbf{100} & \textbf{100} \\
+StreamingLLM                 & $30.0$        & $10.0$        & $10.0$        \\
+H2O                          & $100.0\pm0.0$ & $90.0\pm22.6$ & $90.0\pm22.6$ \\
+SnapKV                       & $100.0\pm0.0$ & $100.0\pm0.0$ & $100.0\pm0.0$ \\
+\textbf{SemantiCache (ours)} & $\mathbf{100.0\pm0.0}$ & $\mathbf{100.0\pm0.0}$ & $\mathbf{100.0\pm0.0}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -600,14 +602,14 @@ Table~\ref{tab:multi-needle} reports results at $b{=}20\%$ with
 $k \in \{1, 2, 4\}$ (10 trials per cell).
 SemantiCache achieves 92.5\% at $k{=}4$, surpassing full KV (80\%) and
 SnapKV (70\%).
-Crucially, SemantiCache's accuracy \emph{increases} from $k{=}2$ to
-$k{=}4$: more needles produce stronger factual and query-relevance
+Moreover, SemantiCache's accuracy increases from $k{=}2$ (85\%) to
+$k{=}4$ (92.5\%): more needles produce stronger factual and query-relevance
 signals, reinforcing retention of all answer-bearing spans.
 
 \begin{table}[htbp]
-\caption{Multi-needle NIAH accuracy (\%) at $b{=}20\%$ on
+\caption{Multi-needle NIAH accuracy (\%, 95\% CI, 10 trials) at $b{=}20\%$ on
 \texttt{Qwen2.5-3B-Instruct}.
-$k$ needles inserted at evenly spaced depths; 10 trials per cell.
+$k$ needles inserted at evenly spaced depths.
 Best per-column in \textbf{bold} (excluding full KV).}
 \label{tab:multi-needle}
 \centering
@@ -655,15 +657,15 @@ Each variant disables one component.
 \toprule
 Variant & Acc (\%) & $\Delta$ \\
 \midrule
-Full model (all components)                    & 70 & --- \\
+Full model (all components)                    & $70.0\pm13.1$ & --- \\
 \midrule
-$-$ Attention ($\alpha{=}0, \gamma{=}0$)       & 70 & $\pm$0 \\
-$-$ Info density ($\beta{=}0$)                  & 68 & $-$2 \\
-$-$ Query relevance                             & 72 & $+$2 \\
-$-$ Factual bonus                               & 66 & $-$4 \\
-$-$ Role pinning                                & 68 & $-$2 \\
+$-$ Attention ($\alpha{=}0, \gamma{=}0$)       & $70.0\pm13.1$ & $\pm$0 \\
+$-$ Info density ($\beta{=}0$)                  & $68.0\pm13.3$ & $-$2 \\
+$-$ Query relevance                             & $72.0\pm12.8$ & $+$2 \\
+$-$ Factual bonus                               & $66.0\pm13.5$ & $-$4 \\
+$-$ Role pinning                                & $68.0\pm13.3$ & $-$2 \\
 \midrule
-Attention only (no semantic signals)            &  8 & $-$62 \\
+Attention only (no semantic signals)            & $8.0\pm7.8$ & $-$62 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -675,30 +677,30 @@ Table~\ref{tab:overhead} reports per-policy latency at $b{=}20\%$.
 SemantiCache's per-step cost (8.86\,ms) is ${\sim}4{\times}$ that of
 attention-only policies but accounts for only 3.9\% of decode time.
 KVzip incurs the highest one-time cost (0.92\,s snapshot).
-The tiered variant adds quantization overhead (3.00\,s total decode),
-an optimization target for future GPU-side dequantization.
+This throughput gap (3.4 vs.\ 6.5\,tok/s for full KV) is a limitation
+for latency-sensitive serving scenarios; three mitigation paths are noted in
+\S\ref{sec:discussion}.
 
 \begin{table}[htbp]
 \caption{Systems overhead at $b{=}20\%$ cache budget. Averaged over 3 runs
 on \texttt{Qwen2.5-3B-Instruct} (4-bit NF4, 48\,GB VRAM).
-Snap\,=\,one-time snapshot; Evict\,=\,mean per-step eviction latency.}
+Snap\,=\,one-time snapshot; Evict\,=\,mean per-step eviction latency.
+Values without $\pm$ have high variance across runs (relative error $>100\%$).}
 \label{tab:overhead}
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3.5pt}
 \begin{tabular}{lccccc}
 \toprule
-Policy & Prefill & Snap & Evict/step & Decode & tok/s \\
-       & (s)     & (s)  & (ms)       & (s)    &       \\
+Policy & Prefill (s) & Snap (s) & Evict/step (ms) & Decode (s) & tok/s \\
 \midrule
-Full KV                & 0.53 & ---   &  0.15 & 0.46 &  6.5 \\
+Full KV                & $0.53\pm0.67$ & ---     & $0.15\pm0.06$ & $0.46\pm0.17$ & $6.5\pm4.6$ \\
 \midrule
-StreamingLLM           & 0.37 & ---   &  2.52 & 0.32 &  5.2 \\
-H2O                    & 0.38 & ---   &  2.09 & 0.43 &  7.4 \\
-SnapKV                 & 0.38 & 0.07  &  0.97 & 0.45 &  7.3 \\
-KVzip                  & 0.38 & 0.92  &  0.96 & 1.20 &  3.8 \\
-\textbf{Ours}          & 0.38 & ---   &  8.86 & 1.37 &  3.4 \\
-\textbf{Ours (tiered)} & 0.38 & ---   &  7.58 & 3.00 &  4.7 \\
+StreamingLLM           & $0.37\pm0.00$ & ---     & $2.52$        & $0.32\pm0.18$ & $5.2\pm2.6$ \\
+H2O                    & $0.38\pm0.01$ & ---     & $2.09$        & $0.43\pm0.03$ & $7.4\pm0.2$ \\
+SnapKV                 & $0.38\pm0.01$ & $0.07$  & $0.97\pm0.05$ & $0.45\pm0.11$ & $7.3\pm1.0$ \\
+KVzip                  & $0.38\pm0.00$ & $0.92$  & $0.96\pm0.01$ & $1.20\pm0.00$ & $3.8\pm0.0$ \\
+\textbf{SemantiCache}  & $0.38\pm0.01$ & ---     & $8.86\pm0.51$ & $1.37\pm0.01$ & $3.4\pm0.0$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -733,9 +735,9 @@ Same haystack length (${\sim}$1800 target tokens) as the Qwen evaluation.}
 \toprule
 Policy & Acc (\%) & tok/s \\
 \midrule
-Full KV       & 90 & 10.0 \\
-SnapKV        & 94 & 10.0 \\
-SemantiCache  & 84 &  7.5 \\
+Full KV       & $90.0$ & $10.0$ \\
+SnapKV        & $94.0$ & $10.0$ \\
+SemantiCache  & $84.0$ & $7.5$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -773,9 +775,8 @@ the needle block from all haystack blocks.}
 \paragraph{Overhead--accuracy trade-off.}
 SemantiCache's per-step eviction cost (8.86\,ms) reduces throughput
 to 3.4\,tok/s---roughly half the full-KV baseline.
-This is acceptable for accuracy-critical workloads but may be
-significant in latency-sensitive scenarios.
-Three optimization paths can close this gap:
+This throughput gap is a limitation for latency-sensitive serving;
+three optimization paths can close it:
 (1)~incremental scoring (content signals are static after prefill),
 (2)~amortized eviction (every $n$ steps instead of every step), and
 (3)~fused CUDA kernels for block selection.
@@ -786,8 +787,8 @@ The overhead scales sub-linearly with context length (Figure~\ref{fig:scaling}):
 \paragraph{Limitations.}
 This study evaluates two 3B models on one benchmark family (RULER NIAH)
 with contexts up to ${\sim}$10K tokens.
-Extending to longer contexts, additional benchmarks
-(LongBench~\cite{bai2023longbench}, NoLiMa~\cite{modarressi2025nolima}),
+Extending to longer contexts, diverse benchmarks
+(e.g., LongBench, NoLiMa),
 larger models, and per-layer retention are important future directions.
 The shared-index constraint (same tokens retained across all layers)
 disadvantages methods designed for per-head selection and represents

@@ -1,0 +1,2852 @@
+[
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Alice",
+    "answers": [
+      "39256"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.3154327869415283,
+    "tokens_per_second": 0.8637694047002825,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "65302"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.5932207107543945,
+    "tokens_per_second": 1.255318856012733,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Charlie",
+    "answers": [
+      "40495"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6792004108428955,
+    "tokens_per_second": 1.1910430625705213,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "95181",
+    "answers": [
+      "95181"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 1.8677754402160645,
+    "tokens_per_second": 3.212377607506135,
+    "retained_tokens": 3722,
+    "total_evicted": 0,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Noah",
+    "answers": [
+      "87236"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.715862512588501,
+    "tokens_per_second": 1.7483918309248951,
+    "retained_tokens": 3719,
+    "total_evicted": 0,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Alice",
+    "answers": [
+      "65392"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6927542686462402,
+    "tokens_per_second": 1.1815063987990861,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "54118",
+    "answers": [
+      "54118"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 1.8642354011535645,
+    "tokens_per_second": 3.2184776645091486,
+    "retained_tokens": 3722,
+    "total_evicted": 0,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Mia",
+    "answers": [
+      "57052"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7269275188446045,
+    "tokens_per_second": 1.7371892955919428,
+    "retained_tokens": 3719,
+    "total_evicted": 0,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Bob",
+    "answers": [
+      "70217"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6884231567382812,
+    "tokens_per_second": 1.1845371771988884,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "82357"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.681868076324463,
+    "tokens_per_second": 1.1891539105556836,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "19116"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.684293270111084,
+    "tokens_per_second": 1.1874416620260522,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 11
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Jack",
+    "answers": [
+      "40512"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.675266981124878,
+    "tokens_per_second": 1.1938395626093437,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 12
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Iris",
+    "answers": [
+      "93320"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.712658405303955,
+    "tokens_per_second": 1.7516627896778827,
+    "retained_tokens": 3719,
+    "total_evicted": 0,
+    "trial": 13
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "37460"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6782779693603516,
+    "tokens_per_second": 1.1916977023551514,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 14
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "42087"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6773412227630615,
+    "tokens_per_second": 1.192363231081525,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 15
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Olive",
+    "answers": [
+      "93886"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7220125198364258,
+    "tokens_per_second": 1.7421476124255881,
+    "retained_tokens": 3719,
+    "total_evicted": 0,
+    "trial": 16
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Kate",
+    "answers": [
+      "17331"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.675321340560913,
+    "tokens_per_second": 1.1938008258943216,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 17
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Bob",
+    "answers": [
+      "45093"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6759274005889893,
+    "tokens_per_second": 1.1933691156890915,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 18
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "95909"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.696512222290039,
+    "tokens_per_second": 1.178889237414569,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 19
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Olive",
+    "answers": [
+      "44718"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7464823722839355,
+    "tokens_per_second": 1.717738494020295,
+    "retained_tokens": 3719,
+    "total_evicted": 0,
+    "trial": 20
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Henry",
+    "answers": [
+      "86622"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.671844720840454,
+    "tokens_per_second": 1.1962833480100823,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 21
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Leo",
+    "answers": [
+      "28131"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6793591976165771,
+    "tokens_per_second": 1.1909304470648632,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 22
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "16175",
+    "answers": [
+      "16175"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 1.8449385166168213,
+    "tokens_per_second": 3.2521408957316225,
+    "retained_tokens": 3722,
+    "total_evicted": 0,
+    "trial": 23
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "99192"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6748559474945068,
+    "tokens_per_second": 1.1941325479315943,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 24
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Mia",
+    "answers": [
+      "88104"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7360846996307373,
+    "tokens_per_second": 1.7280262884858646,
+    "retained_tokens": 3719,
+    "total_evicted": 0,
+    "trial": 25
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Iris",
+    "answers": [
+      "11504"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7063210010528564,
+    "tokens_per_second": 1.7581685967346712,
+    "retained_tokens": 3719,
+    "total_evicted": 0,
+    "trial": 26
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Kate",
+    "answers": [
+      "48469"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6861958503723145,
+    "tokens_per_second": 1.1861018395688716,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 27
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "44522"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6691350936889648,
+    "tokens_per_second": 1.1982253608842341,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 28
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "91959"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6719672679901123,
+    "tokens_per_second": 1.1961956662011803,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 29
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "full",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "59009"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6681101322174072,
+    "tokens_per_second": 1.1989616041366609,
+    "retained_tokens": 3718,
+    "total_evicted": 0,
+    "trial": 30
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Alice",
+    "answers": [
+      "39256"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5445268154144287,
+    "tokens_per_second": 0.7860007557728405,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "65302"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5054447650909424,
+    "tokens_per_second": 0.7982614615442956,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Charlie",
+    "answers": [
+      "40495"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.505535840988159,
+    "tokens_per_second": 0.7982324448454983,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "95181",
+    "answers": [
+      "95181"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 2.703662633895874,
+    "tokens_per_second": 2.2192117924691774,
+    "retained_tokens": 743,
+    "total_evicted": 2979,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Noah",
+    "answers": [
+      "87236"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5662803649902344,
+    "tokens_per_second": 1.1690071127561372,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Alice",
+    "answers": [
+      "65392"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.506671905517578,
+    "tokens_per_second": 0.7978706729020604,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "54118",
+    "answers": [
+      "54118"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 2.7085323333740234,
+    "tokens_per_second": 2.2152218476660344,
+    "retained_tokens": 743,
+    "total_evicted": 2979,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Mia",
+    "answers": [
+      "57052"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5537424087524414,
+    "tokens_per_second": 1.1747465170011273,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Bob",
+    "answers": [
+      "70217"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5229525566101074,
+    "tokens_per_second": 0.7927220013551275,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "82357"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.499738931655884,
+    "tokens_per_second": 0.8000835505950834,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "19116"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5299720764160156,
+    "tokens_per_second": 0.7905225589814495,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 11
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Jack",
+    "answers": [
+      "40512"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.438488006591797,
+    "tokens_per_second": 0.8201803718507278,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 12
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Iris",
+    "answers": [
+      "93320"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.58453106880188,
+    "tokens_per_second": 1.1607521519912394,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 13
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "37460"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5421082973480225,
+    "tokens_per_second": 0.7867485433592422,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 14
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "42087"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.413757562637329,
+    "tokens_per_second": 0.8285836286784131,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 15
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Olive",
+    "answers": [
+      "93886"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.574296236038208,
+    "tokens_per_second": 1.165367045953088,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 16
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Kate",
+    "answers": [
+      "17331"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.512573719024658,
+    "tokens_per_second": 0.7959965452382304,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 17
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Bob",
+    "answers": [
+      "45093"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.511331558227539,
+    "tokens_per_second": 0.7963902629454355,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 18
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "95909"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5227854251861572,
+    "tokens_per_second": 0.7927745182103306,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 19
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Olive",
+    "answers": [
+      "44718"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.4688825607299805,
+    "tokens_per_second": 1.2151246267108722,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 20
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Henry",
+    "answers": [
+      "86622"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.514258861541748,
+    "tokens_per_second": 0.7954630410544109,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 21
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Leo",
+    "answers": [
+      "28131"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5194175243377686,
+    "tokens_per_second": 0.7938342814082402,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 22
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "16175",
+    "answers": [
+      "16175"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 2.727126121520996,
+    "tokens_per_second": 2.2001182683306295,
+    "retained_tokens": 743,
+    "total_evicted": 2979,
+    "trial": 23
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "99192"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.419114351272583,
+    "tokens_per_second": 0.8267488467206577,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 24
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Mia",
+    "answers": [
+      "88104"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.575479745864868,
+    "tokens_per_second": 1.1648315250068388,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 25
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Iris",
+    "answers": [
+      "11504"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5745131969451904,
+    "tokens_per_second": 1.1652688374484443,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 26
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Kate",
+    "answers": [
+      "48469"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.4160916805267334,
+    "tokens_per_second": 0.8277831574520297,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 27
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "44522"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5306358337402344,
+    "tokens_per_second": 0.7903152138030212,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 28
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "91959"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.52048397064209,
+    "tokens_per_second": 0.7934984008212133,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 29
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "semantic",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "59009"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 2.5208911895751953,
+    "tokens_per_second": 0.7933702209245403,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 30
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Alice",
+    "answers": [
+      "39256"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6934311389923096,
+    "tokens_per_second": 1.1810341465612335,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "65302"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6738770008087158,
+    "tokens_per_second": 1.1948309218859696,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Charlie",
+    "answers": [
+      "40495"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6768293380737305,
+    "tokens_per_second": 1.1927272230920734,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "95181",
+    "answers": [
+      "95181"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 1.87916898727417,
+    "tokens_per_second": 3.1929007133644243,
+    "retained_tokens": 743,
+    "total_evicted": 2979,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Noah",
+    "answers": [
+      "87236"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7242250442504883,
+    "tokens_per_second": 1.7399120897841294,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Alice",
+    "answers": [
+      "65392"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6797435283660889,
+    "tokens_per_second": 1.1906579583285726,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "54118",
+    "answers": [
+      "54118"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 1.8699679374694824,
+    "tokens_per_second": 3.208611163739763,
+    "retained_tokens": 743,
+    "total_evicted": 2979,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Mia",
+    "answers": [
+      "57052"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.730600118637085,
+    "tokens_per_second": 1.7335027125518845,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Bob",
+    "answers": [
+      "70217"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.587235689163208,
+    "tokens_per_second": 1.2600523121140261,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "82357"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7010879516601562,
+    "tokens_per_second": 1.17571816204337,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "19116"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6888201236724854,
+    "tokens_per_second": 1.184258744886831,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 11
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Jack",
+    "answers": [
+      "40512"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6712062358856201,
+    "tokens_per_second": 1.196740388501568,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 12
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Iris",
+    "answers": [
+      "93320"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.723444938659668,
+    "tokens_per_second": 1.7406996491185356,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 13
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "37460"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6636557579040527,
+    "tokens_per_second": 1.2021717777238294,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 14
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "42087"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6765656471252441,
+    "tokens_per_second": 1.1929148157302034,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 15
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Olive",
+    "answers": [
+      "93886"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7144784927368164,
+    "tokens_per_second": 1.749803227459045,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 16
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Kate",
+    "answers": [
+      "17331"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6822397708892822,
+    "tokens_per_second": 1.1888911643925408,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 17
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Bob",
+    "answers": [
+      "45093"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.681471824645996,
+    "tokens_per_second": 1.1894341437573979,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 18
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "95909"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6686162948608398,
+    "tokens_per_second": 1.1985979078352444,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 19
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Olive",
+    "answers": [
+      "44718"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.725895881652832,
+    "tokens_per_second": 1.73822768331019,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 20
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Henry",
+    "answers": [
+      "86622"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6809022426605225,
+    "tokens_per_second": 1.1898371893623103,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 21
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Leo",
+    "answers": [
+      "28131"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.669083595275879,
+    "tokens_per_second": 1.1982623312940923,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 22
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "16175",
+    "answers": [
+      "16175"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 1.860466718673706,
+    "tokens_per_second": 3.22499722235144,
+    "retained_tokens": 743,
+    "total_evicted": 2979,
+    "trial": 23
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "99192"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6793525218963623,
+    "tokens_per_second": 1.190935181221841,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 24
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Mia",
+    "answers": [
+      "88104"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.735372543334961,
+    "tokens_per_second": 1.7287354300505036,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 25
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Iris",
+    "answers": [
+      "11504"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7366437911987305,
+    "tokens_per_second": 1.7274699712191577,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 26
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Kate",
+    "answers": [
+      "48469"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6907222270965576,
+    "tokens_per_second": 1.1829264251375926,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 27
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "44522"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6801950931549072,
+    "tokens_per_second": 1.1903379602451964,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 28
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "91959"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6973683834075928,
+    "tokens_per_second": 1.1782945997761851,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 29
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "59009"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.681291103363037,
+    "tokens_per_second": 1.1895619955398913,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 30
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Alice",
+    "answers": [
+      "39256"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.679090976715088,
+    "tokens_per_second": 1.1911206883576533,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "65302"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6776504516601562,
+    "tokens_per_second": 1.1921434515878178,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Charlie",
+    "answers": [
+      "40495"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7065441608428955,
+    "tokens_per_second": 1.1719591241120657,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "9",
+    "answers": [
+      "95181"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6830823421478271,
+    "tokens_per_second": 1.1882959911799358,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "No 8",
+    "answers": [
+      "87236"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.764768362045288,
+    "tokens_per_second": 2.2665864178141644,
+    "retained_tokens": 743,
+    "total_evicted": 2977,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Alice",
+    "answers": [
+      "65392"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.665919303894043,
+    "tokens_per_second": 1.2005383425986194,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "5",
+    "answers": [
+      "54118"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7017874717712402,
+    "tokens_per_second": 1.175234882836678,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "MegaDawg",
+    "answers": [
+      "57052"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.8642630577087402,
+    "tokens_per_second": 3.2184299180257634,
+    "retained_tokens": 743,
+    "total_evicted": 2979,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Bob",
+    "answers": [
+      "70217"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6775460243225098,
+    "tokens_per_second": 1.1922176625870613,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "82357"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6720702648162842,
+    "tokens_per_second": 1.1961219824812486,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "19116"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6711339950561523,
+    "tokens_per_second": 1.1967921219463897,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 11
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Jack",
+    "answers": [
+      "40512"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6649713516235352,
+    "tokens_per_second": 1.2012218697035082,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 12
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Igor",
+    "answers": [
+      "93320"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7176520824432373,
+    "tokens_per_second": 1.746570234254142,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 13
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frankly",
+    "answers": [
+      "37460"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7256271839141846,
+    "tokens_per_second": 1.738498343075007,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 14
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frankenstein",
+    "answers": [
+      "42087"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7085072994232178,
+    "tokens_per_second": 1.7559187490816004,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 15
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Oscar",
+    "answers": [
+      "93886"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7131173610687256,
+    "tokens_per_second": 1.7511935073312517,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 16
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Kate",
+    "answers": [
+      "17331"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6719601154327393,
+    "tokens_per_second": 1.1962007834632808,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 17
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Bob",
+    "answers": [
+      "45093"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.67195725440979,
+    "tokens_per_second": 1.19620283038038,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 18
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "95909"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6747570037841797,
+    "tokens_per_second": 1.1942030966169546,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 19
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Oscar",
+    "answers": [
+      "44718"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.733731746673584,
+    "tokens_per_second": 1.7303714982181848,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 20
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Henry",
+    "answers": [
+      "86622"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.670802116394043,
+    "tokens_per_second": 1.197029845949943,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 21
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Leo",
+    "answers": [
+      "28131"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6995148658752441,
+    "tokens_per_second": 1.1768064170300783,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 22
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "1",
+    "answers": [
+      "16175"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6743812561035156,
+    "tokens_per_second": 1.1944710875790845,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 23
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frankie",
+    "answers": [
+      "99192"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7153668403625488,
+    "tokens_per_second": 1.748897046048727,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 24
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "M",
+    "answers": [
+      "88104"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6802217960357666,
+    "tokens_per_second": 1.1903190428303587,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 25
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Irenaeus",
+    "answers": [
+      "11504"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.8097844123840332,
+    "tokens_per_second": 2.762760009306019,
+    "retained_tokens": 743,
+    "total_evicted": 2978,
+    "trial": 26
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Kate",
+    "answers": [
+      "48469"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6793203353881836,
+    "tokens_per_second": 1.1909580071497732,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 27
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frankenstein",
+    "answers": [
+      "44522"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7379555702209473,
+    "tokens_per_second": 1.7261661065470209,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 28
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "91959"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.667764663696289,
+    "tokens_per_second": 1.199209962613894,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 29
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "streaming",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "59009"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6690235137939453,
+    "tokens_per_second": 1.1983054663224573,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 30
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Alice",
+    "answers": [
+      "39256"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6742894649505615,
+    "tokens_per_second": 1.1945365731958757,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "65302"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6674416065216064,
+    "tokens_per_second": 1.1994423026136023,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Charlie",
+    "answers": [
+      "40495"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6657445430755615,
+    "tokens_per_second": 1.2006642965236933,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "95181",
+    "answers": [
+      "95181"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 1.8437411785125732,
+    "tokens_per_second": 3.2542528582240933,
+    "retained_tokens": 743,
+    "total_evicted": 2979,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Noah",
+    "answers": [
+      "87236"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7108242511749268,
+    "tokens_per_second": 1.753540726313482,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Alice",
+    "answers": [
+      "65392"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6746854782104492,
+    "tokens_per_second": 1.1942541008578986,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "54118",
+    "answers": [
+      "54118"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 1.8590149879455566,
+    "tokens_per_second": 3.227515667655132,
+    "retained_tokens": 743,
+    "total_evicted": 2979,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Mia",
+    "answers": [
+      "57052"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7222445011138916,
+    "tokens_per_second": 1.741912950257468,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Bob",
+    "answers": [
+      "70217"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6688644886016846,
+    "tokens_per_second": 1.198419652200622,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "82357"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6732182502746582,
+    "tokens_per_second": 1.1953013300397008,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "19116"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6694815158843994,
+    "tokens_per_second": 1.1979767256904967,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 11
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Jack",
+    "answers": [
+      "40512"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6726062297821045,
+    "tokens_per_second": 1.195738700710535,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 12
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Iris",
+    "answers": [
+      "93320"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7226109504699707,
+    "tokens_per_second": 1.7415423948057025,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 13
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "37460"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6692321300506592,
+    "tokens_per_second": 1.198155705245922,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 14
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "42087"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6733834743499756,
+    "tokens_per_second": 1.1951833101357108,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 15
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Olive",
+    "answers": [
+      "93886"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7227356433868408,
+    "tokens_per_second": 1.7414163406418526,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 16
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Kate",
+    "answers": [
+      "17331"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.670471429824829,
+    "tokens_per_second": 1.1972668100104689,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 17
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Bob",
+    "answers": [
+      "45093"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6764953136444092,
+    "tokens_per_second": 1.192964861710438,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 18
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "95909"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7012817859649658,
+    "tokens_per_second": 1.1755842074483867,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 19
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Olive",
+    "answers": [
+      "44718"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7134475708007812,
+    "tokens_per_second": 1.7508560233319233,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 20
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Henry",
+    "answers": [
+      "86622"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6777889728546143,
+    "tokens_per_second": 1.192045026137686,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 21
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Leo",
+    "answers": [
+      "28131"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6632423400878906,
+    "tokens_per_second": 1.2024705912033926,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 22
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "16175",
+    "answers": [
+      "16175"
+    ],
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 1.8601868152618408,
+    "tokens_per_second": 3.2254824895936256,
+    "retained_tokens": 743,
+    "total_evicted": 2979,
+    "trial": 23
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "99192"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6735506057739258,
+    "tokens_per_second": 1.1950639515170856,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 24
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Mia",
+    "answers": [
+      "88104"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.7165567874908447,
+    "tokens_per_second": 1.7476846800886863,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 25
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Iris",
+    "answers": [
+      "11504"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.729041337966919,
+    "tokens_per_second": 1.735065515280004,
+    "retained_tokens": 743,
+    "total_evicted": 2976,
+    "trial": 26
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Kate",
+    "answers": [
+      "48469"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6723217964172363,
+    "tokens_per_second": 1.1959420754335546,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 27
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Frank",
+    "answers": [
+      "44522"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6657192707061768,
+    "tokens_per_second": 1.200682513057621,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 28
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "David",
+    "answers": [
+      "91959"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.6627237796783447,
+    "tokens_per_second": 1.2028456105841594,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 29
+  },
+  {
+    "benchmark": "ruler_vt",
+    "task": "vt",
+    "policy": "h2o",
+    "budget": 0.2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3718,
+    "output_text": "Grace",
+    "answers": [
+      "59009"
+    ],
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 1.678011417388916,
+    "tokens_per_second": 1.1918870034341704,
+    "retained_tokens": 743,
+    "total_evicted": 2975,
+    "trial": 30
+  }
+]

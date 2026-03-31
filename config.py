@@ -22,6 +22,7 @@ class ModelConfig:
     num_attention_heads: int = 0
     num_kv_heads: int = 0
     head_dim: int = 0
+    cache_dir: str | None = None
 
     # Generation settings
     max_new_tokens: int = 256

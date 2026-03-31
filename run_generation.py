@@ -66,7 +66,17 @@ def _auto_detect_architecture(cfg: ModelConfig, model) -> None:
 def load_model(cfg: ModelConfig):
     """Load model and tokenizer."""
     print(f"Loading model: {cfg.model_name}")
-    model_dir = snapshot_download(cfg.model_name)
+
+    # Use local cache on data disk if available
+    cache_dir = cfg.cache_dir
+    if cache_dir is None:
+        # Check data disk first
+        data_disk_cache = "/root/autodl-tmp/llama8b_cache"
+        import os
+        if "Llama-3.1-8B" in cfg.model_name and os.path.isdir(data_disk_cache):
+            cache_dir = data_disk_cache
+
+    model_dir = snapshot_download(cfg.model_name, cache_dir=cache_dir)
     tokenizer = AutoTokenizer.from_pretrained(model_dir)
 
     kwargs = {
