@@ -1,0 +1,28 @@
+[
+  {
+    "case_name": "language",
+    "policy": "tiered_semantic",
+    "budget": 0.3,
+    "hot_ratio": 0.7,
+    "warm_top_k": 8,
+    "follow_token_bias": 20.0,
+    "max_new_tokens": 4,
+    "stop_when_output_contains": [
+      "Rust"
+    ],
+    "question": "Which programming language is the kernel module implemented in? Answer with only the language.",
+    "answer_keywords": [
+      "Rust"
+    ],
+    "output_text": "Rust",
+    "correct": true,
+    "generated_tokens": 2,
+    "elapsed_time": 0.9313602447509766,
+    "initial_seq_len": 114,
+    "current_cache_len": 34,
+    "hot_cache_len": 6,
+    "warm_cache_len": 28,
+    "promotion_steps": 1,
+    "peak_promoted_warm_count": 8
+  }
+]

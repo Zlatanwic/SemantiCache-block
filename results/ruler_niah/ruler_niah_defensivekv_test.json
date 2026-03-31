@@ -1,0 +1,22 @@
+[
+  {
+    "benchmark": "ruler_niah",
+    "policy": "defensivekv",
+    "budget": 0.3,
+    "target_tokens": 1024,
+    "actual_prompt_tokens": 1757,
+    "depth": 0.0,
+    "needle_key": "Kate",
+    "needle_value": "24592",
+    "needle_type": "numbers",
+    "output_text": "Based on the only one special magic number mentioned in the special magic numbers for Kate has only mentions one special magic numbers mentioned in the in the in the (1",
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 8.196762561798096,
+    "tokens_per_second": 3.9039803530651827,
+    "retained_tokens": 527,
+    "initial_seq_len": 1757,
+    "total_evicted": 1261,
+    "needle_index": 1
+  }
+]

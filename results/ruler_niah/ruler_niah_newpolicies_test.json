@@ -1,0 +1,42 @@
+[
+  {
+    "benchmark": "ruler_niah",
+    "policy": "snapkv",
+    "budget": 0.3,
+    "target_tokens": 1024,
+    "actual_prompt_tokens": 1757,
+    "depth": 0.0,
+    "needle_key": "Kate",
+    "needle_value": "24592",
+    "needle_type": "numbers",
+    "output_text": "Based on the provided text, there is only one special magic number for Kate mentioned:\n\n24592",
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 5.58139967918396,
+    "tokens_per_second": 4.120830136171643,
+    "retained_tokens": 527,
+    "initial_seq_len": 1757,
+    "total_evicted": 1251,
+    "needle_index": 1
+  },
+  {
+    "benchmark": "ruler_niah",
+    "policy": "streaming",
+    "budget": 0.3,
+    "target_tokens": 1024,
+    "actual_prompt_tokens": 1757,
+    "depth": 0.0,
+    "needle_key": "Kate",
+    "needle_value": "24592",
+    "needle_type": "numbers",
+    "output_text": "Based on the provided text, there is only one special magic number mentioned for Kate:\n\n123\n\nThe text states: \"Several people have told me they",
+    "score": 0.0,
+    "correct": false,
+    "elapsed_time": 9.870659112930298,
+    "tokens_per_second": 3.2419314286804677,
+    "retained_tokens": 527,
+    "initial_seq_len": 1757,
+    "total_evicted": 1261,
+    "needle_index": 1
+  }
+]

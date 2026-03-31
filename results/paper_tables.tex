@@ -1,0 +1,115 @@
+% ===================================================================
+% Table 1: Main Results — RULER NIAH Retrieval Accuracy
+% ===================================================================
+
+\begin{table}[t]
+\caption{RULER NIAH retrieval accuracy (\%) across cache budgets.
+Each cell aggregates 50 runs (10 depths $\times$ 5 needles) on
+\texttt{Qwen2.5-3B-Instruct} with 1800 target haystack tokens.
+Best per-column in \textbf{bold} (excluding full KV).}
+\label{tab:main}
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Policy & $b{=}50\%$ & $b{=}30\%$ & $b{=}20\%$ & Avg \\
+\midrule
+Full KV (upper bound)          & 58 & 58 & 58 & 58.0 \\
+\midrule
+StreamingLLM~\cite{xiao2023streamingllm}  & 28 & 20 & 10 & 19.3 \\
+H2O~\cite{zhang2023h2o}                   & 22 &  8 &  8 & 12.7 \\
+SnapKV~\cite{li2024snapkv}                & 60 & 42 & 30 & 44.0 \\
+KVzip~\cite{he2025kvzip}                  & 38 & 32 & 12 & 27.3 \\
+\textbf{SemantiCache (ours)}              & \textbf{60} & \textbf{62} & \textbf{70} & \textbf{64.0} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% ===================================================================
+% Table 2: Ablation Study
+% ===================================================================
+
+\begin{table}[t]
+\caption{Ablation study at $b{=}20\%$ cache budget. Each variant
+disables one component of SemantiCache. 50 runs per variant
+(10 depths $\times$ 5 needles).}
+\label{tab:ablation}
+\centering
+\begin{tabular}{lcc}
+\toprule
+Variant & Acc (\%) & $\Delta$ \\
+\midrule
+Full model (all components)     & 70 & --- \\
+\midrule
+$-$ Attention ($\alpha{=}0, \gamma{=}0$)       & 70 & $\pm$0 \\
+$-$ Info density ($\beta{=}0$)                  & 68 & $-$2 \\
+$-$ Query relevance                             & 72 & $+$2 \\
+$-$ Factual bonus                               & 66 & $-$4 \\
+$-$ Role pinning                                & 68 & $-$2 \\
+\midrule
+Attention only (no semantic)    &  8 & $-$62 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% ===================================================================
+% Table 3: Budget Sensitivity (compact)
+% ===================================================================
+
+\begin{table}[t]
+\caption{Budget sensitivity on RULER NIAH (accuracy \%).
+25 runs per cell (5 depths $\times$ 5 needles).
+Best per-column in \textbf{bold} (excluding full KV).}
+\label{tab:budget}
+\centering
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lcccccccc}
+\toprule
+Policy & 10\% & 15\% & 20\% & 25\% & 30\% & 35\% & 40\% & 50\% \\
+\midrule
+Full KV                       & 68 & 68 & 68 & 68 & 68 & 68 & 68 & 68 \\
+StreamingLLM                  & 16 & 16 & 16 & 16 & 32 & 36 & 40 & 36 \\
+SnapKV                        & 40 &  4 & 48 & 52 & 68 & 68 & 68 & 68 \\
+KVzip                         &  4 &  4 & 12 & 28 & 32 & 44 & 44 & 64 \\
+\textbf{SemantiCache}         & \textbf{80} & \textbf{76} & \textbf{76} & \textbf{72} & \textbf{64} & \textbf{64} & \textbf{64} & 64 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% ===================================================================
+% Figure: Budget Sensitivity Curve
+% ===================================================================
+
+% \begin{figure}[t]
+% \centering
+% \includegraphics[width=\columnwidth]{results/budget_sensitivity/budget_curve.png}
+% \caption{Budget sensitivity on RULER NIAH. SemantiCache is the only
+% policy whose accuracy \emph{increases} as the budget shrinks, reaching
+% 80\% at just 10\% cache budget --- surpassing even the full KV upper
+% bound (68\%). Query-agnostic methods (KVzip, StreamingLLM) degrade
+% sharply below 25\%.}
+% \label{fig:budget}
+% \end{figure}
+
+
+% ===================================================================
+% BibTeX entries to add to systor_short_paper_refs.bib
+% ===================================================================
+
+% @inproceedings{li2024snapkv,
+%   author = {Li, Yuhong and Huang, Yingbing and Yang, Bowen and Venkitesh, Bharat and Locatelli, Acyr and Ye, Hanchen and Cai, Tianle and Lewis, Patrick and Chen, Deming},
+%   title = {{SnapKV}: {LLM} Knows What You Are Looking for Before Generation},
+%   booktitle = {Proc. ICML},
+%   year = {2024},
+%   url = {https://arxiv.org/abs/2404.14469}
+% }
+%
+% @inproceedings{he2025kvzip,
+%   author = {He, Yuxin and Li, Yuhong and Chen, Deming},
+%   title = {{KVzip}: Query-Agnostic {KV} Cache Compression with Context Reconstruction},
+%   booktitle = {Proc. NeurIPS},
+%   year = {2025},
+%   url = {https://arxiv.org/abs/2505.23416}
+% }

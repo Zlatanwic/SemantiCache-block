@@ -1,0 +1,40 @@
+[
+  {
+    "benchmark": "ablation_ruler_niah",
+    "ablation": "full_model",
+    "ablation_desc": "Full SemantiCache (all components)",
+    "budget": 0.3,
+    "target_tokens": 1024,
+    "actual_prompt_tokens": 1757,
+    "depth": 0.0,
+    "needle_key": "Kate",
+    "needle_value": "24592",
+    "output_text": "Based on the provided text, there is only one special magic number for Kate mentioned:\n\n24592",
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 6.129009008407593,
+    "tokens_per_second": 3.7526458141029457,
+    "retained_tokens": 527,
+    "total_evicted": 1251,
+    "needle_index": 1
+  },
+  {
+    "benchmark": "ablation_ruler_niah",
+    "ablation": "no_query_relevance",
+    "ablation_desc": "Remove query relevance signal",
+    "budget": 0.3,
+    "target_tokens": 1024,
+    "actual_prompt_tokens": 1757,
+    "depth": 0.0,
+    "needle_key": "Kate",
+    "needle_value": "24592",
+    "output_text": "Based on the provided text, there is only one special magic number for Kate mentioned:\n\n24592",
+    "score": 100.0,
+    "correct": true,
+    "elapsed_time": 6.346735239028931,
+    "tokens_per_second": 3.6239104254046475,
+    "retained_tokens": 527,
+    "total_evicted": 1251,
+    "needle_index": 1
+  }
+]

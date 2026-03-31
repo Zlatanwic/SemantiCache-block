@@ -50,7 +50,7 @@ HAYSTACK_PARAGRAPHS = [
     "Data engineering pipelines transform raw data into actionable insights. ETL processes, stream processing, and data warehousing form the backbone of modern data infrastructure.",
 ]
 
-SWEEP_POLICIES = ["full", "window", "streaming", "h2o", "semantic"]
+SWEEP_POLICIES = ["full", "window", "streaming", "h2o", "semantic", "tiered_semantic"]
 SWEEP_BUDGETS = [1.0, 0.5, 0.3, 0.1]
 SWEEP_POSITIONS = [0.0, 0.25, 0.5, 0.75, 1.0]
 
@@ -98,8 +98,102 @@ def check_answer(output_text: str, keywords: list[str]) -> bool:
     return all(keyword.lower() in output_lower for keyword in keywords)
 
 
+def _dtype_bytes(torch_dtype_name: str) -> int:
+    """Return the byte width for the configured floating-point dtype."""
+    mapping = {
+        "float16": 2,
+        "bfloat16": 2,
+        "float32": 4,
+    }
+    return mapping.get(torch_dtype_name, 2)
+
+
+def _estimate_fp16_kv_token_bytes(config: ExperimentConfig) -> int:
+    """Estimate full-precision KV bytes retained per logical token."""
+    dtype_bytes = _dtype_bytes(config.model.torch_dtype)
+    return (
+        config.model.num_layers
+        * config.model.num_kv_heads
+        * config.model.head_dim
+        * 2  # keys + values
+        * dtype_bytes
+    )
+
+
+def _estimate_warm_quantized_kv_token_bytes(config: ExperimentConfig) -> int:
+    """Estimate quantized warm-tier bytes retained per logical token."""
+    quant_bytes = max(1, int(config.cache.semantic_warm_bits) // 8)
+    scale_bytes = 4  # per-vector fp32 scale
+    return (
+        config.model.num_layers
+        * config.model.num_kv_heads
+        * 2  # keys + values
+        * ((config.model.head_dim * quant_bytes) + scale_bytes)
+    )
+
+
+def _build_system_metrics(run_result: dict, config: ExperimentConfig) -> dict:
+    """Derive systems-facing cache and overhead metrics from one generation run."""
+    stats = run_result["stats"]
+    generated_tokens = len(run_result["output_ids"])
+    logical_total_tokens = int((stats.get("initial_seq_len") or 0) + generated_tokens)
+
+    fp_token_bytes = _estimate_fp16_kv_token_bytes(config)
+    warm_token_bytes = _estimate_warm_quantized_kv_token_bytes(config)
+
+    hot_cache_len = int(stats.get("hot_cache_len") or 0)
+    warm_cache_len = int(stats.get("warm_cache_len") or 0)
+    tiered_retained_tokens = hot_cache_len + warm_cache_len
+
+    if config.cache.policy == "tiered_semantic":
+        retained_tokens = tiered_retained_tokens
+        retained_kv_bytes = (hot_cache_len * fp_token_bytes) + (warm_cache_len * warm_token_bytes)
+        full_precision_retained_kv_bytes = tiered_retained_tokens * fp_token_bytes
+        active_fp_kv_bytes = hot_cache_len * fp_token_bytes
+        warm_quantized_kv_bytes = warm_cache_len * warm_token_bytes
+    else:
+        retained_tokens = int(stats.get("current_cache_len") or 0)
+        retained_kv_bytes = retained_tokens * fp_token_bytes
+        full_precision_retained_kv_bytes = retained_kv_bytes
+        active_fp_kv_bytes = retained_kv_bytes
+        warm_quantized_kv_bytes = 0
+
+    logical_full_kv_bytes = logical_total_tokens * fp_token_bytes
+    kv_bytes_saved = max(0, logical_full_kv_bytes - retained_kv_bytes)
+    kv_bytes_saved_vs_uncompressed_retained = max(0, full_precision_retained_kv_bytes - retained_kv_bytes)
+
+    quantize_time_s = float(stats.get("warm_quantize_time_s") or 0.0)
+    dequantize_time_s = float(stats.get("warm_dequantize_time_s") or 0.0)
+    retention_overhead_s = quantize_time_s + dequantize_time_s
+    elapsed_time = float(run_result["elapsed_time"])
+
+    return {
+        "logical_total_tokens": logical_total_tokens,
+        "retained_tokens": retained_tokens,
+        "retained_token_ratio_vs_logical": retained_tokens / logical_total_tokens if logical_total_tokens else 0.0,
+        "fp_kv_token_bytes": fp_token_bytes,
+        "warm_kv_token_bytes": warm_token_bytes,
+        "logical_full_kv_bytes": logical_full_kv_bytes,
+        "retained_kv_bytes": retained_kv_bytes,
+        "active_fp_kv_bytes": active_fp_kv_bytes,
+        "warm_quantized_kv_bytes": warm_quantized_kv_bytes,
+        "full_precision_retained_kv_bytes": full_precision_retained_kv_bytes,
+        "kv_bytes_saved": kv_bytes_saved,
+        "kv_savings_ratio_vs_logical_full": kv_bytes_saved / logical_full_kv_bytes if logical_full_kv_bytes else 0.0,
+        "warm_quantization_savings_ratio": (
+            kv_bytes_saved_vs_uncompressed_retained / full_precision_retained_kv_bytes
+            if full_precision_retained_kv_bytes
+            else 0.0
+        ),
+        "retention_overhead_s": retention_overhead_s,
+        "retention_overhead_ratio": retention_overhead_s / elapsed_time if elapsed_time else 0.0,
+        "tokens_per_second": generated_tokens / elapsed_time if elapsed_time else 0.0,
+    }
+
+
 def build_result_record(
     run_result: dict,
+    config: ExperimentConfig,
     needle: dict,
     policy: str,
     budget: float,
@@ -110,6 +204,7 @@ def build_result_record(
     stats = run_result["stats"]
     output_text = run_result["output_text"]
     correct = check_answer(output_text, needle["answer_keywords"])
+    system_metrics = _build_system_metrics(run_result, config)
 
     return {
         "task": "niah",
@@ -125,12 +220,45 @@ def build_result_record(
         "output_preview": output_text[:200],
         "elapsed_time": run_result["elapsed_time"],
         "generated_tokens": len(run_result["output_ids"]),
+        "tokens_per_second": system_metrics["tokens_per_second"],
         "initial_seq_len": stats["initial_seq_len"],
         "cache_budget_tokens": stats["cache_budget_tokens"],
         "cache_budget_ratio": stats["cache_budget_ratio"],
         "current_cache_len": stats["current_cache_len"],
+        "hot_cache_len": stats.get("hot_cache_len"),
+        "warm_cache_len": stats.get("warm_cache_len"),
+        "cold_cache_len": stats.get("cold_cache_len"),
+        "peak_hot_cache_len": stats.get("peak_hot_cache_len"),
+        "peak_warm_cache_len": stats.get("peak_warm_cache_len"),
+        "peak_cold_cache_len": stats.get("peak_cold_cache_len"),
+        "hot_budget_tokens": stats.get("hot_budget_tokens"),
+        "hot_ratio": stats.get("hot_ratio"),
+        "warm_top_k": stats.get("warm_top_k"),
+        "warm_quantize_time_s": stats.get("warm_quantize_time_s"),
+        "warm_dequantize_time_s": stats.get("warm_dequantize_time_s"),
+        "warm_quantize_ops": stats.get("warm_quantize_ops"),
+        "warm_dequantize_ops": stats.get("warm_dequantize_ops"),
+        "materialization_steps": stats.get("materialization_steps"),
+        "last_promoted_warm_count": stats.get("last_promoted_warm_count"),
+        "peak_promoted_warm_count": stats.get("peak_promoted_warm_count"),
+        "promotion_steps": stats.get("promotion_steps"),
         "total_evicted": stats["total_evicted"],
         "eviction_steps": stats["eviction_steps"],
+        "logical_total_tokens": system_metrics["logical_total_tokens"],
+        "retained_tokens": system_metrics["retained_tokens"],
+        "retained_token_ratio_vs_logical": system_metrics["retained_token_ratio_vs_logical"],
+        "fp_kv_token_bytes": system_metrics["fp_kv_token_bytes"],
+        "warm_kv_token_bytes": system_metrics["warm_kv_token_bytes"],
+        "logical_full_kv_bytes": system_metrics["logical_full_kv_bytes"],
+        "retained_kv_bytes": system_metrics["retained_kv_bytes"],
+        "active_fp_kv_bytes": system_metrics["active_fp_kv_bytes"],
+        "warm_quantized_kv_bytes": system_metrics["warm_quantized_kv_bytes"],
+        "full_precision_retained_kv_bytes": system_metrics["full_precision_retained_kv_bytes"],
+        "kv_bytes_saved": system_metrics["kv_bytes_saved"],
+        "kv_savings_ratio_vs_logical_full": system_metrics["kv_savings_ratio_vs_logical_full"],
+        "warm_quantization_savings_ratio": system_metrics["warm_quantization_savings_ratio"],
+        "retention_overhead_s": system_metrics["retention_overhead_s"],
+        "retention_overhead_ratio": system_metrics["retention_overhead_ratio"],
     }
 
 
@@ -141,15 +269,19 @@ def run_single_eval(
     needle: dict,
     haystack_length: int,
     needle_position: float,
+    max_new_tokens: int | None = None,
+    stop_when_answer_found: bool = False,
 ) -> dict:
     """Run one NIAH evaluation item."""
     messages = build_haystack_prompt(needle, haystack_length, needle_position)
     config.model.do_sample = False
-    config.model.max_new_tokens = 128
+    config.model.max_new_tokens = max_new_tokens if max_new_tokens is not None else 128
+    config.model.stop_when_output_contains = list(needle["answer_keywords"]) if stop_when_answer_found else []
 
     run_result = generate_with_eviction(model, tokenizer, messages, config)
     return build_result_record(
         run_result=run_result,
+        config=config,
         needle=needle,
         policy=config.cache.policy,
         budget=config.cache.cache_budget,
@@ -194,6 +326,8 @@ def run_sweep(
     policies: list[str] | None = None,
     budgets: list[float] | None = None,
     positions: list[float] | None = None,
+    hot_ratio: float = 0.5,
+    warm_top_k: int = 16,
 ) -> list[dict]:
     """Run the full sweep across policies, budgets and needle positions."""
     policies = policies or SWEEP_POLICIES
@@ -218,6 +352,8 @@ def run_sweep(
         config = ExperimentConfig()
         config.cache.policy = policy
         config.cache.cache_budget = budget
+        config.cache.semantic_hot_ratio = hot_ratio
+        config.cache.semantic_warm_top_k = warm_top_k
 
         result = run_single_eval(
             model=model,
@@ -253,6 +389,18 @@ def main():
     parser.add_argument("--haystack-length", type=int, default=2000, help="Approximate haystack token budget")
     parser.add_argument("--needle-pos", type=float, default=0.5, help="Needle insertion position in [0, 1]")
     parser.add_argument(
+        "--hot-ratio",
+        type=float,
+        default=0.5,
+        help="Hot-tier ratio within the total retained budget for tiered_semantic",
+    )
+    parser.add_argument(
+        "--warm-top-k",
+        type=int,
+        default=16,
+        help="How many warm-tier tokens to promote per decode step for tiered_semantic",
+    )
+    parser.add_argument(
         "--output",
         type=str,
         default="results/niah_results.json",
@@ -270,11 +418,15 @@ def main():
             tokenizer=tokenizer,
             output_path=output_path,
             haystack_length=args.haystack_length,
+            hot_ratio=args.hot_ratio,
+            warm_top_k=args.warm_top_k,
         )
         return
 
     config.cache.policy = args.policy
     config.cache.cache_budget = args.budget
+    config.cache.semantic_hot_ratio = args.hot_ratio
+    config.cache.semantic_warm_top_k = args.warm_top_k
 
     needle = NEEDLES[0]
     result = run_single_eval(
