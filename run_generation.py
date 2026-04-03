@@ -67,15 +67,14 @@ def load_model(cfg: ModelConfig):
     """Load model and tokenizer."""
     print(f"Loading model: {cfg.model_name}")
 
-    # Use local cache on data disk if available
+    # Download model to data disk to save system disk space
+    import os
     cache_dir = cfg.cache_dir
     if cache_dir is None:
-        # Check data disk first
-        data_disk_cache = "/root/autodl-tmp/llama8b_cache"
-        import os
-        if "Llama-3.1-8B" in cfg.model_name and os.path.isdir(data_disk_cache):
-            cache_dir = data_disk_cache
-
+        data_disk = "/root/autodl-tmp/modelscope_cache"
+        if os.path.isdir("/root/autodl-tmp"):
+            os.makedirs(data_disk, exist_ok=True)
+            cache_dir = data_disk
     model_dir = snapshot_download(cfg.model_name, cache_dir=cache_dir)
     tokenizer = AutoTokenizer.from_pretrained(model_dir)
 
@@ -485,19 +484,54 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
     print("Prefill: running prompt forward pass...")
     prefill_start = time.time()
 
-    outputs = model(
-        input_ids=input_ids,
-        past_key_values=past_key_values,
-        use_cache=True,
-        cache_position=prompt_cache_position,
-        position_ids=prompt_cache_position.unsqueeze(0),
-        output_attentions=True,
-        return_dict=True,
-    )
-    prefill_end = time.time()
-    print(f"Prefill: done in {prefill_end - prefill_start:.2f}s")
+    # Policies that need attention weights during prefill
+    _NEEDS_PREFILL_ATTN = {"h2o", "semantic", "tiered_semantic", "snapkv", "kvzip", "defensive"}
+    needs_attn = cache_cfg.policy in _NEEDS_PREFILL_ATTN
 
-    _update_tracker_or_raise(outputs.attentions, tracker, cache_cfg.policy, "prefill")
+    # Chunked prefill: process long prompts in chunks to avoid OOM from
+    # the full attention matrix (eager attention materializes QK^T even
+    # when output_attentions=False).  Only the last chunk requests
+    # attention weights (when the policy needs them).
+    PREFILL_CHUNK = 2048
+    if prompt_len > PREFILL_CHUNK:
+        # --- chunked prefill ---
+        num_chunks = (prompt_len + PREFILL_CHUNK - 1) // PREFILL_CHUNK
+        for chunk_idx in range(num_chunks):
+            start = chunk_idx * PREFILL_CHUNK
+            end = min(start + PREFILL_CHUNK, prompt_len)
+            chunk_ids = input_ids[:, start:end]
+            chunk_positions = prompt_cache_position[start:end]
+            is_last = (chunk_idx == num_chunks - 1)
+            outputs = model(
+                input_ids=chunk_ids,
+                past_key_values=past_key_values,
+                use_cache=True,
+                cache_position=chunk_positions,
+                position_ids=chunk_positions.unsqueeze(0),
+                output_attentions=is_last,  # only last chunk
+                return_dict=True,
+            )
+            if not is_last:
+                # free intermediate logits immediately
+                del outputs
+                torch.cuda.empty_cache()
+        print(f"Prefill: done in {time.time() - prefill_start:.2f}s (chunked, {num_chunks} chunks)")
+    else:
+        outputs = model(
+            input_ids=input_ids,
+            past_key_values=past_key_values,
+            use_cache=True,
+            cache_position=prompt_cache_position,
+            position_ids=prompt_cache_position.unsqueeze(0),
+            output_attentions=needs_attn,
+            return_dict=True,
+        )
+        print(f"Prefill: done in {time.time() - prefill_start:.2f}s")
+
+    prefill_end = time.time()
+
+    if needs_attn:
+        _update_tracker_or_raise(outputs.attentions, tracker, cache_cfg.policy, "prefill")
     cache_manager.set_initial_seq_len(prompt_len)
 
     if isinstance(policy, SemantiCachePolicy):

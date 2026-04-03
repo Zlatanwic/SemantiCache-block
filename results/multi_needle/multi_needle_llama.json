@@ -1,0 +1,2402 @@
+[
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Kate",
+    "needle_values": [
+      "24592"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 24592.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.799809694290161,
+    "tokens_per_second": 7.1433426496048416,
+    "retained_tokens": 3740,
+    "initial_seq_len": 3722,
+    "total_evicted": 0,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Alice",
+    "needle_values": [
+      "46048"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 46048.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.0771443843841553,
+    "tokens_per_second": 9.628603649490511,
+    "retained_tokens": 3740,
+    "initial_seq_len": 3722,
+    "total_evicted": 0,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "David",
+    "needle_values": [
+      "39256"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 39256.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.026792049407959,
+    "tokens_per_second": 9.867810565885211,
+    "retained_tokens": 3740,
+    "initial_seq_len": 3722,
+    "total_evicted": 0,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Charlie",
+    "needle_values": [
+      "23434"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 23434.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.212557077407837,
+    "tokens_per_second": 9.039314829080649,
+    "retained_tokens": 3740,
+    "initial_seq_len": 3722,
+    "total_evicted": 0,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Kate",
+    "needle_values": [
+      "81482"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 81482.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.2141005992889404,
+    "tokens_per_second": 9.033013227322648,
+    "retained_tokens": 3740,
+    "initial_seq_len": 3722,
+    "total_evicted": 0,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Bob",
+    "needle_values": [
+      "87397"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 87397.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.0507888793945312,
+    "tokens_per_second": 9.752344671336788,
+    "retained_tokens": 3740,
+    "initial_seq_len": 3722,
+    "total_evicted": 0,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Grace",
+    "needle_values": [
+      "14165"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 14165.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.2270686626434326,
+    "tokens_per_second": 8.98041462999209,
+    "retained_tokens": 3740,
+    "initial_seq_len": 3722,
+    "total_evicted": 0,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Alice",
+    "needle_values": [
+      "22280"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text: 22280.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 1.9918477535247803,
+    "tokens_per_second": 9.03683525417399,
+    "retained_tokens": 3738,
+    "initial_seq_len": 3722,
+    "total_evicted": 0,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "David",
+    "needle_values": [
+      "40495"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 40495.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.2154762744903564,
+    "tokens_per_second": 9.02740427883876,
+    "retained_tokens": 3740,
+    "initial_seq_len": 3722,
+    "total_evicted": 0,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Iris",
+    "needle_values": [
+      "88907"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 88907.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.029831647872925,
+    "tokens_per_second": 9.853033881385258,
+    "retained_tokens": 3740,
+    "initial_seq_len": 3722,
+    "total_evicted": 0,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Alice",
+    "needle_values": [
+      "83563",
+      "36062"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Alice mentioned in the provided text are:\n\n1. 83563\n2. 36062",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.436549425125122,
+    "tokens_per_second": 10.260411605939902,
+    "retained_tokens": 3759,
+    "initial_seq_len": 3736,
+    "total_evicted": 0,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Leo",
+    "needle_values": [
+      "95181",
+      "81426"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers for Leo mentioned in the provided text:\n\n1. 95181\n2. 81426",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.2697057723999023,
+    "tokens_per_second": 11.455229270756345,
+    "retained_tokens": 3760,
+    "initial_seq_len": 3736,
+    "total_evicted": 0,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Grace",
+    "needle_values": [
+      "38893",
+      "68878"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for Grace:\n\n1. 38893\n2. 68878",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.420731544494629,
+    "tokens_per_second": 10.740554878598886,
+    "retained_tokens": 3760,
+    "initial_seq_len": 3736,
+    "total_evicted": 0,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Jack",
+    "needle_values": [
+      "46463",
+      "10851"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Jack mentioned in the provided text are:\n\n1. 46463\n2. 10851",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.2149622440338135,
+    "tokens_per_second": 11.286874106924213,
+    "retained_tokens": 3759,
+    "initial_seq_len": 3736,
+    "total_evicted": 0,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Charlie",
+    "needle_values": [
+      "65392",
+      "54597"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned for Charlie in the provided text:\n\n1. 65392\n2. 54597",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.397991418838501,
+    "tokens_per_second": 10.842407439720299,
+    "retained_tokens": 3760,
+    "initial_seq_len": 3736,
+    "total_evicted": 0,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Eve",
+    "needle_values": [
+      "30379",
+      "38221"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers for Eve mentioned in the provided text:\n\n1. 30379\n2. 38221",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.275804042816162,
+    "tokens_per_second": 11.42453370801937,
+    "retained_tokens": 3760,
+    "initial_seq_len": 3736,
+    "total_evicted": 0,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Frank",
+    "needle_values": [
+      "23396",
+      "22156"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for Frank:\n\n1. 23396\n2. 22156",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.3759260177612305,
+    "tokens_per_second": 10.943101681465269,
+    "retained_tokens": 3760,
+    "initial_seq_len": 3736,
+    "total_evicted": 0,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Grace",
+    "needle_values": [
+      "22676",
+      "57052"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for Grace:\n\n1. 22676\n2. 57052",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.2561888694763184,
+    "tokens_per_second": 11.52385793217517,
+    "retained_tokens": 3760,
+    "initial_seq_len": 3736,
+    "total_evicted": 0,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Frank",
+    "needle_values": [
+      "89131",
+      "44671"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Frank mentioned in the provided text are:\n\n1. 89131\n2. 44671",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.226431369781494,
+    "tokens_per_second": 11.228731475542201,
+    "retained_tokens": 3759,
+    "initial_seq_len": 3736,
+    "total_evicted": 0,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Alice",
+    "needle_values": [
+      "70217",
+      "80284"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Alice mentioned in the provided text are:\n\n1. 70217\n2. 80284",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.358293056488037,
+    "tokens_per_second": 10.60088776126489,
+    "retained_tokens": 3759,
+    "initial_seq_len": 3736,
+    "total_evicted": 0,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Bob",
+    "needle_values": [
+      "59615",
+      "20328",
+      "82357",
+      "48427"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Bob mentioned in the provided text are:\n\n1. 59615\n2. 20328\n3. 82357\n4. 48427",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.736351728439331,
+    "tokens_per_second": 13.521653527013074,
+    "retained_tokens": 3799,
+    "initial_seq_len": 3764,
+    "total_evicted": 0,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Kate",
+    "needle_values": [
+      "91070",
+      "57400",
+      "85674",
+      "35203"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Kate mentioned in the provided text are:\n\n1. 91070\n2. 57400\n3. 85674\n4. 35203",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.5836403369903564,
+    "tokens_per_second": 14.32087875013623,
+    "retained_tokens": 3799,
+    "initial_seq_len": 3764,
+    "total_evicted": 0,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Leo",
+    "needle_values": [
+      "19116",
+      "16006",
+      "96673",
+      "39871"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Leo mentioned in the provided text are:\n\n1. 19116\n2. 16006\n3. 96673\n4. 39871",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.7379958629608154,
+    "tokens_per_second": 13.513533932074287,
+    "retained_tokens": 3799,
+    "initial_seq_len": 3764,
+    "total_evicted": 0,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Eve",
+    "needle_values": [
+      "20458",
+      "40512",
+      "23238",
+      "59823"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Eve mentioned in the provided text are:\n\n1. 20458\n2. 40512\n3. 23238\n4. 59823",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.541280746459961,
+    "tokens_per_second": 14.559587739977768,
+    "retained_tokens": 3799,
+    "initial_seq_len": 3764,
+    "total_evicted": 0,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Eve",
+    "needle_values": [
+      "69429",
+      "93320",
+      "57819",
+      "31319"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Eve mentioned in the provided text are:\n\n1. 69429\n2. 93320\n3. 57819\n4. 31319",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.7256767749786377,
+    "tokens_per_second": 13.5746102911597,
+    "retained_tokens": 3799,
+    "initial_seq_len": 3764,
+    "total_evicted": 0,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Frank",
+    "needle_values": [
+      "56566",
+      "37460",
+      "97841",
+      "44993"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Frank mentioned in the provided text are:\n\n1. 56566\n2. 37460\n3. 97841\n4. 44993",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.561129331588745,
+    "tokens_per_second": 14.446751885445705,
+    "retained_tokens": 3799,
+    "initial_seq_len": 3764,
+    "total_evicted": 0,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Leo",
+    "needle_values": [
+      "99593",
+      "94939",
+      "19358",
+      "89840"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Leo mentioned in the provided text are:\n\n1. 99593\n2. 94939\n3. 19358\n4. 89840",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.7226059436798096,
+    "tokens_per_second": 13.589921114324637,
+    "retained_tokens": 3799,
+    "initial_seq_len": 3764,
+    "total_evicted": 0,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Kate",
+    "needle_values": [
+      "32431",
+      "80010",
+      "42087",
+      "31417"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Kate mentioned in the provided text are:\n\n1. 32431\n2. 80010\n3. 42087\n4. 31417",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.541759967803955,
+    "tokens_per_second": 14.556842687221753,
+    "retained_tokens": 3799,
+    "initial_seq_len": 3764,
+    "total_evicted": 0,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Henry",
+    "needle_values": [
+      "59735",
+      "45382",
+      "93886",
+      "83000"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Henry mentioned in the provided text are:\n\n1. 59735\n2. 45382\n3. 93886\n4. 83000",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.653698682785034,
+    "tokens_per_second": 13.942803770460033,
+    "retained_tokens": 3799,
+    "initial_seq_len": 3764,
+    "total_evicted": 0,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "full",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "David",
+    "needle_values": [
+      "99733",
+      "52504",
+      "17331",
+      "40021"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for David mentioned in the provided text are:\n\n1. 99733\n2. 52504\n3. 17331\n4. 40021",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.586915969848633,
+    "tokens_per_second": 14.30274521138194,
+    "retained_tokens": 3799,
+    "initial_seq_len": 3764,
+    "total_evicted": 0,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Alice",
+    "needle_values": [
+      "51347"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text: 51347.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.1253020763397217,
+    "tokens_per_second": 8.469384282068884,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2994,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Grace",
+    "needle_values": [
+      "45093"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 45093.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.218698501586914,
+    "tokens_per_second": 9.0142937337791,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Bob",
+    "needle_values": [
+      "37653"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 37653.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.225850820541382,
+    "tokens_per_second": 8.985328134046066,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Jack",
+    "needle_values": [
+      "51245"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 51245.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.0500378608703613,
+    "tokens_per_second": 9.755917381695978,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "David",
+    "needle_values": [
+      "95909"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 95909.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.1789746284484863,
+    "tokens_per_second": 9.178629130822312,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Henry",
+    "needle_values": [
+      "61856"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 61856.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.0261547565460205,
+    "tokens_per_second": 9.870914319542864,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Kate",
+    "needle_values": [
+      "70142"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 70142.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.154393196105957,
+    "tokens_per_second": 9.283356462576,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Charlie",
+    "needle_values": [
+      "44718"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 44718.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.167144775390625,
+    "tokens_per_second": 9.228732767239801,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Charlie",
+    "needle_values": [
+      "42325"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 42325.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.041529893875122,
+    "tokens_per_second": 9.796574647279387,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Leo",
+    "needle_values": [
+      "83579"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 83579.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.19712495803833,
+    "tokens_per_second": 9.102804975578948,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Iris",
+    "needle_values": [
+      "44438",
+      "86622"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for Iris:\n\n1. 44438\n2. 86622",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.2079334259033203,
+    "tokens_per_second": 11.775717372167938,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Grace",
+    "needle_values": [
+      "86484",
+      "62350"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for Grace:\n\n1. 86484\n2. 62350",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.3750951290130615,
+    "tokens_per_second": 10.946929949203318,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Frank",
+    "needle_values": [
+      "38746",
+      "28131"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for Frank:\n\n1. 38746\n2. 28131",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.2550852298736572,
+    "tokens_per_second": 11.529497712801156,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Iris",
+    "needle_values": [
+      "74686",
+      "21915"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Iris mentioned in the provided text are:\n\n1. 74686\n2. 21915",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.356088161468506,
+    "tokens_per_second": 10.61080837671964,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3012,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Alice",
+    "needle_values": [
+      "24371",
+      "30033"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Alice mentioned in the provided text are:\n\n1. 24371\n2. 30033",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.1961677074432373,
+    "tokens_per_second": 11.383465805125065,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3012,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Kate",
+    "needle_values": [
+      "30969",
+      "99192"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned for Kate in the provided text:\n\n1. 30969\n2. 99192",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.342773914337158,
+    "tokens_per_second": 11.097955223458337,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Grace",
+    "needle_values": [
+      "88172",
+      "18326"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for Grace:\n\n1. 88172\n2. 18326",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.2417008876800537,
+    "tokens_per_second": 11.598335952352464,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Grace",
+    "needle_values": [
+      "60019",
+      "88104"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for Grace:\n\n1. 60019\n2. 88104",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.383713722229004,
+    "tokens_per_second": 10.907350055310951,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Henry",
+    "needle_values": [
+      "79352",
+      "42953"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text:\n\n1. 79352\n2. 42953",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.1405842304229736,
+    "tokens_per_second": 11.211892369803017,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3011,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Iris",
+    "needle_values": [
+      "11504",
+      "99166"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for Iris:\n\n1. 11504\n2. 99166",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.331696033477783,
+    "tokens_per_second": 11.150681575428315,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Leo",
+    "needle_values": [
+      "25014",
+      "99353",
+      "80381",
+      "44973"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Leo mentioned in the provided text are:\n\n1. 25014\n2. 99353\n3. 80381\n4. 44973",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.5665814876556396,
+    "tokens_per_second": 14.416062836094266,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Kate",
+    "needle_values": [
+      "54587",
+      "24621",
+      "48469",
+      "66985"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Kate mentioned in the provided text are:\n\n1. 54587\n2. 24621\n3. 48469\n4. 66985",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.7511041164398193,
+    "tokens_per_second": 13.449145664425593,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Charlie",
+    "needle_values": [
+      "69470",
+      "10425",
+      "44522",
+      "75612"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Charlie mentioned in the provided text are:\n\n1. 69470\n2. 10425\n3. 44522\n4. 75612",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.5680596828460693,
+    "tokens_per_second": 14.407764837846177,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Charlie",
+    "needle_values": [
+      "76542",
+      "23947",
+      "91959",
+      "49117"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Charlie mentioned in the provided text are:\n\n1. 76542\n2. 23947\n3. 91959\n4. 49117",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.5581066608428955,
+    "tokens_per_second": 14.463822234765031,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Kate",
+    "needle_values": [
+      "76540",
+      "89818",
+      "36071",
+      "30032"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Kate mentioned in the provided text are:\n\n1. 76540\n2. 89818\n3. 36071\n4. 30032",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.7137773036956787,
+    "tokens_per_second": 13.634132745385049,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Frank",
+    "needle_values": [
+      "31174",
+      "80697",
+      "79514",
+      "10074"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Frank mentioned in the provided text are:\n\n1. 31174\n2. 80697\n3. 79514\n4. 10074",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.7388899326324463,
+    "tokens_per_second": 13.509122640951825,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Jack",
+    "needle_values": [
+      "52487",
+      "74042",
+      "12552",
+      "24662"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Jack mentioned in the provided text are:\n\n1. 52487\n2. 74042\n3. 12552\n4. 24662",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.5846893787384033,
+    "tokens_per_second": 14.315066369042706,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Frank",
+    "needle_values": [
+      "50306",
+      "41385",
+      "17592",
+      "41571"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Frank mentioned in the provided text are:\n\n1. 50306\n2. 41385\n3. 17592\n4. 41571",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.726048231124878,
+    "tokens_per_second": 13.572760590788338,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Jack",
+    "needle_values": [
+      "20322",
+      "21226",
+      "73699",
+      "19071"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Jack mentioned in the provided text are:\n\n1. 20322\n2. 21226\n3. 73699\n4. 19071",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.5707008838653564,
+    "tokens_per_second": 14.392961947547189,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Iris",
+    "needle_values": [
+      "26483",
+      "26828",
+      "96474",
+      "72296"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Iris mentioned in the provided text are:\n\n1. 26483\n2. 26828\n3. 96474\n4. 72296",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 2.761712074279785,
+    "tokens_per_second": 13.397486415975882,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Iris",
+    "needle_values": [
+      "31643"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is no mention of \"Iris\" or \"magic numbers\" in the provided text. The text actually mentions a special magic number for Iris, which is 31643.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 3.5045807361602783,
+    "tokens_per_second": 10.557610962770482,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 3013,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Eve",
+    "needle_values": [
+      "79163"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 79163.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 3.0665621757507324,
+    "tokens_per_second": 6.521961354037686,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Jack",
+    "needle_values": [
+      "65461"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is: 65461.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.92167592048645,
+    "tokens_per_second": 7.1876555003073594,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2997,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "David",
+    "needle_values": [
+      "80686"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 80686.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 3.0452070236206055,
+    "tokens_per_second": 6.567697974182707,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Leo",
+    "needle_values": [
+      "36365"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the text for Leo, which is 36365.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.936628818511963,
+    "tokens_per_second": 7.15105697649628,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2997,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Leo",
+    "needle_values": [
+      "50857"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 50857.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 3.0390138626098633,
+    "tokens_per_second": 6.58108218789903,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Grace",
+    "needle_values": [
+      "98039"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 98039.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.8523035049438477,
+    "tokens_per_second": 7.011876529034989,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Kate",
+    "needle_values": [
+      "58944"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 58944.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 3.0225512981414795,
+    "tokens_per_second": 6.616926572031281,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Henry",
+    "needle_values": [
+      "77839"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 77839.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.832204580307007,
+    "tokens_per_second": 7.061636768425828,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 1,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3722,
+    "needle_key": "Henry",
+    "needle_values": [
+      "25860"
+    ],
+    "needle_depths": [
+      0.0
+    ],
+    "output_text": "There is only one special magic number mentioned in the provided text, which is 25860.",
+    "score": 100.0,
+    "num_found": 1,
+    "elapsed_time": 2.8421337604522705,
+    "tokens_per_second": 7.036966478600004,
+    "retained_tokens": 744,
+    "initial_seq_len": 3722,
+    "total_evicted": 2996,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "David",
+    "needle_values": [
+      "39451",
+      "18392"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for David:\n\n1. 39451\n2. 18392",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 3.2328152656555176,
+    "tokens_per_second": 8.042525744114235,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Frank",
+    "needle_values": [
+      "12757",
+      "87110"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Frank mentioned in the provided text are:\n\n1. 12757\n2. 87110",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 3.2242703437805176,
+    "tokens_per_second": 7.753692257295966,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3012,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Iris",
+    "needle_values": [
+      "40161",
+      "87128"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for Iris:\n\n1. 40161\n2. 87128",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 3.0601630210876465,
+    "tokens_per_second": 8.49627938800432,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "David",
+    "needle_values": [
+      "10942",
+      "19305"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "The special magic numbers for David mentioned in the provided text are:\n\n1. 10942\n2. 19305",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 3.1881296634674072,
+    "tokens_per_second": 7.841588215960457,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3012,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Leo",
+    "needle_values": [
+      "92719",
+      "17716"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned for Leo in the provided text:\n\n1. 92719\n2. 17716",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 3.0747976303100586,
+    "tokens_per_second": 8.455841042578855,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "David",
+    "needle_values": [
+      "18834",
+      "14117"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned for David in the provided text:\n\n1. 18834\n2. 14117",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 3.207582950592041,
+    "tokens_per_second": 8.105791931336036,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Frank",
+    "needle_values": [
+      "19287",
+      "77391"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Frank mentioned in the provided text are:\n\n1. 19287\n2. 77391",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.9647042751312256,
+    "tokens_per_second": 8.432544253977383,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3012,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "David",
+    "needle_values": [
+      "46500",
+      "97684"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned for David in the provided text:\n\n1. 46500\n2. 97684",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 3.1416149139404297,
+    "tokens_per_second": 8.275998399622127,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Henry",
+    "needle_values": [
+      "38080",
+      "80678"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "There are two special magic numbers mentioned in the provided text for Henry:\n\n1. 38080\n2. 80678",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.992583751678467,
+    "tokens_per_second": 8.6881444789698,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3013,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 2,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3736,
+    "needle_key": "Charlie",
+    "needle_values": [
+      "84847",
+      "85525"
+    ],
+    "needle_depths": [
+      0.0,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Charlie mentioned in the provided text are:\n\n1. 84847\n2. 85525",
+    "score": 100.0,
+    "num_found": 2,
+    "elapsed_time": 2.9730417728424072,
+    "tokens_per_second": 8.408896312310638,
+    "retained_tokens": 747,
+    "initial_seq_len": 3736,
+    "total_evicted": 3012,
+    "trial": 10
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Henry",
+    "needle_values": [
+      "41850",
+      "71993",
+      "63354",
+      "34957"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Henry mentioned in the provided text are:\n\n1. 41850\n2. 71993\n3. 63354\n4. 34957",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 3.785701274871826,
+    "tokens_per_second": 9.773618495889568,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 1
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Bob",
+    "needle_values": [
+      "22704",
+      "96374",
+      "66498",
+      "56438"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Bob mentioned in the provided text are:\n\n1. 22704\n2. 96374\n3. 66498\n4. 56438",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 3.9195950031280518,
+    "tokens_per_second": 9.43975078304569,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 2
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Grace",
+    "needle_values": [
+      "63883",
+      "71213",
+      "17100",
+      "98259"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Grace mentioned in the provided text are:\n\n1. 63883\n2. 71213\n3. 17100\n4. 98259",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 3.610619068145752,
+    "tokens_per_second": 10.247550157375505,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 3
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Kate",
+    "needle_values": [
+      "94696",
+      "22899",
+      "17944",
+      "62772"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Kate mentioned in the provided text are:\n\n1. 94696\n2. 22899\n3. 17944\n4. 62772",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 3.7747015953063965,
+    "tokens_per_second": 9.802099335748068,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 4
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Leo",
+    "needle_values": [
+      "54473",
+      "24322",
+      "42591",
+      "35112"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Leo mentioned in the provided text are:\n\n1. 54473\n2. 24322\n3. 42591\n4. 35112",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 3.5019371509552,
+    "tokens_per_second": 10.565580821434146,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 5
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "David",
+    "needle_values": [
+      "80292",
+      "68800",
+      "28373",
+      "65296"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for David mentioned in the provided text are:\n\n1. 80292\n2. 68800\n3. 28373\n4. 65296",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 3.6290600299835205,
+    "tokens_per_second": 10.195477532557657,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 6
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Charlie",
+    "needle_values": [
+      "46509",
+      "70637",
+      "42742",
+      "19880"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Charlie mentioned in the provided text are:\n\n1. 46509\n2. 70637\n3. 42742\n4. 19880",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 3.507967233657837,
+    "tokens_per_second": 10.547418928260416,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 7
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Henry",
+    "needle_values": [
+      "82132",
+      "22833",
+      "16630",
+      "95477"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Henry mentioned in the provided text are:\n\n1. 82132\n2. 22833\n3. 16630\n4. 95477",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 3.5096380710601807,
+    "tokens_per_second": 10.542397606492557,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 8
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Iris",
+    "needle_values": [
+      "11934",
+      "22224",
+      "40982",
+      "31798"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Iris mentioned in the provided text are:\n\n1. 11934\n2. 22224\n3. 40982\n4. 31798",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 3.6000187397003174,
+    "tokens_per_second": 10.277724277368637,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 9
+  },
+  {
+    "benchmark": "ruler_multi_niah",
+    "policy": "semantic",
+    "budget": 0.2,
+    "num_needles": 4,
+    "target_tokens": 1800,
+    "actual_prompt_tokens": 3764,
+    "needle_key": "Grace",
+    "needle_values": [
+      "73653",
+      "73092",
+      "38016",
+      "62565"
+    ],
+    "needle_depths": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      1.0
+    ],
+    "output_text": "The special magic numbers for Grace mentioned in the provided text are:\n\n1. 73653\n2. 73092\n3. 38016\n4. 62565",
+    "score": 100.0,
+    "num_found": 4,
+    "elapsed_time": 3.785879373550415,
+    "tokens_per_second": 9.773158716702913,
+    "retained_tokens": 752,
+    "initial_seq_len": 3764,
+    "total_evicted": 3047,
+    "trial": 10
+  }
+]

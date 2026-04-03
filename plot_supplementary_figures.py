@@ -27,7 +27,7 @@ POLICY_LABELS = {
     "streaming": "StreamingLLM",
     "h2o": "H2O",
     "snapkv": "SnapKV",
-    "semantic": "SemantiCache",
+    "semantic": "SieveKV",
 }
 
 POLICY_COLORS = {
@@ -84,7 +84,7 @@ def plot_multi_needle(data_path: str, output_path: str):
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
-    fig.tight_layout()
+    fig.tight_layout(rect=[0, 0.06, 1, 1])
     fig.savefig(output_path, bbox_inches="tight")
     print(f"Saved: {output_path}")
     plt.close(fig)
@@ -132,13 +132,13 @@ def plot_context_scaling(data_paths: list[str], output_path: str):
     ax.set_xlabel("Context length (tokens)")
     ax.set_ylabel("Eviction latency per step (ms)")
     ax.set_xticks(target_tokens)
-    ax.set_xticklabels([str(t) for t in target_tokens])
+    ax.set_xticklabels([str(t) for t in target_tokens], rotation=45, ha='right')
     ax.set_title("Eviction Overhead Scaling at b = 20%")
     ax.legend(loc="upper left")
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
-    fig.tight_layout()
+    fig.tight_layout(rect=[0, 0.06, 1, 1])
     fig.savefig(output_path, bbox_inches="tight")
     print(f"Saved: {output_path}")
     plt.close(fig)
@@ -185,7 +185,7 @@ def plot_signal_distribution(data_path: str, output_path: str):
         ax.spines["right"].set_visible(False)
 
     fig.suptitle("Signal Scores: Needle vs. Haystack Tokens", fontsize=13, y=1.02)
-    fig.tight_layout()
+    fig.tight_layout(rect=[0, 0.06, 1, 1])
     fig.savefig(output_path, bbox_inches="tight")
     print(f"Saved: {output_path}")
     plt.close(fig)
@@ -206,6 +206,8 @@ if __name__ == "__main__":
     scaling_paths = []
     for p in [
         "results/scaling/context_scaling_qwen_b20.json",
+        "results/scaling/context_scaling_16k.json",
+        "results/scaling/context_scaling_32k.json",
     ]:
         if Path(p).exists():
             scaling_paths.append(p)

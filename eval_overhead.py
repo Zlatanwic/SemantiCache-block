@@ -184,7 +184,7 @@ def export_latex_table(results: list[dict]) -> str:
         "h2o": "H2O",
         "snapkv": "SnapKV",
         "kvzip": "KVzip",
-        "semantic": "SemantiCache",
+        "semantic": "SieveKV",
         "tiered_semantic": "Tiered SemantiCache",
     }
 

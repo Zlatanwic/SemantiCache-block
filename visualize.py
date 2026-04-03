@@ -142,7 +142,7 @@ def plot_budget_degradation_curve(
         "window": {"color": "#e74c3c", "marker": "o", "linestyle": "-", "label": "Local Window"},
         "streaming": {"color": "#f39c12", "marker": "^", "linestyle": "-", "label": "StreamingLLM"},
         "h2o": {"color": "#3498db", "marker": "D", "linestyle": "-", "label": "H2O"},
-        "semantic": {"color": "#2ecc71", "marker": "*", "linestyle": "-", "label": "SemantiCache (ours)"},
+        "semantic": {"color": "#2ecc71", "marker": "*", "linestyle": "-", "label": "SieveKV (ours)"},
     }
 
     fig, ax = plt.subplots(1, 1, figsize=(10, 6))

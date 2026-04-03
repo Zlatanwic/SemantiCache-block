@@ -1,0 +1,137 @@
+{
+  "hotpotqa_full_b20": {
+    "task": "hotpotqa",
+    "policy": "full",
+    "budget": 0.2,
+    "mean": 0.11119636130607588,
+    "ci95": 0.04941854000591317,
+    "n": 26,
+    "std": 0.12232334942884317
+  },
+  "hotpotqa_semantic_b20": {
+    "task": "hotpotqa",
+    "policy": "semantic",
+    "budget": 0.2,
+    "mean": 0.08477007549364077,
+    "ci95": 0.06253532079984572,
+    "n": 26,
+    "std": 0.15479068982873695
+  },
+  "hotpotqa_snapkv_b20": {
+    "task": "hotpotqa",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "mean": 0.11698380955171282,
+    "ci95": 0.06557579579912351,
+    "n": 26,
+    "std": 0.16231663223257597
+  },
+  "hotpotqa_streaming_b20": {
+    "task": "hotpotqa",
+    "policy": "streaming",
+    "budget": 0.2,
+    "mean": 0.07635513267610071,
+    "ci95": 0.06084131258993473,
+    "n": 26,
+    "std": 0.15059759229547356
+  },
+  "hotpotqa_h2o_b20": {
+    "task": "hotpotqa",
+    "policy": "h2o",
+    "budget": 0.2,
+    "mean": 0.11557286314776134,
+    "ci95": 0.06862476884045338,
+    "n": 26,
+    "std": 0.16986360943362422
+  },
+  "gov_report_full_b20": {
+    "task": "gov_report",
+    "policy": "full",
+    "budget": 0.2,
+    "mean": 0.1485088582353913,
+    "ci95": 0.024170891085344707,
+    "n": 30,
+    "std": 0.0648332139199012
+  },
+  "gov_report_semantic_b20": {
+    "task": "gov_report",
+    "policy": "semantic",
+    "budget": 0.2,
+    "mean": 0.12056789770331358,
+    "ci95": 0.015886747007671762,
+    "n": 30,
+    "std": 0.04261278012477729
+  },
+  "gov_report_snapkv_b20": {
+    "task": "gov_report",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "mean": 0.11944194558560235,
+    "ci95": 0.020218562928621155,
+    "n": 30,
+    "std": 0.05423194415447365
+  },
+  "gov_report_streaming_b20": {
+    "task": "gov_report",
+    "policy": "streaming",
+    "budget": 0.2,
+    "mean": 0.12197171016231736,
+    "ci95": 0.010566316103407563,
+    "n": 30,
+    "std": 0.02834186914577087
+  },
+  "gov_report_h2o_b20": {
+    "task": "gov_report",
+    "policy": "h2o",
+    "budget": 0.2,
+    "mean": 0.13104630118848035,
+    "ci95": 0.023029007500469677,
+    "n": 30,
+    "std": 0.06177035692929925
+  },
+  "passage_count_full_b20": {
+    "task": "passage_count",
+    "policy": "full",
+    "budget": 0.2,
+    "mean": 0.06666666666666667,
+    "ci95": 0.143,
+    "n": 15,
+    "std": 0.25819888974716115
+  },
+  "passage_count_semantic_b20": {
+    "task": "passage_count",
+    "policy": "semantic",
+    "budget": 0.2,
+    "mean": 0.0,
+    "ci95": 0.0,
+    "n": 15,
+    "std": 0.0
+  },
+  "passage_count_snapkv_b20": {
+    "task": "passage_count",
+    "policy": "snapkv",
+    "budget": 0.2,
+    "mean": 0.0,
+    "ci95": 0.0,
+    "n": 15,
+    "std": 0.0
+  },
+  "passage_count_streaming_b20": {
+    "task": "passage_count",
+    "policy": "streaming",
+    "budget": 0.2,
+    "mean": 0.0,
+    "ci95": 0.0,
+    "n": 15,
+    "std": 0.0
+  },
+  "passage_count_h2o_b20": {
+    "task": "passage_count",
+    "policy": "h2o",
+    "budget": 0.2,
+    "mean": 0.0,
+    "ci95": 0.0,
+    "n": 15,
+    "std": 0.0
+  }
+}

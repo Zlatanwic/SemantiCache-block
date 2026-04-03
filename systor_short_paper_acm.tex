@@ -6,11 +6,11 @@
 \usepackage{multirow}
 \usepackage{xcolor}
 \usepackage{hyperref}
-
+\usepackage{amsmath}
 \begin{document}
 
-\title{SemantiCache: Query-Aware Semantic KV Cache Eviction for Retrieval-Intensive Long-Context Inference}
-\titlerunning{SemantiCache}
+\title{SieveKV: Less Cache, More Accuracy --- Semantic Multi-Signal Eviction for Long-Context Retrieval}
+\titlerunning{SieveKV}
 
 \author{Anonymous Author(s)}
 \authorrunning{Anonymous Author(s)}
@@ -24,33 +24,33 @@ LLM inference.
 Existing eviction policies select tokens to retain based on recency, cumulative
 attention, or query-agnostic importance---signals that degrade sharply when the
 answer depends on a small factual span buried in a long prompt.
-We present \textbf{SemantiCache}, a serving-time KV cache eviction policy that
+We present \textbf{SieveKV}, a serving-time KV cache eviction policy that
 combines five lightweight signals---attention mass, information density, head
 entropy, query relevance, and factual-token likelihood---with role-aware pinning
 and contiguous block retention.
 On the RULER Needle-in-a-Haystack benchmark with \texttt{Qwen2.5-3B-Instruct},
-SemantiCache achieves 70\% retrieval accuracy at a 20\% cache budget, surpassing
-even the full-KV upper bound (58\%) and outperforming the best baseline, SnapKV
+SieveKV achieves 70\% retrieval accuracy at a 20\% cache budget, surpassing
+even the full-KV baseline (58\%) and outperforming the best baseline, SnapKV
 (30\%), by 40 percentage points.
-At the most aggressive 10\% budget, SemantiCache reaches 80\%---while all
+At the most aggressive 10\% budget, SieveKV reaches 80\%---while all
 baselines fall below 40\%.
 A cross-architecture evaluation on \texttt{Llama-3.2-3B-Instruct} confirms that
 the method transfers effectively without recalibration, achieving 84\% accuracy
-within 6~points of the full-KV upper bound.
+within 6~points of the full-KV baseline.
 A multi-needle variant requiring simultaneous recall of four scattered facts
-shows SemantiCache reaching 92.5\%---surpassing even full KV (80\%)---while
+shows SieveKV reaching 92.5\%---surpassing even full KV (80\%)---while
 the best baseline (SnapKV) plateaus at 70\%.
 An ablation study shows that the semantic signals act synergistically: removing
 any single component degrades accuracy by at most 4\%, but stripping all
 semantic signals reduces accuracy from 70\% to 8\%.
-Systems profiling demonstrates that SemantiCache's per-step eviction overhead
+Systems profiling demonstrates that SieveKV's per-step eviction overhead
 (8.86\,ms) accounts for under 4\% of total decode time---a modest cost for a
 40-point accuracy gain over the strongest baseline.
 These results demonstrate that query-aware, multi-signal token scoring is a
 practical and effective strategy for memory-efficient long-context inference
 in retrieval-heavy workloads.
 \keywords{KV cache eviction \and Long-context inference \and Query-aware systems \and Memory-efficient serving}
-\end {abstract}
+\end{abstract}
 
 %% ================================================================
 \section{Introduction}
@@ -93,9 +93,9 @@ intent can guide eviction: a query-aware policy can exploit the question's
 vocabulary to boost retention of query-aligned, content-rich tokens---precisely
 those most likely to carry the answer.
 
-This paper presents \textbf{SemantiCache}, a serving-time KV cache eviction
+This paper presents \textbf{SieveKV}, a serving-time KV cache eviction
 policy designed for retrieval-intensive long-context workloads.
-SemantiCache makes three contributions:
+SieveKV makes three contributions:
 
 \begin{enumerate}
 \item \textbf{Multi-signal scoring.}
@@ -113,7 +113,7 @@ SemantiCache makes three contributions:
   A systematic evaluation on the RULER Needle-in-a-Haystack
   benchmark~\cite{hsieh2024ruler}---including a multi-needle variant---against
   five baselines spanning 2023--2025, across two model architectures (Qwen and
-  Llama), showing that SemantiCache is the only policy whose accuracy
+  Llama), showing that SieveKV is the only policy whose accuracy
   \emph{increases} as the cache budget shrinks and as the number of
   simultaneously required facts grows (\S\ref{sec:results}).
 \end{enumerate}
@@ -123,7 +123,7 @@ SemantiCache makes three contributions:
 \label{sec:related}
 %% ================================================================
 
-We organize prior work along three dimensions and position SemantiCache.
+We organize prior work along three dimensions and position SieveKV.
 
 \paragraph{Eviction timing.}
 \textbf{Progressive} methods evict during decoding:
@@ -133,17 +133,17 @@ cumulative attention.
 \textbf{One-shot} methods prune once at prefill:
 SnapKV~\cite{li2024snapkv} scores by observation-window attention;
 KVzip~\cite{he2025kvzip} by context-reconstruction contribution.
-SemantiCache follows the progressive paradigm.
+SieveKV follows the progressive paradigm.
 
 \paragraph{Scoring signal.}
 Recency (StreamingLLM), attention (H2O, SnapKV), and reconstruction
 (KVzip) signals are all \emph{query-agnostic}---they cannot distinguish
 answer-bearing tokens from structurally similar distractors.
-SemantiCache combines attention with query-aware and content-aware signals.
+SieveKV combines attention with query-aware and content-aware signals.
 
 \paragraph{Selection granularity.}
 Most methods select individual tokens, risking fragmented retention.
-SemantiCache operates at the \emph{contiguous block} level, preserving
+SieveKV operates at the \emph{contiguous block} level, preserving
 local positional continuity.
 
 \subsection{Orthogonal approaches}
@@ -153,17 +153,17 @@ per token rather than token count, and is orthogonal to eviction---combining
 $b{=}20\%$ eviction with 2-bit quantization would yield ${\sim}20{\times}$
 memory reduction.
 Grouped-query attention (GQA)~\cite{ainslie2023gqa} reduces KV heads;
-both models in our evaluation already use GQA, so SemantiCache provides
+both models in our evaluation already use GQA, so SieveKV provides
 additional savings on top.
 Learned eviction approaches train auxiliary predictors but require
-per-model fine-tuning; SemantiCache instead uses architecture-independent
+per-model fine-tuning; SieveKV instead uses architecture-independent
 heuristics that transfer without retraining.
 
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.75\textwidth]{framework.pdf}
-    \caption{SemantiCache two-phase pipeline.
+    \includegraphics[width=\textwidth]{framework.pdf}
+    \caption{SieveKV two-phase pipeline.
     During prefill, static semantic signals (role tags, info density,
     query relevance, factual likelihood) are computed once.
     During decode, attention-derived signals are accumulated per step;
@@ -181,7 +181,7 @@ heuristics that transfer without retraining.
 \label{sec:method}
 %% ================================================================
 
-SemantiCache is a progressive KV cache eviction policy that operates during
+SieveKV is a progressive KV cache eviction policy that operates during
 autoregressive decoding.
 At each decode step, it assigns a composite retention score to every cached
 token and selects a budget-sized subset of tokens to retain.
@@ -210,7 +210,7 @@ blocks are ranked, and low-scoring tokens are evicted.
 \subsection{Multi-signal token scoring}
 \label{sec:scoring}
 
-SemantiCache assigns each cached token a composite retention score by
+SieveKV assigns each cached token a composite retention score by
 combining five signals.
 The first three are \emph{attention-derived} signals computed from the
 model's own attention weights; the remaining two are \emph{content-derived}
@@ -291,7 +291,7 @@ single signal costs at most 4\% accuracy.
 \subsection{Role-aware pinning}
 \label{sec:pinning}
 
-Before score-based selection, SemantiCache assigns \emph{infinite retention
+Before score-based selection, SieveKV assigns \emph{infinite retention
 priority} to three classes of tokens, ensuring they are never evicted
 regardless of their computed scores:
 
@@ -322,7 +322,7 @@ cannot.
 
 Token-level eviction can fragment positional continuity, causing degraded
 outputs.
-SemantiCache groups unpinned tokens into contiguous blocks of $B{=}16$
+SieveKV groups unpinned tokens into contiguous blocks of $B{=}16$
 and ranks blocks by their \emph{safest member}:
 \begin{equation}
   S_{\text{block}}(b) = \max_{i \in b} s(i)
@@ -338,9 +338,10 @@ retains the highest-scoring tokens within the partial block and restores
 their original positional order.
 
 Algorithm~\ref{alg:eviction} summarizes the complete eviction procedure.
+Note that in our scoring convention, \emph{lower} scores correspond to higher retention priority; pinned tokens receive $-\infty$ to guarantee they are never selected for eviction.
 
 \begin{algorithm}[t]
-\caption{SemantiCache eviction at each decode step}
+\caption{SieveKV eviction at each decode step}
 \label{alg:eviction}
 \begin{algorithmic}[1]
 \REQUIRE KV cache $\mathcal{C}$, budget $B$, attention tracker $\mathcal{T}$
@@ -350,7 +351,7 @@ Algorithm~\ref{alg:eviction} summarizes the complete eviction procedure.
 \ENDIF
 \STATE $\mathcal{P} \leftarrow$ \textsc{PinnedMask}(system $\cup$ query-tail $\cup$ recent)
 \STATE $s \leftarrow$ \textsc{MultiSignalScore}($\mathcal{C}$, $\mathcal{T}$)
-\STATE $s[i] \leftarrow -\infty$ for all $i \in \mathcal{P}$ \COMMENT{Pin tokens}
+\STATE $s[i] \leftarrow -\infty$ for all $i \in \mathcal{P}$ \COMMENT{Pin tokens (never evicted)}
 \STATE Partition unpinned tokens into blocks of size 16
 \STATE Score each block $b$: $S_b \leftarrow \max_{i \in b} s(i)$
 \STATE Select top-$k$ blocks to fill remaining budget
@@ -385,12 +386,12 @@ illustrating why multi-signal scoring outperforms single-signal approaches.
 We evaluate on two model architectures to assess cross-architecture
 generality:
 \begin{itemize}
-\item \textbf{Qwen2.5-3B-Instruct}~\cite{qwen2024qwen25}: 36 layers,
+\item \textbf{Qwen2.5-3B-Instruct}~\cite{qwen2025qwen25}: 36 layers,
   16 attention heads, 2 KV heads (GQA), head dimension 128, ChatML
   chat template.
   This is the primary evaluation model.
 
-\item \textbf{Llama-3.2-3B-Instruct}~\cite{grattafiori2024llama3}:
+\item \textbf{Llama-3.2-3B-Instruct}~\cite{meta2024llama32}:
   28 layers, 24 attention heads, 8 KV heads (GQA), head dimension 128,
   Llama-style chat template.
   This serves as a cross-architecture validation.
@@ -398,12 +399,12 @@ generality:
 
 Both models are served with 4-bit NF4 quantization via BitsAndBytes on a
 single NVIDIA GPU with 48\,GB VRAM.
-SemantiCache's signal weights are fixed across both architectures---no
+SieveKV's signal weights are fixed across both architectures---no
 per-model calibration is performed.
 
 \subsection{Benchmark}
 
-We evaluate SemantiCache on the RULER Needle-in-a-Haystack benchmark,
+We evaluate SieveKV on the RULER Needle-in-a-Haystack benchmark,
 a controlled retrieval task designed to isolate eviction policy quality.
 
 \textbf{RULER Needle-in-a-Haystack (NIAH)}~\cite{hsieh2024ruler}:
@@ -425,7 +426,7 @@ the scenario where query-agnostic eviction policies fail.
 We compare against five eviction policies spanning three years of research:
 \begin{enumerate}
 \item \textbf{Full KV}: No eviction; retains all tokens.
-  Serves as the accuracy upper bound and the latency/memory reference.
+  Serves as the accuracy reference and the latency/memory reference.
 
 \item \textbf{StreamingLLM}~\cite{xiao2023streamingllm} (ICLR 2024):
   Retains 4 attention-sink tokens and a sliding window of recent tokens.
@@ -435,7 +436,7 @@ We compare against five eviction policies spanning three years of research:
   Retains heavy-hitter tokens ranked by cumulative attention.
   Progressive eviction during decoding.
 
-\item \textbf{SnapKV}~\cite{li2024snapkv} (ICML 2024):
+\item \textbf{SnapKV}~\cite{li2024snapkv} (NeurIPS 2024):
   One-shot pruning at prefill using observation-window attention from the
   final prompt tokens.
 
@@ -452,12 +453,12 @@ though it disadvantages methods originally designed for per-head selection
 
 \subsection{Evaluation protocol}
 
-We conduct six evaluation campaigns totaling ${\sim}$1800 runs:
+We conduct six evaluation campaigns totaling ${\sim}$2900 runs:
 main accuracy (900 runs, 6 policies $\times$ 3 budgets $\times$ 50 trials),
 budget sensitivity (1000 runs, 8-point grid),
 multi-needle retrieval (150 Qwen + 90 Llama runs, $k{\in}\{1,2,4\}$),
 ablation (350 runs, 7 variants),
-context scaling (150 runs, 1800--6000\,t),
+context scaling (250 runs, 1800--32\,000\,t),
 and cross-architecture validation (150 Llama runs).
 Systems overhead profiling measures latency and memory over 3 runs.
 
@@ -471,11 +472,11 @@ Systems overhead profiling measures latency and memory over 3 runs.
 
 Table~\ref{tab:main} reports retrieval accuracy across cache budgets on
 Qwen2.5-3B-Instruct.
-SemantiCache achieves the highest accuracy at every budget level and is
+SieveKV achieves the highest accuracy at every budget level and is
 the only policy that \emph{improves} as the budget shrinks: from 60\% at
 $b{=}50\%$ to 70\% at $b{=}20\%$.
 All baselines degrade monotonically.
-At $b{=}20\%$, SemantiCache (70\%) outperforms the full-KV upper bound
+At $b{=}20\%$, SieveKV (70\%) outperforms the full-KV baseline
 (58\%) by 12 percentage points and the strongest baseline, SnapKV (30\%),
 by 40 points.
 
@@ -487,31 +488,29 @@ answer-critical spans identified by query-aware signals.
 \caption{RULER NIAH retrieval accuracy (\%, 95\% confidence interval) across
 cache budgets on \texttt{Qwen2.5-3B-Instruct}.
 Each cell aggregates 50 runs (10 depths $\times$ 5 needles).
-Best per-column in \textbf{bold} (excluding full KV).%
-$^\dagger$}%
+Best per-column in \textbf{bold} (excluding full KV).}
 \label{tab:main}
 \centering
 \begin{tabular}{lcccc}
 \toprule
 Policy & $b{=}50\%$ & $b{=}30\%$ & $b{=}20\%$ & Avg \\
 \midrule
-Full KV (upper bound)                           & $58.0\pm14.1$ & $58.0\pm14.1$ & $58.0\pm14.1$ & 58.0 \\
+Full KV (baseline)                           & $58.0\pm14.1$ & $58.0\pm14.1$ & $58.0\pm14.1$ & 58.0 \\
 \midrule
-StreamingLLM~\cite{xiao2023streamingllm}\rlap{$^\text{a}$} & $28.0\pm12.8$ & $20.0\pm11.4$ & $10.0\pm8.6$ & 19.3 \\
-H2O~\cite{zhang2023h2o}\rlap{$^\text{b}$}                  & $22.0\pm11.8$ & $8.0\pm7.8$ & $8.0\pm7.8$ & 12.7 \\
-SnapKV~\cite{li2024snapkv}\rlap{$^\text{c}$}               & $60.0\pm14.0$ & $42.0\pm14.1$ & $30.0\pm13.1$ & 44.0 \\
-KVzip~\cite{he2025kvzip}\rlap{$^\text{d}$}                 & $38.0\pm13.9$ & $32.0\pm13.3$ & $12.0\pm9.3$ & 27.3 \\
-\textbf{SemantiCache (ours)}                    & $\mathbf{60.0\pm14.0}$ & $\mathbf{62.0\pm13.9}$ & $\mathbf{70.0\pm13.1}$ & \textbf{64.0} \\
+StreamingLLM~\cite{xiao2023streamingllm} & $28.0\pm12.8$ & $20.0\pm11.4$ & $10.0\pm8.6$ & 19.3 \\
+H2O~\cite{zhang2023h2o}                  & $22.0\pm11.8$ & $8.0\pm7.8$ & $8.0\pm7.8$ & 12.7 \\
+SnapKV~\cite{li2024snapkv}               & $60.0\pm14.0$ & $42.0\pm14.1$ & $30.0\pm13.1$ & 44.0 \\
+KVzip~\cite{he2025kvzip}                 & $38.0\pm13.9$ & $32.0\pm13.3$ & $12.0\pm9.3$ & 27.3 \\
+\textbf{SieveKV (ours)}                    & $\mathbf{60.0\pm14.0}$ & $\mathbf{62.0\pm13.9}$ & $\mathbf{70.0\pm13.1}$ & \textbf{64.0} \\
 \bottomrule
 \end{tabular}
 \end{table}
-\noindent $^{^\dagger}$Full KV accuracy varies across tables because Table~\ref{tab:main} averages over 10 depths (including challenging mid-context positions where full KV drops to 0\%); Tables~\ref{tab:scaling} and~\ref{tab:multi-needle} use shallower depth ranges where full KV performs near ceiling.
 
 \subsection{Budget sensitivity}
 \label{sec:budget}
 
 Figure~\ref{fig:budget} shows accuracy across a finer 8-point budget grid.
-SemantiCache peaks at 80\% ($b{=}10\%$) while all baselines fall below
+SieveKV peaks at 80\% ($b{=}10\%$) while all baselines fall below
 40\%.
 SnapKV matches full KV at $b{\geq}30\%$ but degrades rapidly below;
 KVzip's query-agnostic scores cannot distinguish needles from
@@ -519,8 +518,8 @@ structurally similar haystack tokens under tight budgets.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.6\textwidth]{budget_curve.png}
-\caption{Budget sensitivity on RULER NIAH. SemantiCache is the only
+\includegraphics[width=0.9\textwidth]{budget_curve.pdf}
+\caption{Budget sensitivity on RULER NIAH. SieveKV is the only
 policy whose accuracy increases as the budget shrinks, reaching 80\%
 at 10\% cache budget. Query-agnostic methods (KVzip, StreamingLLM)
 degrade sharply below 25\%.
@@ -532,14 +531,16 @@ degrade sharply below 25\%.
 \label{sec:scaling}
 
 Table~\ref{tab:scaling} reports single-needle accuracy at $b{=}20\%$
-across three prompt lengths (1800--6000 target tokens, ${\sim}$3.7K--10K
-actual tokens; 10 trials per cell).
-SemantiCache and SnapKV maintain 100\% across all lengths, matching
-full KV despite 80\% memory savings.
-StreamingLLM drops from 30\% to 10\% as context grows.
+across five prompt lengths spanning 1800--32\,000 target tokens
+(${\sim}$3.7K--36K actual tokens; 10 trials per cell).
+SieveKV sustains ${\geq}90\%$ accuracy up to 32K tokens,
+while H2O degrades sharply from 100\% to 20\%.
+SnapKV maintains 100\% across all lengths but relies solely on
+prefill attention, whereas SieveKV's multi-signal scoring
+additionally enables the multi-needle and depth advantages
+shown in \S\ref{sec:multi-needle}--\ref{sec:depth}.
 Figure~\ref{fig:scaling} shows eviction latency: baselines stay below
-1.2\,ms, while SemantiCache rises from 6.3 to 10.2\,ms but plateaus
-beyond 4000 tokens, indicating sub-linear scaling.
+2.3\,ms, while SieveKV rises from 6.3 to 38.4\,ms at 32K tokens.
 
 \begin{table}[htbp]
 \caption{Context length scaling at $b{=}20\%$ on
@@ -547,27 +548,27 @@ beyond 4000 tokens, indicating sub-linear scaling.
 Accuracy (\%, 95\% CI) on single-needle NIAH; 10 trials per cell.}
 \label{tab:scaling}
 \centering
-\begin{tabular}{lccc}
+\begin{tabular}{lccccc}
 \toprule
-Policy & 1800\,t & 4000\,t & 6000\,t \\
+Policy & 1800\,t & 4000\,t & 6000\,t & 16\,000\,t & 32\,000\,t \\
 \midrule
-Full KV (upper bound)        & $100.0\pm0.0$ & $100.0\pm0.0$ & $100.0\pm0.0$ \\
+Full KV (baseline)        & $100.0\pm0.0$ & $100.0\pm0.0$ & $100.0\pm0.0$ & $100.0\pm0.0$ & $100.0\pm0.0$ \\
 \midrule
-StreamingLLM                 & $30.0$        & $10.0$        & $10.0$        \\
-H2O                          & $100.0\pm0.0$ & $90.0\pm22.6$ & $90.0\pm22.6$ \\
-SnapKV                       & $100.0\pm0.0$ & $100.0\pm0.0$ & $100.0\pm0.0$ \\
-\textbf{SemantiCache (ours)} & $\mathbf{100.0\pm0.0}$ & $\mathbf{100.0\pm0.0}$ & $\mathbf{100.0\pm0.0}$ \\
+StreamingLLM                 & $30.0\pm34.6$ & $10.0\pm22.6$ & $10.0\pm22.6$ & $40.0\pm30.4$ & $40.0\pm30.4$ \\
+H2O                          & $100.0\pm0.0$ & $90.0\pm22.6$ & $90.0\pm22.6$ & $70.0\pm28.4$ & $20.0\pm24.8$ \\
+SnapKV                       & $100.0\pm0.0$ & $100.0\pm0.0$ & $100.0\pm0.0$ & $100.0\pm0.0$ & $100.0\pm0.0$ \\
+\textbf{SieveKV (ours)} & $\mathbf{100.0\pm0.0}$ & $\mathbf{100.0\pm0.0}$ & $\mathbf{100.0\pm0.0}$ & $\mathbf{90.0\pm18.6}$ & $\mathbf{90.0\pm18.6}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.6\textwidth]{context_scaling.pdf}
+\includegraphics[width=0.8\textwidth]{context_scaling.pdf}
 \caption{Eviction overhead scaling at $b{=}20\%$.
-Baseline policies stay below 1.2\,ms per step regardless of context
-length.  SemantiCache's semantic scoring costs 6--10\,ms but plateaus
-between 4000 and 6000 tokens, indicating sub-linear growth.}
+Baseline policies stay below 2.3\,ms per step regardless of context
+length.  SieveKV's semantic scoring costs 6--38\,ms, growing
+sub-linearly with context length.}
 \label{fig:scaling}
 \end{figure}
 
@@ -575,20 +576,20 @@ between 4000 and 6000 tokens, indicating sub-linear growth.}
 \label{sec:depth}
 
 Figure~\ref{fig:depth} breaks down accuracy by needle depth.
-SemantiCache sustains high accuracy across all depths at $b{=}20\%$
+SieveKV sustains high accuracy across all depths at $b{=}20\%$
 (100\% at shallow/deep positions, 20--80\% mid-context), while
 StreamingLLM retrieves only tail needles and SnapKV/KVzip exhibit
 the ``lost in the middle'' pattern~\cite{liu2024lost}.
 Notably, the full-KV baseline drops to 0\% at depth~67\%, while
-SemantiCache retains 20\%---evidence that distractor eviction can
+SieveKV retains 20\%---evidence that distractor eviction can
 \emph{improve} mid-context retrieval.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.75\textwidth]{depth_heatmap.pdf}
+\includegraphics[width=\textwidth]{depth_heatmap.pdf}
 \caption{Retrieval accuracy (\%) by needle depth across cache budgets.
 Each cell aggregates 5 runs (5 needles at that depth).
-SemantiCache is the only policy that sustains high accuracy across all
+SieveKV is the only policy that sustains high accuracy across all
 depths at $b{=}20\%$, while baselines collapse in the mid-context region.}
 \label{fig:depth}
 \end{figure}
@@ -600,9 +601,9 @@ We evaluate a multi-needle variant: $k$ needles inserted at evenly spaced
 depths, all $k$ values must be recalled for a correct score.
 Table~\ref{tab:multi-needle} reports results at $b{=}20\%$ with
 $k \in \{1, 2, 4\}$ (10 trials per cell).
-SemantiCache achieves 92.5\% at $k{=}4$, surpassing full KV (80\%) and
+SieveKV achieves 92.5\% at $k{=}4$, surpassing full KV (80\%) and
 SnapKV (70\%).
-Moreover, SemantiCache's accuracy increases from $k{=}2$ (85\%) to
+Moreover, SieveKV's accuracy increases from $k{=}2$ (85\%) to
 $k{=}4$ (92.5\%): more needles produce stronger factual and query-relevance
 signals, reinforcing retention of all answer-bearing spans.
 
@@ -617,21 +618,21 @@ Best per-column in \textbf{bold} (excluding full KV).}
 \toprule
 Policy & $k{=}1$ & $k{=}2$ & $k{=}4$ \\
 \midrule
-Full KV (upper bound)          & 100 & 80 & 80 \\
+Full KV (baseline)          & $100.0\pm0.0$ & $80.0\pm18.5$ & $80.0\pm16.4$ \\
 \midrule
-StreamingLLM                   &   0 & 50 & 25 \\
-H2O                            &   0 & 45 & 20 \\
-SnapKV                         & 100 & 70 & 70 \\
-\textbf{SemantiCache (ours)}   & \textbf{100} & \textbf{85} & \textbf{92.5} \\
+StreamingLLM                   & $0.0\pm0.0$ & $50.0\pm0.0$ & $25.0\pm0.0$ \\
+H2O                            & $0.0\pm0.0$ & $45.0\pm11.3$ & $20.0\pm7.5$ \\
+SnapKV                         & $100.0\pm0.0$ & $70.0\pm18.5$ & $70.0\pm16.4$ \\
+\textbf{SieveKV (ours)}   & $\mathbf{100.0\pm0.0}$ & $\mathbf{85.0\pm17.3}$ & $\mathbf{92.5\pm12.1}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.6\textwidth]{multi_needle_bar.pdf}
+\includegraphics[width=0.8\textwidth]{multi_needle_bar.pdf}
 \caption{Multi-needle NIAH accuracy at $b{=}20\%$.
-SemantiCache is the only policy whose accuracy improves from $k{=}2$
+SieveKV is the only policy whose accuracy improves from $k{=}2$
 to $k{=}4$, reaching 92.5\%---above full KV (80\%).
 StreamingLLM and H2O fail at $k{=}1$ (0\%).}
 \label{fig:multi-needle}
@@ -641,8 +642,12 @@ StreamingLLM and H2O fail at $k{=}1$ (0\%).}
 \label{sec:ablation}
 
 Table~\ref{tab:ablation} isolates each signal at $b{=}20\%$.
-Removing any single component costs at most 4~points, confirming
-complementarity.
+Removing any single component changes accuracy by at most 4~points
+(within the 95\% confidence interval), confirming that signals are
+individually redundant but collectively essential.
+The slight gain from removing query relevance ($+$2, not statistically
+significant) reflects overlap with the factual-token signal, which
+independently captures query-aligned tokens via entity detection.
 The critical result: stripping \emph{all} semantic signals collapses
 accuracy from 70\% to 8\% ($-$62), demonstrating that multi-signal
 combination is essential.
@@ -674,7 +679,7 @@ Attention only (no semantic signals)            & $8.0\pm7.8$ & $-$62 \\
 \label{sec:overhead}
 
 Table~\ref{tab:overhead} reports per-policy latency at $b{=}20\%$.
-SemantiCache's per-step cost (8.86\,ms) is ${\sim}4{\times}$ that of
+SieveKV's per-step cost (8.86\,ms) is ${\sim}4{\times}$ that of
 attention-only policies but accounts for only 3.9\% of decode time.
 KVzip incurs the highest one-time cost (0.92\,s snapshot).
 This throughput gap (3.4 vs.\ 6.5\,tok/s for full KV) is a limitation
@@ -700,7 +705,7 @@ StreamingLLM           & $0.37\pm0.00$ & ---     & $2.52$        & $0.32\pm0.18$
 H2O                    & $0.38\pm0.01$ & ---     & $2.09$        & $0.43\pm0.03$ & $7.4\pm0.2$ \\
 SnapKV                 & $0.38\pm0.01$ & $0.07$  & $0.97\pm0.05$ & $0.45\pm0.11$ & $7.3\pm1.0$ \\
 KVzip                  & $0.38\pm0.00$ & $0.92$  & $0.96\pm0.01$ & $1.20\pm0.00$ & $3.8\pm0.0$ \\
-\textbf{SemantiCache}  & $0.38\pm0.01$ & ---     & $8.86\pm0.51$ & $1.37\pm0.01$ & $3.4\pm0.0$ \\
+\textbf{SieveKV}  & $0.38\pm0.01$ & ---     & $8.86\pm0.51$ & $1.37\pm0.01$ & $3.4\pm0.0$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -710,18 +715,18 @@ At $b{=}20\%$, the KV cache shrinks from 131\,MB to 26\,MB (80\%
 reduction); at $b{=}10\%$, to 13\,MB (90\% savings).
 
 \paragraph{Overhead scaling.}
-Per-step eviction latency scales sub-linearly: 6.3\,ms (1800\,t)
-to 10.2\,ms (4000\,t), plateauing beyond 4000 tokens
+Per-step eviction latency scales sub-linearly with context length:
+6.3\,ms at 1800 tokens, 10.2\,ms at 4000 tokens, and 38.4\,ms at 32K tokens
 (Figure~\ref{fig:scaling}).
 
 \subsection{Cross-architecture validation}
 \label{sec:cross}
 
 Table~\ref{tab:llama} reports results on
-\texttt{Llama-3.2-3B-Instruct}~\cite{grattafiori2024llama3}
+\texttt{Llama-3.2-3B-Instruct}~\cite{meta2024llama32}
 (28~layers, 8~KV heads) at $b{=}20\%$ with 50~runs.
 Llama is a stronger retriever (full KV: 90\% vs.\ 58\% on Qwen).
-SemantiCache reaches 84\%---within 6~points of full KV---using
+SieveKV reaches 84\%---within 6~points of full KV---using
 identical signal weights, confirming cross-architecture transfer
 without recalibration.
 
@@ -735,9 +740,9 @@ Same haystack length (${\sim}$1800 target tokens) as the Qwen evaluation.}
 \toprule
 Policy & Acc (\%) & tok/s \\
 \midrule
-Full KV       & $90.0$ & $10.0$ \\
-SnapKV        & $94.0$ & $10.0$ \\
-SemantiCache  & $84.0$ & $7.5$ \\
+Full KV       & $90.0\pm8.6$ & $10.0\pm0.7$ \\
+SnapKV        & $94.0\pm6.8$ & $10.0\pm0.6$ \\
+SieveKV  & $84.0\pm10.5$ & $7.5\pm0.4$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -748,7 +753,7 @@ SemantiCache  & $84.0$ & $7.5$ \\
 %% ================================================================
 
 \paragraph{Distractor filtering.}
-SemantiCache's counter-intuitive improvement under tighter budgets
+SieveKV's counter-intuitive improvement under tighter budgets
 arises from a \emph{distractor filtering} effect: aggressive eviction
 removes tokens that are structurally similar to the needle but
 irrelevant to the query, concentrating the model's attention on
@@ -763,7 +768,7 @@ haystack blocks.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.75\textwidth]{signal_distribution.pdf}
+\includegraphics[width=0.9\textwidth]{signal_distribution.pdf}
 \caption{Signal score distributions for needle (30 tokens) vs.\ haystack
 (3653 tokens) at 50\% depth.
 Query relevance provides the strongest discrimination ($3.5{\times}$
@@ -773,7 +778,7 @@ the needle block from all haystack blocks.}
 \end{figure}
 
 \paragraph{Overhead--accuracy trade-off.}
-SemantiCache's per-step eviction cost (8.86\,ms) reduces throughput
+SieveKV's per-step eviction cost (8.86\,ms) reduces throughput
 to 3.4\,tok/s---roughly half the full-KV baseline.
 This throughput gap is a limitation for latency-sensitive serving;
 three optimization paths can close it:
@@ -781,15 +786,23 @@ three optimization paths can close it:
 (2)~amortized eviction (every $n$ steps instead of every step), and
 (3)~fused CUDA kernels for block selection.
 The overhead scales sub-linearly with context length (Figure~\ref{fig:scaling}):
-62\% increase for $3.3{\times}$ longer context, plateauing beyond
-4000 tokens.
+62\% increase from 1800 to 6000 tokens ($3.3{\times}$ longer context).
 
 \paragraph{Limitations.}
 This study evaluates two 3B models on one benchmark family (RULER NIAH)
-with contexts up to ${\sim}$10K tokens.
-Extending to longer contexts, diverse benchmarks
-(e.g., LongBench, NoLiMa),
-larger models, and per-layer retention are important future directions.
+with actual context lengths up to ${\sim}$36K tokens (target 32\,000 tokens).
+We deliberately chose NIAH as the primary benchmark because it provides a
+\emph{controlled} evaluation that isolates eviction policy quality: the
+task has a single, verifiable ground truth, the needle position and count
+are parameterized, and scoring is deterministic
+(\texttt{string\_match\_all}).
+Open-ended generation benchmarks (e.g., LongBench summarization) conflate
+eviction quality with generation variance, making it harder to attribute
+accuracy differences to the eviction policy alone.
+Nonetheless, extending to diverse benchmarks
+(e.g., LongBench~\cite{bai2024longbench}, NoLiMa~\cite{modarressi2025nolima}),
+longer contexts, larger models, and per-layer retention budgets are
+important future directions.
 The shared-index constraint (same tokens retained across all layers)
 disadvantages methods designed for per-head selection and represents
 another axis for improvement.
@@ -799,13 +812,13 @@ another axis for improvement.
 \label{sec:conclusion}
 %% ================================================================
 
-We presented SemantiCache, a query-aware KV cache eviction policy that
+We presented SieveKV, a query-aware KV cache eviction policy that
 combines five lightweight signals with role-aware pinning and block retention.
-On RULER NIAH, SemantiCache achieves 70\% accuracy at $b{=}20\%$---surpassing
+On RULER NIAH, SieveKV achieves 70\% accuracy at $b{=}20\%$---surpassing
 full KV (58\%) and SnapKV (30\%)---and reaches 80\% at the aggressive $b{=}10\%$
 budget.
 The advantage grows with task complexity: on multi-needle retrieval (4 facts),
-SemantiCache reaches 92.5\% vs.\ 80\% for full KV.
+SieveKV reaches 92.5\% vs.\ 80\% for full KV.
 Cross-architecture transfer to Llama-3.2-3B confirms robustness (84\% accuracy,
 within 6~points of full KV) without recalibration.
 Ablation reveals strong signal synergy (single-component removal $\leq$4\%

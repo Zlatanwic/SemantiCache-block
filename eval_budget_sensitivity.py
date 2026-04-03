@@ -139,7 +139,7 @@ def plot_budget_sensitivity(results_path: str, output_path: str = "results/budge
         "defensivekv": {"color": "#9b59b6", "marker": "v", "linestyle": "-.", "label": "DefensiveKV"},
         "h2o":         {"color": "#e74c3c", "marker": "o", "linestyle": ":",  "label": "H2O"},
         "kvzip":       {"color": "#1abc9c", "marker": "P", "linestyle": "-.", "label": "KVzip"},
-        "semantic":    {"color": "#e74c3c", "marker": "*", "linestyle": "-",  "label": "SemantiCache (ours)"},
+        "semantic":    {"color": "#e74c3c", "marker": "*", "linestyle": "-",  "label": "SieveKV (ours)"},
     }
 
     fig, ax = plt.subplots(1, 1, figsize=(8, 5))
@@ -182,7 +182,9 @@ def plot_budget_sensitivity(results_path: str, output_path: str = "results/budge
     plt.tight_layout()
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_path, dpi=150, bbox_inches="tight")
-    print(f"Plot saved to: {output_path}")
+    pdf_path = Path(output_path).with_suffix(".pdf")
+    plt.savefig(pdf_path)
+    print(f"Plot saved to: {output_path} and {pdf_path}")
     plt.close()
 
 

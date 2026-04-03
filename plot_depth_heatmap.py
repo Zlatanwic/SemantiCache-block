@@ -33,7 +33,7 @@ policy_labels = [
     "H2O",
     "SnapKV",
     "KVzip",
-    "SemantiCache (ours)",
+    "SieveKV (ours)",
 ]
 budgets = [0.5, 0.3, 0.2]
 budget_labels = ["b = 50%", "b = 30%", "b = 20%"]
@@ -41,8 +41,8 @@ depths = sorted({r["depth"] for r in all_data})
 depth_labels = [f"{d:.0%}" for d in depths]
 
 # ── Plot ───────────────────────────────────────────────────────────────
-fig, axes = plt.subplots(1, 3, figsize=(16, 4.2), sharey=True)
-cmap = plt.cm.RdYlGn  # red=bad, green=good
+fig, axes = plt.subplots(1, 3, figsize=(12, 4.5), sharey=True)
+cmap = plt.cm.RdYlGn
 norm = mcolors.Normalize(vmin=0, vmax=100)
 
 for ax, budget, blabel in zip(axes, budgets, budget_labels):
@@ -53,33 +53,35 @@ for ax, budget, blabel in zip(axes, budgets, budget_labels):
 
     im = ax.imshow(matrix, cmap=cmap, norm=norm, aspect="auto")
 
-    # Annotate cells
     for i in range(len(policies)):
         for j in range(len(depths)):
             val = matrix[i, j]
             color = "white" if val < 30 or val > 85 else "black"
             ax.text(j, i, f"{val:.0f}", ha="center", va="center",
-                    fontsize=8, fontweight="bold", color=color)
+                    fontsize=10, fontweight="bold", color=color)
 
     ax.set_xticks(range(len(depths)))
-    ax.set_xticklabels(depth_labels, fontsize=8, rotation=45)
-    ax.set_xlabel("Needle Depth", fontsize=10)
-    ax.set_title(blabel, fontsize=12, fontweight="bold")
+    ax.set_xticklabels(depth_labels, fontsize=13, rotation=45)
+    ax.set_xlabel("Needle Depth", fontsize=14)
+    ax.set_title(blabel, fontsize=15, fontweight="bold")
 
     if ax == axes[0]:
         ax.set_yticks(range(len(policies)))
-        ax.set_yticklabels(policy_labels, fontsize=9)
-
-# Colorbar
-cbar = fig.colorbar(im, ax=axes, shrink=0.8, pad=0.02)
-cbar.set_label("Accuracy (%)", fontsize=10)
+        ax.set_yticklabels(policy_labels, fontsize=14)
 
 fig.suptitle("RULER NIAH Retrieval Accuracy by Needle Depth",
-             fontsize=13, fontweight="bold", y=1.02)
-plt.tight_layout()
-plt.savefig("depth_heatmap.png", dpi=200, bbox_inches="tight")
-plt.savefig("depth_heatmap.pdf", bbox_inches="tight")
-print("Saved: depth_heatmap.png / .pdf")
+             fontsize=16, fontweight="bold", y=1.0)
+
+fig.subplots_adjust(left=0.13, right=0.88, top=0.85, bottom=0.2,wspace=0.15, hspace=0.1)
+
+# 单独放 colorbar
+cax = fig.add_axes([0.905, 0.18, 0.012, 0.58])
+cbar = fig.colorbar(im, cax=cax)
+cbar.set_label("Accuracy (%)", fontsize=14, labelpad=8)
+cbar.ax.tick_params(labelsize=13)
+
+plt.savefig("depth_heatmap.png", dpi=200)
+plt.savefig("depth_heatmap.pdf")
 
 # ── Print summary table for verification ───────────────────────────────
 print(f"\n{'Policy':<20} {'Budget':>6}  " +
