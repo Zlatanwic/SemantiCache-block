@@ -9,7 +9,7 @@
 \usepackage{amsmath}
 \begin{document}
 
-\title{SieveKV: Less Cache, More Accuracy --- Semantic Multi-Signal Eviction for Long-Context Retrieval}
+\title{SieveKV: Semantic Multi-Signal Eviction for Long-Context Retrieval}
 \titlerunning{SieveKV}
 
 \author{Anonymous Author(s)}
@@ -46,7 +46,7 @@ semantic signals reduces accuracy from 70\% to 8\%.
 Systems profiling demonstrates that SieveKV's per-step eviction overhead
 (8.86\,ms) accounts for under 4\% of total decode time---a modest cost for a
 40-point accuracy gain over the strongest baseline.
-These results demonstrate that query-aware, multi-signal token scoring is a
+These results indicate that query-aware, multi-signal token scoring is a
 practical and effective strategy for memory-efficient long-context inference
 in retrieval-heavy workloads.
 \keywords{KV cache eviction \and Long-context inference \and Query-aware systems \and Memory-efficient serving}
@@ -338,7 +338,7 @@ retains the highest-scoring tokens within the partial block and restores
 their original positional order.
 
 Algorithm~\ref{alg:eviction} summarizes the complete eviction procedure.
-Note that in our scoring convention, \emph{lower} scores correspond to higher retention priority; pinned tokens receive $-\infty$ to guarantee they are never selected for eviction.
+Note that in our scoring convention, \emph{higher} scores correspond to higher retention priority; pinned tokens receive $+\infty$ to guarantee they are always retained.
 
 \begin{algorithm}[t]
 \caption{SieveKV eviction at each decode step}
@@ -351,7 +351,7 @@ Note that in our scoring convention, \emph{lower} scores correspond to higher re
 \ENDIF
 \STATE $\mathcal{P} \leftarrow$ \textsc{PinnedMask}(system $\cup$ query-tail $\cup$ recent)
 \STATE $s \leftarrow$ \textsc{MultiSignalScore}($\mathcal{C}$, $\mathcal{T}$)
-\STATE $s[i] \leftarrow -\infty$ for all $i \in \mathcal{P}$ \COMMENT{Pin tokens (never evicted)}
+\STATE $s[i] \leftarrow +\infty$ for all $i \in \mathcal{P}$ \COMMENT{Pin tokens (always retained)}
 \STATE Partition unpinned tokens into blocks of size 16
 \STATE Score each block $b$: $S_b \leftarrow \max_{i \in b} s(i)$
 \STATE Select top-$k$ blocks to fill remaining budget
@@ -414,9 +414,9 @@ controlled depths into Paul Graham essay haystacks of approximately 1800
 target tokens.
 After chat template expansion, prompts contain ${\sim}$3700 tokens (Qwen)
 or ${\sim}$3400 tokens (Llama).
-Scoring follows the RULER \texttt{string\_match\_all} metric: a run is
-correct if and only if all needle values appear as substrings in the
-model's output.
+We use an exact substring-match criterion (string\_match\_all in our
+implementation): a run is counted as correct only if all needle values
+appear as substrings in the model output.
 The NIAH task is specifically designed to stress-test a model's ability to
 locate and retrieve a specific factual span from a long context---exactly
 the scenario where query-agnostic eviction policies fail.
@@ -462,6 +462,11 @@ context scaling (250 runs, 1800--32\,000\,t),
 and cross-architecture validation (150 Llama runs).
 Systems overhead profiling measures latency and memory over 3 runs.
 
+Generation uses greedy decoding (temperature\,=\,0, top-p\,=\,1.0) with
+max\_new\_tokens\,=\,32, matching the exact-match evaluation criterion.
+Cache budget $b$ refers to the fraction of \texttt{KV\_entries} retained per
+layer and is applied uniformly across all layers and KV heads.
+
 %% ================================================================
 \section{Results}
 \label{sec:results}
@@ -472,9 +477,10 @@ Systems overhead profiling measures latency and memory over 3 runs.
 
 Table~\ref{tab:main} reports retrieval accuracy across cache budgets on
 Qwen2.5-3B-Instruct.
-SieveKV achieves the highest accuracy at every budget level and is
-the only policy that \emph{improves} as the budget shrinks: from 60\% at
-$b{=}50\%$ to 70\% at $b{=}20\%$.
+Under this controlled RULER NIAH setting, SieveKV achieves the highest
+accuracy at every budget level and is the only policy whose accuracy
+increases as the cache budget shrinks: from 60\% at $b{=}50\%$ to 70\%
+at $b{=}20\%$.
 All baselines degrade monotonically.
 At $b{=}20\%$, SieveKV (70\%) outperforms the full-KV baseline
 (58\%) by 12 percentage points and the strongest baseline, SnapKV (30\%),
@@ -522,7 +528,9 @@ structurally similar haystack tokens under tight budgets.
 \caption{Budget sensitivity on RULER NIAH. SieveKV is the only
 policy whose accuracy increases as the budget shrinks, reaching 80\%
 at 10\% cache budget. Query-agnostic methods (KVzip, StreamingLLM)
-degrade sharply below 25\%.
+degrade sharply below 25\%.  This counter-intuitive trend reflects
+SieveKV's distractor-filtering effect: tighter budgets force earlier
+removal of haystack tokens, concentrating attention on answer-critical spans.
 25 runs per point (5 depths $\times$ 5 needles).}
 \label{fig:budget}
 \end{figure}
@@ -538,7 +546,7 @@ while H2O degrades sharply from 100\% to 20\%.
 SnapKV maintains 100\% across all lengths but relies solely on
 prefill attention, whereas SieveKV's multi-signal scoring
 additionally enables the multi-needle and depth advantages
-shown in \S\ref{sec:multi-needle}--\ref{sec:depth}.
+shown in \S\ref{sec:depth}--\ref{sec:multi-needle}.
 Figure~\ref{fig:scaling} shows eviction latency: baselines stay below
 2.3\,ms, while SieveKV rises from 6.3 to 38.4\,ms at 32K tokens.
 
@@ -603,9 +611,9 @@ Table~\ref{tab:multi-needle} reports results at $b{=}20\%$ with
 $k \in \{1, 2, 4\}$ (10 trials per cell).
 SieveKV achieves 92.5\% at $k{=}4$, surpassing full KV (80\%) and
 SnapKV (70\%).
-Moreover, SieveKV's accuracy increases from $k{=}2$ (85\%) to
-$k{=}4$ (92.5\%): more needles produce stronger factual and query-relevance
-signals, reinforcing retention of all answer-bearing spans.
+Under the controlled NIAH setting, SieveKV's accuracy increases from
+$k{=}2$ (85\%) to $k{=}4$ (92.5\%): more needles produce stronger factual
+and query-relevance signals, reinforcing retention of all answer-bearing spans.
 
 \begin{table}[htbp]
 \caption{Multi-needle NIAH accuracy (\%, 95\% CI, 10 trials) at $b{=}20\%$ on
@@ -634,7 +642,8 @@ SnapKV                         & $100.0\pm0.0$ & $70.0\pm18.5$ & $70.0\pm16.4$ \
 \caption{Multi-needle NIAH accuracy at $b{=}20\%$.
 SieveKV is the only policy whose accuracy improves from $k{=}2$
 to $k{=}4$, reaching 92.5\%---above full KV (80\%).
-StreamingLLM and H2O fail at $k{=}1$ (0\%).}
+StreamingLLM and H2O fail at $k{=}1$ (0\%).
+Multi-needle settings stress-test policies on sparse factual spans: more needles provide stronger query-relevance and factual-likelihood signals, amplifying SieveKV's advantage.}
 \label{fig:multi-needle}
 \end{figure}
 
@@ -799,6 +808,9 @@ are parameterized, and scoring is deterministic
 Open-ended generation benchmarks (e.g., LongBench summarization) conflate
 eviction quality with generation variance, making it harder to attribute
 accuracy differences to the eviction policy alone.
+Our conclusions should therefore be interpreted primarily as evidence for
+retrieval-oriented long-context settings rather than as a universal advantage
+across all long-context generation tasks.
 Nonetheless, extending to diverse benchmarks
 (e.g., LongBench~\cite{bai2024longbench}, NoLiMa~\cite{modarressi2025nolima}),
 longer contexts, larger models, and per-layer retention budgets are
@@ -816,9 +828,8 @@ We presented SieveKV, a query-aware KV cache eviction policy that
 combines five lightweight signals with role-aware pinning and block retention.
 On RULER NIAH, SieveKV achieves 70\% accuracy at $b{=}20\%$---surpassing
 full KV (58\%) and SnapKV (30\%)---and reaches 80\% at the aggressive $b{=}10\%$
-budget.
-The advantage grows with task complexity: on multi-needle retrieval (4 facts),
-SieveKV reaches 92.5\% vs.\ 80\% for full KV.
+budget; the advantage grows with task complexity, reaching 92.5\% on 4-needle
+retrieval vs.\ 80\% for full KV.
 Cross-architecture transfer to Llama-3.2-3B confirms robustness (84\% accuracy,
 within 6~points of full KV) without recalibration.
 Ablation reveals strong signal synergy (single-component removal $\leq$4\%

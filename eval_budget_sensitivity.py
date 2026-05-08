@@ -133,7 +133,7 @@ def plot_budget_sensitivity(results_path: str, output_path: str = "results/budge
     budgets = sorted(set(r["budget"] for r in results))
 
     STYLE = {
-        "full":        {"color": "#2ecc71", "marker": "s", "linestyle": "--", "label": "Full (upper bound)"},
+        "full":        {"color": "#2ecc71", "marker": "s", "linestyle": "--", "label": "Full (baseline)"},
         "streaming":   {"color": "#f39c12", "marker": "^", "linestyle": "-.", "label": "StreamingLLM"},
         "snapkv":      {"color": "#3498db", "marker": "D", "linestyle": "-.", "label": "SnapKV"},
         "defensivekv": {"color": "#9b59b6", "marker": "v", "linestyle": "-.", "label": "DefensiveKV"},
