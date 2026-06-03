@@ -25,6 +25,7 @@ from eviction_policies import (
     H2OPolicy,
     KVzipPolicy,
     LocalWindowPolicy,
+    OPSieveKVLitePolicy,
     SemantiCachePolicy,
     SnapKVPolicy,
     TieredSemantiCachePolicy,
@@ -142,6 +143,30 @@ def build_policy(cache_cfg: CacheConfig, tracker: AttentionTracker, analyzer: Se
             latest_user_tail_tokens=cache_cfg.semantic_latest_user_tail_tokens,
             generated_retention_window=cache_cfg.semantic_generated_retention_window,
         )
+    if cache_cfg.policy == "op_sievekv_lite":
+        return OPSieveKVLitePolicy(
+            tracker=tracker,
+            analyzer=analyzer,
+            alpha=cache_cfg.alpha,
+            beta=cache_cfg.beta,
+            gamma=cache_cfg.gamma,
+            query_weight=cache_cfg.query_weight,
+            factual_weight=cache_cfg.factual_weight,
+            pin_system=cache_cfg.pin_system,
+            pin_latest_user=cache_cfg.pin_latest_user,
+            recent_window_size=cache_cfg.op_recent_window,
+            hot_recent_window=cache_cfg.semantic_hot_recent_window,
+            hot_block_size=cache_cfg.semantic_hot_block_size,
+            block_size=cache_cfg.semantic_block_size,
+            warm_promotable_reserve=cache_cfg.semantic_warm_promotable_reserve,
+            latest_user_tail_tokens=cache_cfg.semantic_latest_user_tail_tokens,
+            generated_retention_window=cache_cfg.semantic_generated_retention_window,
+            max_segment_tokens=cache_cfg.op_max_segment_tokens,
+            min_segment_tokens=cache_cfg.op_min_segment_tokens,
+            uncertainty_weight=cache_cfg.op_uncertainty_weight,
+            budget_ratio=cache_cfg.cache_budget,
+            policy_ckpt=cache_cfg.op_policy_ckpt,
+        )
     if cache_cfg.policy == "tiered_semantic":
         return TieredSemantiCachePolicy(
             tracker=tracker,
@@ -182,7 +207,7 @@ def _update_tracker_or_raise(
         )
         return
 
-    if policy_name in {"h2o", "semantic", "tiered_semantic"}:
+    if policy_name in {"h2o", "semantic", "tiered_semantic", "op_sievekv_lite"}:
         raise RuntimeError(
             f"Model did not return attentions during {phase}. "
             "Set ModelConfig.attn_implementation='eager'."
@@ -429,6 +454,13 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
     """Run a manual decode loop and prune KV cache between steps."""
     model_cfg = config.model
     cache_cfg = config.cache
+    if (
+        model_cfg.num_layers == 0
+        or model_cfg.num_attention_heads == 0
+        or model_cfg.num_kv_heads == 0
+        or model_cfg.head_dim == 0
+    ):
+        _auto_detect_architecture(model_cfg, model)
 
     text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     inputs = tokenizer(text, return_tensors="pt").to(model.device)
@@ -485,7 +517,7 @@ def generate_with_eviction(model, tokenizer, messages: list[dict], config: Exper
     prefill_start = time.time()
 
     # Policies that need attention weights during prefill
-    _NEEDS_PREFILL_ATTN = {"h2o", "semantic", "tiered_semantic", "snapkv", "kvzip", "defensive"}
+    _NEEDS_PREFILL_ATTN = {"h2o", "semantic", "tiered_semantic", "op_sievekv_lite", "snapkv", "kvzip", "defensivekv"}
     needs_attn = cache_cfg.policy in _NEEDS_PREFILL_ATTN
 
     # Chunked prefill: process long prompts in chunks to avoid OOM from
@@ -911,7 +943,18 @@ def main():
         "--policy",
         type=str,
         default="full",
-        choices=["full", "window", "streaming", "h2o", "semantic", "tiered_semantic"],
+        choices=[
+            "full",
+            "window",
+            "streaming",
+            "h2o",
+            "snapkv",
+            "kvzip",
+            "defensivekv",
+            "semantic",
+            "tiered_semantic",
+            "op_sievekv_lite",
+        ],
     )
     parser.add_argument("--budget", type=float, default=0.5, help="Cache budget ratio (0.1 ~ 1.0)")
     parser.add_argument(
@@ -932,6 +975,11 @@ def main():
     parser.add_argument("--debug-tiers", action="store_true", help="Print hot/warm retained snippets after the first eviction")
     parser.add_argument("--debug-tiers-top-n", type=int, default=8, help="How many hot/warm snippets to print")
     parser.add_argument("--debug-logits-top-n", type=int, default=0, help="Print top logits for prefill and first decode step")
+    parser.add_argument("--op-max-segment-tokens", type=int, default=32, help="Maximum semantic segment length for op_sievekv_lite")
+    parser.add_argument("--op-min-segment-tokens", type=int, default=4, help="Minimum sentence segment length for op_sievekv_lite")
+    parser.add_argument("--op-recent-window", type=int, default=16, help="Hard recent-token window for op_sievekv_lite")
+    parser.add_argument("--op-uncertainty-weight", type=float, default=0.15, help="Entropy bonus weight for op_sievekv_lite")
+    parser.add_argument("--op-policy-ckpt", type=str, default=None, help="Checkpoint for learned OP-SieveKV segment policy")
     parser.add_argument("--temperature", type=float, default=None, help="Sampling temperature override")
     parser.add_argument("--greedy", action="store_true", help="Use greedy decoding instead of sampling")
     parser.add_argument("--mask-polite-openers", action="store_true", help="Mask common polite opener tokens for the first generated token")
@@ -960,6 +1008,11 @@ def main():
     config.cache.semantic_debug_tiers = args.debug_tiers
     config.cache.semantic_debug_tiers_top_n = args.debug_tiers_top_n
     config.cache.semantic_debug_logits_top_n = args.debug_logits_top_n
+    config.cache.op_max_segment_tokens = args.op_max_segment_tokens
+    config.cache.op_min_segment_tokens = args.op_min_segment_tokens
+    config.cache.op_recent_window = args.op_recent_window
+    config.cache.op_uncertainty_weight = args.op_uncertainty_weight
+    config.cache.op_policy_ckpt = args.op_policy_ckpt
     if args.follow_token_bias is not None:
         config.cache.semantic_follow_token_bias = args.follow_token_bias
     if args.temperature is not None:

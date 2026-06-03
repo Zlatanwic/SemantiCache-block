@@ -506,7 +506,7 @@ def main() -> None:
     parser.add_argument(
         "--policy",
         default="semantic",
-        choices=["full", "window", "streaming", "h2o", "semantic", "tiered_semantic"],
+        choices=["full", "window", "streaming", "h2o", "semantic", "tiered_semantic", "op_sievekv_lite"],
         help="Policy to evaluate.",
     )
     parser.add_argument(

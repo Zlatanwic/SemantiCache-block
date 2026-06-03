@@ -1,12 +1,24 @@
 """Eviction policy implementations for KV-cache pruning."""
 
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from typing import Optional
 
 import torch
 
 from attention_tracker import AttentionTracker
+from op_policy_model import FEATURE_DIM, load_policy_checkpoint
 from semantic_analyzer import RoleTag, SemanticAnalyzer
+
+
+@dataclass
+class KVTipStats:
+    """Per-decision diagnostics for OP-SieveKV-style retention training."""
+
+    entropy: torch.Tensor
+    divergence: torch.Tensor
+    soft_or: torch.Tensor
+    quadrant: torch.Tensor
 
 
 class EvictionPolicy(ABC):
@@ -935,6 +947,415 @@ class SemantiCachePolicy(EvictionPolicy):
             self.generated_assistant_mask = self.generated_assistant_mask[keep_mask]
         if self.prompt_token_ids is not None:
             self.prompt_token_ids = self.prompt_token_ids[keep_mask]
+
+
+class OPSieveKVLitePolicy(SemantiCachePolicy):
+    """
+    OP-SieveKV-Lite: semantic segment retention with adaptive gated scoring.
+
+    This is the online-serving half of the research plan's MVP. It keeps the
+    runtime path oracle-free, but exposes KV-TIP diagnostics so offline scripts
+    can attach counterfactual oracle labels and select informative decisions.
+    """
+
+    def __init__(
+        self,
+        *args,
+        max_segment_tokens: int = 32,
+        min_segment_tokens: int = 4,
+        uncertainty_weight: float = 0.15,
+        budget_ratio: float = 0.5,
+        policy_ckpt: str | None = None,
+        **kwargs,
+    ):
+        super().__init__(*args, **kwargs)
+        self.max_segment_tokens = max(4, int(max_segment_tokens))
+        self.min_segment_tokens = max(1, int(min_segment_tokens))
+        self.uncertainty_weight = max(0.0, float(uncertainty_weight))
+        self.budget_ratio = min(max(float(budget_ratio), 0.0), 1.0)
+
+        self.segment_ids: Optional[torch.Tensor] = None
+        self.last_keep_prob: Optional[torch.Tensor] = None
+        self.last_segment_scores: Optional[dict[int, float]] = None
+        self.last_kvtip: Optional[KVTipStats] = None
+        self.learned_policy = None
+        self.learned_feature_mean: Optional[torch.Tensor] = None
+        self.learned_feature_std: Optional[torch.Tensor] = None
+        self.learned_policy_metadata: dict = {}
+        if policy_ckpt:
+            (
+                self.learned_policy,
+                self.learned_feature_mean,
+                self.learned_feature_std,
+                self.learned_policy_metadata,
+            ) = load_policy_checkpoint(policy_ckpt, map_location="cpu")
+
+    def setup_semantic_signals(self, input_ids: torch.Tensor, latest_query_text: str = "") -> None:
+        super().setup_semantic_signals(input_ids, latest_query_text)
+        self.segment_ids = self._build_semantic_segment_ids(input_ids)
+
+    def extend_signals(self, num_new_tokens: int = 1) -> None:
+        next_segment_id = 0
+        if self.segment_ids is not None and self.segment_ids.numel() > 0:
+            next_segment_id = int(self.segment_ids.max().item()) + 1
+        super().extend_signals(num_new_tokens)
+        if self.segment_ids is not None:
+            new_segments = torch.arange(
+                next_segment_id,
+                next_segment_id + num_new_tokens,
+                dtype=torch.long,
+            )
+            self.segment_ids = torch.cat([self.segment_ids, new_segments])
+
+    def evict_positions(self, keep_mask: torch.Tensor) -> None:
+        if self.segment_ids is not None:
+            self.segment_ids = self.segment_ids[keep_mask.cpu()]
+        super().evict_positions(keep_mask)
+
+    def _build_semantic_segment_ids(self, input_ids: torch.Tensor) -> torch.Tensor:
+        """Build sentence/role-aware segment ids with a fixed-block fallback."""
+        ids = input_ids.detach().cpu()
+        seq_len = int(ids.numel())
+        segment_ids = torch.empty(seq_len, dtype=torch.long)
+        if seq_len == 0:
+            return segment_ids
+
+        role_tags = self.role_tags if self.role_tags is not None and len(self.role_tags) >= seq_len else None
+        boundary = self.chat_boundary_mask if self.chat_boundary_mask is not None and len(self.chat_boundary_mask) >= seq_len else None
+        template = self.chat_template_mask if self.chat_template_mask is not None and len(self.chat_template_mask) >= seq_len else None
+
+        segment_id = 0
+        start = 0
+        for pos in range(seq_len):
+            segment_ids[pos] = segment_id
+            token_text = self.analyzer.tokenizer.decode([int(ids[pos].item())], skip_special_tokens=False)
+            role_changed = bool(role_tags is not None and pos > start and role_tags[pos] != role_tags[pos - 1])
+            hard_boundary = bool(boundary is not None and boundary[pos] and pos > start)
+            template_boundary = bool(template is not None and template[pos] and pos > start)
+            sentence_boundary = any(mark in token_text for mark in (".", "?", "!", "\n", "\r", ";"))
+            too_long = (pos - start + 1) >= self.max_segment_tokens
+            long_enough = (pos - start + 1) >= self.min_segment_tokens
+
+            if role_changed or hard_boundary or template_boundary or too_long or (sentence_boundary and long_enough):
+                if pos + 1 < seq_len:
+                    segment_id += 1
+                    start = pos + 1
+
+        return segment_ids
+
+    @staticmethod
+    def _safe_signal(signal: Optional[torch.Tensor], seq_len: int) -> torch.Tensor:
+        if signal is None or len(signal) < seq_len:
+            return torch.zeros(seq_len, dtype=torch.float32)
+        return signal[:seq_len].detach().cpu().float()
+
+    def _segment_positions(self, seq_len: int) -> list[torch.Tensor]:
+        if self.segment_ids is None or len(self.segment_ids) < seq_len:
+            return [torch.arange(start, min(seq_len, start + self.max_segment_tokens), dtype=torch.long) for start in range(0, seq_len, self.max_segment_tokens)]
+
+        segment_ids = self.segment_ids[:seq_len].cpu()
+        positions: list[torch.Tensor] = []
+        for segment_id in segment_ids.unique(sorted=True).tolist():
+            segment_positions = torch.nonzero(segment_ids == segment_id, as_tuple=False).flatten()
+            if segment_positions.numel() > 0:
+                positions.append(segment_positions)
+        return positions
+
+    def compute_segment_features(
+        self,
+        seq_len: int,
+    ) -> tuple[torch.Tensor, list[torch.Tensor], torch.Tensor]:
+        """Return segment features, positions, and heuristic keep probabilities."""
+        attn = self._normalize(self.tracker.get_cumulative_scores(), seq_len)
+        entropy = self._normalize(self.tracker.get_head_entropy(), seq_len)
+        density = self._normalize(self.info_density, seq_len)
+        query = self._normalize(self.query_relevance, seq_len)
+        factual = self._normalize(self.factual_bonus, seq_len)
+        authority = self._normalize(self.authority_bonus, seq_len)
+
+        signals = {
+            "attn": self._safe_signal(attn, seq_len),
+            "entropy": self._safe_signal(entropy, seq_len),
+            "density": self._safe_signal(density, seq_len),
+            "query": self._safe_signal(query, seq_len),
+            "factual": self._safe_signal(factual, seq_len),
+            "authority": self._safe_signal(authority, seq_len),
+        }
+        recency = torch.linspace(0.0, 1.0, seq_len, dtype=torch.float32) if seq_len > 1 else torch.ones(seq_len)
+        signals["recency"] = recency
+
+        query_peak = float(signals["query"].max().item()) if seq_len else 0.0
+        factual_peak = float(signals["factual"].max().item()) if seq_len else 0.0
+        sparse_query = query_peak > 0.15
+        factual_task = factual_peak > 0.20 or float(signals["authority"].max().item()) > 0.0
+
+        weights = {
+            "attn": max(0.05, self.alpha),
+            "density": max(0.05, self.beta * 0.75),
+            "entropy": max(0.05, self.gamma * 0.50),
+            "query": max(0.05, self.query_weight),
+            "factual": max(0.05, self.factual_weight),
+            "authority": 0.35,
+            "recency": 0.08,
+        }
+        if sparse_query:
+            weights["query"] += 0.45
+            weights["factual"] += 0.15
+        if factual_task:
+            weights["factual"] += 0.45
+            weights["authority"] += 0.35
+        if seq_len > self.max_segment_tokens * 4:
+            weights["recency"] += 0.05
+
+        segment_features: list[torch.Tensor] = []
+        segment_positions = self._segment_positions(seq_len)
+        heuristic_probs: list[float] = []
+        for positions in self._segment_positions(seq_len):
+            positions = positions.to(dtype=torch.long)
+            pooled: dict[str, float] = {}
+            for name, values in signals.items():
+                segment_values = values[positions]
+                pooled[name] = 0.55 * float(segment_values.max().item()) + 0.35 * float(segment_values.mean().item())
+                if segment_values.numel() > 1:
+                    pooled[name] += 0.10 * float(segment_values.std(unbiased=False).item())
+
+            score = sum(weights[name] * pooled[name] for name in weights)
+
+            if self.role_tags is not None and len(self.role_tags) >= seq_len:
+                role_values = self.role_tags[:seq_len][positions]
+                role = int(torch.mode(role_values).values.item())
+                if role == RoleTag.SYSTEM:
+                    score += 0.25
+                elif role == RoleTag.USER_LATEST:
+                    score += 0.55
+                elif role == RoleTag.USER_HISTORY:
+                    score += 0.30
+                elif role == RoleTag.ASSISTANT:
+                    score -= 0.20
+                elif role == RoleTag.FILLER:
+                    score -= 0.18
+
+            length_penalty = max(0, int(positions.numel()) - self.max_segment_tokens) / max(1, self.max_segment_tokens)
+            score -= 0.10 * length_penalty
+
+            prob = torch.sigmoid(torch.tensor(2.8 * (score - 0.55))).item()
+            heuristic_probs.append(float(prob))
+
+            start = float(positions[0].item())
+            end = float(positions[-1].item())
+            denom = max(1.0, float(seq_len - 1))
+            feature_values: list[float] = []
+            for signal_name in signals:
+                segment_values = signals[signal_name][positions]
+                feature_values.extend(
+                    [
+                        float(segment_values.max().item()),
+                        float(segment_values.mean().item()),
+                        float(segment_values.std(unbiased=False).item()) if segment_values.numel() > 1 else 0.0,
+                    ]
+                )
+
+            feature_values.extend(
+                [
+                    start / denom,
+                    end / denom,
+                    ((start + end) * 0.5) / denom,
+                    float(positions.numel()) / max(1.0, float(seq_len)),
+                    self.budget_ratio,
+                ]
+            )
+
+            role_fractions = [0.0] * 6
+            if self.role_tags is not None and len(self.role_tags) >= seq_len:
+                role_values = self.role_tags[:seq_len][positions]
+                for role_idx in range(6):
+                    role_fractions[role_idx] = float((role_values == role_idx).float().mean().item())
+            feature_values.extend(role_fractions)
+
+            def mask_fraction(mask: Optional[torch.Tensor]) -> float:
+                if mask is None or len(mask) < seq_len:
+                    return 0.0
+                return float(mask[:seq_len][positions].float().mean().item())
+
+            feature_values.extend(
+                [
+                    mask_fraction(self.pinned_mask),
+                    mask_fraction(self.question_tail_mask),
+                    mask_fraction(self.question_like_mask),
+                    mask_fraction(self.chat_template_mask),
+                    mask_fraction(self.chat_boundary_mask),
+                    float(prob),
+                ]
+            )
+            segment_features.append(torch.tensor(feature_values, dtype=torch.float32))
+
+        if segment_features:
+            features = torch.stack(segment_features, dim=0)
+            if features.shape[1] != FEATURE_DIM:
+                raise RuntimeError(f"OP segment feature dim {features.shape[1]} != expected {FEATURE_DIM}")
+            heuristic_tensor = torch.tensor(heuristic_probs, dtype=torch.float32)
+            return features, segment_positions, heuristic_tensor
+
+        return torch.empty(0, FEATURE_DIM, dtype=torch.float32), [], torch.empty(0, dtype=torch.float32)
+
+    def _compute_token_keep_prob(self, seq_len: int) -> torch.Tensor:
+        """Predict per-token keep probability via heuristic or learned segment scoring."""
+        device = torch.device("cpu")
+        features, segment_positions, heuristic_probs = self.compute_segment_features(seq_len)
+        keep_prob = torch.zeros(seq_len, dtype=torch.float32, device=device)
+        self.last_segment_scores = {}
+
+        if self.learned_policy is not None and features.numel() > 0:
+            assert self.learned_feature_mean is not None
+            assert self.learned_feature_std is not None
+            normalized = (features - self.learned_feature_mean) / self.learned_feature_std
+            with torch.no_grad():
+                segment_probs = torch.sigmoid(self.learned_policy(normalized)).cpu()
+        else:
+            segment_probs = heuristic_probs
+
+        for positions, prob in zip(segment_positions, segment_probs.tolist()):
+            positions = positions.to(dtype=torch.long)
+            keep_prob[positions] = float(prob)
+            self.last_segment_scores[int(positions[0].item())] = float(prob)
+
+        if self.pinned_mask is not None and len(self.pinned_mask) >= seq_len:
+            keep_prob[self.pinned_mask[:seq_len]] = 1.0
+        recent_generated_mask = self._build_recent_generated_mask(seq_len, keep_prob.device)
+        if recent_generated_mask.any():
+            keep_prob[recent_generated_mask] = 1.0
+        if self.recent_window_size > 0:
+            keep_prob[max(0, seq_len - self.recent_window_size) :] = 1.0
+
+        self.last_keep_prob = keep_prob
+        return keep_prob
+
+    def compute_eviction_scores(self, seq_len: int, **kwargs) -> torch.Tensor:
+        keep_prob = self._compute_token_keep_prob(seq_len)
+        entropy = -(keep_prob * torch.log(keep_prob.clamp(min=1e-6)) + (1.0 - keep_prob) * torch.log((1.0 - keep_prob).clamp(min=1e-6)))
+        scores = 1.0 - keep_prob
+        scores -= self.uncertainty_weight * (entropy / torch.log(torch.tensor(2.0)))
+
+        if self.pinned_mask is not None and len(self.pinned_mask) >= seq_len:
+            scores[self.pinned_mask[:seq_len]] = -torch.inf
+        recent_generated_mask = self._build_recent_generated_mask(seq_len, scores.device)
+        if recent_generated_mask.any():
+            scores[recent_generated_mask] = -torch.inf
+        if self.recent_window_size > 0:
+            scores[max(0, seq_len - self.recent_window_size) :] = -torch.inf
+        return scores
+
+    def select_keep_indices(self, scores: torch.Tensor, budget: int) -> torch.Tensor:
+        seq_len = int(scores.shape[0])
+        if budget >= seq_len:
+            return torch.arange(seq_len, device=scores.device)
+
+        protected_mask = self._build_protected_mask(seq_len, scores.device)
+        protected_indices = torch.nonzero(protected_mask, as_tuple=False).flatten()
+        if protected_indices.numel() >= budget:
+            return self._trim_op_protected_indices(seq_len, budget, scores.device)
+
+        keep_indices = protected_indices.tolist()
+        remaining = budget - len(keep_indices)
+        selected = protected_mask.detach().cpu().clone()
+
+        segment_candidates: list[tuple[float, torch.Tensor]] = []
+        for positions in self._segment_positions(seq_len):
+            optional = positions[~selected[positions]]
+            if optional.numel() == 0:
+                continue
+            segment_score = float(scores[optional].min().item())
+            segment_candidates.append((segment_score, optional))
+        segment_candidates.sort(key=lambda item: item[0])
+
+        for _, positions in segment_candidates:
+            if remaining <= 0:
+                break
+            positions = positions.to(device=scores.device, dtype=torch.long)
+            if positions.numel() <= remaining:
+                keep_indices.extend(positions.tolist())
+                remaining -= int(positions.numel())
+                continue
+            local_scores = scores[positions]
+            _, best = local_scores.topk(remaining, largest=False)
+            keep_indices.extend(positions[best].sort().values.tolist())
+            remaining = 0
+
+        keep_tensor = torch.tensor(keep_indices, device=scores.device, dtype=torch.long).unique(sorted=True)
+        if keep_tensor.numel() > budget:
+            keep_tensor = keep_tensor[-budget:]
+        return keep_tensor.sort().values
+
+    def _trim_op_protected_indices(self, seq_len: int, budget: int, device: torch.device) -> torch.Tensor:
+        """Trim oversized protected sets without collapsing into a pure recent window."""
+        keep_mask = torch.zeros(seq_len, dtype=torch.bool, device=device)
+
+        if self.pinned_mask is not None and len(self.pinned_mask) >= seq_len:
+            keep_mask |= self.pinned_mask[:seq_len].to(device=device)
+
+        if self.generated_retention_window > 0:
+            recent_generated_mask = self._build_recent_generated_mask(seq_len, device)
+            keep_mask |= recent_generated_mask
+
+        hard_indices = torch.nonzero(keep_mask, as_tuple=False).flatten()
+        if hard_indices.numel() >= budget:
+            scores = self.last_keep_prob if self.last_keep_prob is not None else torch.zeros(seq_len)
+            hard_scores = scores[hard_indices.cpu()].to(device=device)
+            _, order = hard_scores.topk(budget, largest=True)
+            return hard_indices[order].sort().values
+
+        keep_indices = hard_indices.tolist()
+        remaining = budget - len(keep_indices)
+        if remaining <= 0:
+            return hard_indices.sort().values
+
+        recent_quota = min(remaining, max(1, min(self.recent_window_size, budget // 3)))
+        recent_start = max(0, seq_len - recent_quota)
+        for idx in range(recent_start, seq_len):
+            if idx not in keep_indices:
+                keep_indices.append(idx)
+
+        remaining = budget - len(keep_indices)
+        if remaining > 0:
+            score_source = self.last_keep_prob if self.last_keep_prob is not None else torch.zeros(seq_len)
+            candidates = torch.arange(seq_len, dtype=torch.long)
+            already = torch.zeros(seq_len, dtype=torch.bool)
+            if keep_indices:
+                already[torch.tensor(keep_indices, dtype=torch.long)] = True
+            candidates = candidates[~already]
+            if candidates.numel() > 0:
+                candidate_scores = score_source[candidates]
+                _, order = candidate_scores.topk(min(remaining, candidates.numel()), largest=True)
+                keep_indices.extend(candidates[order].tolist())
+
+        return torch.tensor(keep_indices[:budget], device=device, dtype=torch.long).unique(sorted=True)
+
+    def compute_kvtip_stats(self, oracle_keep_prob: torch.Tensor) -> KVTipStats:
+        """Compute KV-TIP entropy/divergence quadrants for offline distillation."""
+        if self.last_keep_prob is None:
+            raise RuntimeError("compute_eviction_scores must run before KV-TIP diagnostics.")
+
+        policy_prob = self.last_keep_prob.detach().cpu().float()
+        oracle = oracle_keep_prob.detach().cpu().float()
+        if oracle.numel() != policy_prob.numel():
+            raise ValueError(f"oracle_keep_prob length {oracle.numel()} != policy length {policy_prob.numel()}")
+
+        p = policy_prob.clamp(1e-6, 1.0 - 1e-6)
+        y = oracle.clamp(1e-6, 1.0 - 1e-6)
+        entropy = -(p * torch.log(p) + (1.0 - p) * torch.log(1.0 - p)) / torch.log(torch.tensor(2.0))
+        divergence = torch.abs(y - p)
+        soft_or = entropy + divergence - entropy * divergence
+
+        high_entropy = entropy > entropy.median()
+        high_divergence = divergence > divergence.median()
+        quadrant = torch.ones_like(policy_prob, dtype=torch.long)
+        quadrant[high_entropy & ~high_divergence] = 2
+        quadrant[~high_entropy & high_divergence] = 3
+        quadrant[high_entropy & high_divergence] = 4
+
+        stats = KVTipStats(entropy=entropy, divergence=divergence, soft_or=soft_or, quadrant=quadrant)
+        self.last_kvtip = stats
+        return stats
 
 
 class TieredSemantiCachePolicy(SemantiCachePolicy):

@@ -90,12 +90,22 @@ def run_multi_needle_eval(
     target_tokens: int,
     rng: random.Random,
     max_new_tokens: int = 128,
+    example: dict | None = None,
 ) -> dict:
     """Run a single multi-needle NIAH evaluation."""
-    key, question, facts, values = make_multi_needles(num_needles, rng)
-
-    # Spread needles evenly across depths
-    depths = list(np.linspace(0.0, 1.0, num=num_needles, endpoint=True))
+    if example is None:
+        key, question, facts, values = make_multi_needles(num_needles, rng)
+        depths = list(np.linspace(0.0, 1.0, num=num_needles, endpoint=True))
+        sample_id = None
+    else:
+        key = str(example["needle_key"])
+        question = str(example["question"])
+        facts = list(example["facts"])
+        values = list(example["needle_values"])
+        depths = [float(value) for value in example["needle_depths"]]
+        num_needles = int(example["num_needles"])
+        target_tokens = int(example.get("target_tokens", target_tokens))
+        sample_id = example.get("sample_id")
 
     haystack = build_pg_haystack(tokenizer, target_tokens)
     text_with_needles = insert_needles_at_depths(haystack, facts, depths)
@@ -126,6 +136,7 @@ def run_multi_needle_eval(
         "policy": config.cache.policy,
         "budget": config.cache.cache_budget,
         "num_needles": num_needles,
+        "sample_id": sample_id,
         "target_tokens": target_tokens,
         "actual_prompt_tokens": prompt_tokens,
         "needle_key": key,
@@ -140,6 +151,39 @@ def run_multi_needle_eval(
         "initial_seq_len": stats.get("initial_seq_len", 0),
         "total_evicted": stats.get("total_evicted", 0),
     }
+
+
+def make_multi_needle_manifest(
+    *,
+    needle_counts: list[int],
+    num_trials: int,
+    target_tokens: int,
+    seed: int,
+) -> list[dict]:
+    """Create fixed multi-needle samples for paired policy comparisons."""
+    rng = random.Random(seed)
+    manifest: list[dict] = []
+    sample_id = 0
+    for num_needles in needle_counts:
+        for trial in range(num_trials):
+            key, question, facts, values = make_multi_needles(num_needles, rng)
+            depths = list(np.linspace(0.0, 1.0, num=num_needles, endpoint=True))
+            manifest.append(
+                {
+                    "benchmark": "ruler_multi_niah",
+                    "sample_id": sample_id,
+                    "trial": trial + 1,
+                    "num_needles": num_needles,
+                    "target_tokens": target_tokens,
+                    "needle_key": key,
+                    "question": question,
+                    "facts": facts,
+                    "needle_values": values,
+                    "needle_depths": depths,
+                }
+            )
+            sample_id += 1
+    return manifest
 
 
 # ---------------------------------------------------------------------------
@@ -158,16 +202,27 @@ def run_multi_needle_suite(
     max_new_tokens: int = 128,
     output_path: Optional[str] = None,
     model_cfg=None,
+    op_policy_ckpt: str | None = None,
+    manifest_path: Optional[str] = None,
 ) -> list[dict]:
     """Run multi-needle evaluation grid."""
     rng = random.Random(seed)
+    manifest = None
+    if manifest_path:
+        manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+        needle_counts = sorted({int(item["num_needles"]) for item in manifest})
+        num_trials = max(1, len(manifest) // max(1, len(needle_counts)))
 
-    total = len(policies) * len(budgets) * len(needle_counts) * num_trials
+    examples_per_policy_budget = len(manifest) if manifest is not None else len(needle_counts) * num_trials
+    total = len(policies) * len(budgets) * examples_per_policy_budget
     print(f"Multi-Needle NIAH suite: {total} total runs")
     print(f"  policies: {policies}")
     print(f"  budgets: {budgets}")
     print(f"  needle_counts: {needle_counts}")
-    print(f"  trials per cell: {num_trials}")
+    if manifest_path:
+        print(f"  manifest: {manifest_path} ({len(manifest)} samples)")
+    else:
+        print(f"  trials per cell: {num_trials}")
     print(f"  target_tokens: {target_tokens}")
 
     results: list[dict] = []
@@ -176,37 +231,47 @@ def run_multi_needle_suite(
 
     for policy in policies:
         for budget in budgets:
-            for n_needles in needle_counts:
-                for trial in range(num_trials):
-                    run_idx += 1
-                    elapsed = time.time() - t0
-                    eta = (elapsed / run_idx) * (total - run_idx) if run_idx > 1 else 0
-                    print(
-                        f"[{run_idx}/{total}] {policy} b={budget:.0%} "
-                        f"needles={n_needles} trial={trial+1} "
-                        f"(elapsed={elapsed:.0f}s eta={eta:.0f}s)"
-                    )
+            eval_items = manifest if manifest is not None else None
+            if eval_items is None:
+                eval_items = [
+                    {"num_needles": n_needles, "trial": trial + 1, "example": None}
+                    for n_needles in needle_counts
+                    for trial in range(num_trials)
+                ]
+            for item in eval_items:
+                n_needles = int(item["num_needles"])
+                trial = int(item.get("trial", 0))
+                run_idx += 1
+                elapsed = time.time() - t0
+                eta = (elapsed / run_idx) * (total - run_idx) if run_idx > 1 else 0
+                print(
+                    f"[{run_idx}/{total}] {policy} b={budget:.0%} "
+                    f"needles={n_needles} trial={trial or '?'} "
+                    f"(elapsed={elapsed:.0f}s eta={eta:.0f}s)"
+                )
 
-                    cfg = ExperimentConfig()
-                    if model_cfg is not None:
-                        cfg.model = model_cfg
-                    cfg.cache.policy = policy
-                    cfg.cache.cache_budget = budget
+                cfg = ExperimentConfig()
+                if model_cfg is not None:
+                    cfg.model = model_cfg
+                cfg.cache.policy = policy
+                cfg.cache.cache_budget = budget
+                cfg.cache.op_policy_ckpt = op_policy_ckpt
 
-                    result = run_multi_needle_eval(
-                        model, tokenizer, cfg,
-                        num_needles=n_needles,
-                        target_tokens=target_tokens,
-                        rng=rng,
-                        max_new_tokens=max_new_tokens,
-                    )
-                    result["trial"] = trial + 1
-                    results.append(result)
-                    print(
-                        f"  found={result['num_found']}/{n_needles} "
-                        f"score={result['score']:.0f}% "
-                        f"-> {result['output_text'][:60]}"
-                    )
+                result = run_multi_needle_eval(
+                    model, tokenizer, cfg,
+                    num_needles=n_needles,
+                    target_tokens=target_tokens,
+                    rng=rng,
+                    max_new_tokens=max_new_tokens,
+                    example=item if manifest is not None else None,
+                )
+                result["trial"] = trial
+                results.append(result)
+                print(
+                    f"  found={result['num_found']}/{n_needles} "
+                    f"score={result['score']:.0f}% "
+                    f"-> {result['output_text'][:60]}"
+                )
 
         # Per-policy checkpoint
         policy_results = [r for r in results if r["policy"] == policy]
@@ -260,7 +325,23 @@ if __name__ == "__main__":
     parser.add_argument("--max-new-tokens", type=int, default=128)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--output", default="results/multi_needle/multi_needle_results.json")
+    parser.add_argument("--op-policy-ckpt", type=str, default=None, help="Learned OP-SieveKV policy checkpoint")
+    parser.add_argument("--manifest", type=str, default=None, help="Fixed multi-needle manifest to evaluate")
+    parser.add_argument("--create-manifest", type=str, default=None, help="Write a fixed multi-needle manifest and exit")
     args = parser.parse_args()
+
+    if args.create_manifest:
+        manifest = make_multi_needle_manifest(
+            needle_counts=args.needle_counts,
+            num_trials=args.num_trials,
+            target_tokens=args.target_tokens,
+            seed=args.seed,
+        )
+        out = Path(args.create_manifest)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+        print(f"Wrote {len(manifest)} multi-needle manifest samples to {out}")
+        raise SystemExit(0)
 
     cfg = ExperimentConfig()
     if args.model:
@@ -279,4 +360,6 @@ if __name__ == "__main__":
         max_new_tokens=args.max_new_tokens,
         output_path=args.output,
         model_cfg=cfg.model,
+        op_policy_ckpt=args.op_policy_ckpt,
+        manifest_path=args.manifest,
     )

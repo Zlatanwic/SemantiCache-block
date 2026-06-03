@@ -8,6 +8,7 @@ KV-cache eviction policies and cache budgets.
 
 import argparse
 import json
+import random
 from pathlib import Path
 
 from config import ExperimentConfig
@@ -50,7 +51,7 @@ HAYSTACK_PARAGRAPHS = [
     "Data engineering pipelines transform raw data into actionable insights. ETL processes, stream processing, and data warehousing form the backbone of modern data infrastructure.",
 ]
 
-SWEEP_POLICIES = ["full", "window", "streaming", "h2o", "semantic", "tiered_semantic"]
+SWEEP_POLICIES = ["full", "window", "streaming", "h2o", "semantic", "tiered_semantic", "op_sievekv_lite"]
 SWEEP_BUDGETS = [1.0, 0.5, 0.3, 0.1]
 SWEEP_POSITIONS = [0.0, 0.25, 0.5, 0.75, 1.0]
 
@@ -59,14 +60,17 @@ def build_haystack_prompt(
     needle: dict,
     haystack_length: int = 2000,
     needle_position: float = 0.5,
+    paragraph_offset: int = 0,
 ) -> list[dict]:
     """Build a long-context prompt with one inserted target fact."""
     paragraphs = []
     total_chars = 0
     target_chars = haystack_length * 4
+    offset = int(paragraph_offset) % len(HAYSTACK_PARAGRAPHS)
+    haystack_paragraphs = HAYSTACK_PARAGRAPHS[offset:] + HAYSTACK_PARAGRAPHS[:offset]
 
     while total_chars < target_chars:
-        for paragraph in HAYSTACK_PARAGRAPHS:
+        for paragraph in haystack_paragraphs:
             paragraphs.append(paragraph)
             total_chars += len(paragraph)
             if total_chars >= target_chars:
@@ -199,6 +203,7 @@ def build_result_record(
     budget: float,
     haystack_length: int,
     needle_position: float,
+    paragraph_offset: int = 0,
 ) -> dict:
     """Normalize one evaluation run into a stable JSON-friendly schema."""
     stats = run_result["stats"]
@@ -212,6 +217,7 @@ def build_result_record(
         "budget": budget,
         "haystack_length": haystack_length,
         "needle_position": needle_position,
+        "paragraph_offset": paragraph_offset,
         "needle_fact": needle["fact"],
         "question": needle["question"],
         "answer_keywords": needle["answer_keywords"],
@@ -269,11 +275,12 @@ def run_single_eval(
     needle: dict,
     haystack_length: int,
     needle_position: float,
+    paragraph_offset: int = 0,
     max_new_tokens: int | None = None,
     stop_when_answer_found: bool = False,
 ) -> dict:
     """Run one NIAH evaluation item."""
-    messages = build_haystack_prompt(needle, haystack_length, needle_position)
+    messages = build_haystack_prompt(needle, haystack_length, needle_position, paragraph_offset)
     config.model.do_sample = False
     config.model.max_new_tokens = max_new_tokens if max_new_tokens is not None else 128
     config.model.stop_when_output_contains = list(needle["answer_keywords"]) if stop_when_answer_found else []
@@ -287,7 +294,95 @@ def run_single_eval(
         budget=config.cache.cache_budget,
         haystack_length=haystack_length,
         needle_position=needle_position,
+        paragraph_offset=paragraph_offset,
     )
+
+
+def make_niah_manifest(
+    *,
+    num_samples: int,
+    haystack_length: int,
+    seed: int,
+    positions: list[float] | None = None,
+) -> list[dict]:
+    """Create fixed NIAH samples for paired policy comparisons."""
+    rng = random.Random(seed)
+    position_choices = positions or SWEEP_POSITIONS
+    manifest: list[dict] = []
+    for sample_id in range(num_samples):
+        needle_index = sample_id % len(NEEDLES)
+        if sample_id < len(NEEDLES) * len(position_choices):
+            position = position_choices[(sample_id // len(NEEDLES)) % len(position_choices)]
+        else:
+            position = round(rng.uniform(0.0, 1.0), 4)
+        manifest.append(
+            {
+                "task": "niah",
+                "sample_id": sample_id,
+                "needle_index": needle_index,
+                "haystack_length": haystack_length,
+                "needle_position": position,
+                "paragraph_offset": rng.randrange(len(HAYSTACK_PARAGRAPHS)),
+            }
+        )
+    return manifest
+
+
+def run_manifest(
+    model,
+    tokenizer,
+    manifest_path: Path,
+    output_path: Path,
+    policies: list[str],
+    budgets: list[float],
+    hot_ratio: float = 0.5,
+    warm_top_k: int = 16,
+    op_policy_ckpt: str | None = None,
+) -> list[dict]:
+    """Run a fixed NIAH manifest across policies and budgets."""
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    valid_policy_budget_pairs = [
+        (policy, budget)
+        for policy in policies
+        for budget in budgets
+        if not (policy == "full" and budget != 1.0)
+    ]
+    total = len(valid_policy_budget_pairs) * len(manifest)
+    results: list[dict] = []
+    run_index = 0
+
+    for policy, budget in valid_policy_budget_pairs:
+        for item in manifest:
+            run_index += 1
+            needle = NEEDLES[int(item["needle_index"])]
+            print(
+                f"\n[{run_index}/{total}] policy={policy}, budget={budget:.0%}, "
+                f"sample={item.get('sample_id')}, pos={float(item['needle_position']):.2f}"
+            )
+            config = ExperimentConfig()
+            config.cache.policy = policy
+            config.cache.cache_budget = budget
+            config.cache.semantic_hot_ratio = hot_ratio
+            config.cache.semantic_warm_top_k = warm_top_k
+            config.cache.op_policy_ckpt = op_policy_ckpt
+            result = run_single_eval(
+                model=model,
+                tokenizer=tokenizer,
+                config=config,
+                needle=needle,
+                haystack_length=int(item["haystack_length"]),
+                needle_position=float(item["needle_position"]),
+                paragraph_offset=int(item.get("paragraph_offset", 0)),
+            )
+            result["sample_id"] = item.get("sample_id")
+            results.append(result)
+            print(f"  -> {'Correct' if result['correct'] else 'Wrong'}")
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(results, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"\nResults saved to {output_path}")
+    summarize_results(results, policies=policies, budgets=budgets)
+    return results
 
 
 def summarize_results(results: list[dict], policies: list[str], budgets: list[float]) -> None:
@@ -328,6 +423,7 @@ def run_sweep(
     positions: list[float] | None = None,
     hot_ratio: float = 0.5,
     warm_top_k: int = 16,
+    op_policy_ckpt: str | None = None,
 ) -> list[dict]:
     """Run the full sweep across policies, budgets and needle positions."""
     policies = policies or SWEEP_POLICIES
@@ -354,6 +450,7 @@ def run_sweep(
         config.cache.cache_budget = budget
         config.cache.semantic_hot_ratio = hot_ratio
         config.cache.semantic_warm_top_k = warm_top_k
+        config.cache.op_policy_ckpt = op_policy_ckpt
 
         result = run_single_eval(
             model=model,
@@ -385,7 +482,21 @@ def main():
         choices=SWEEP_POLICIES,
         help="Policy for single-run evaluation",
     )
+    parser.add_argument(
+        "--policies",
+        nargs="+",
+        default=None,
+        choices=SWEEP_POLICIES,
+        help="Policies for manifest mode. Defaults to --policy.",
+    )
     parser.add_argument("--budget", type=float, default=0.5, help="Cache budget ratio")
+    parser.add_argument(
+        "--sweep-budgets",
+        nargs="+",
+        type=float,
+        default=None,
+        help="Budget ratios for sweep mode",
+    )
     parser.add_argument("--haystack-length", type=int, default=2000, help="Approximate haystack token budget")
     parser.add_argument("--needle-pos", type=float, default=0.5, help="Needle insertion position in [0, 1]")
     parser.add_argument(
@@ -406,11 +517,45 @@ def main():
         default="results/niah_results.json",
         help="Output path for JSON results",
     )
+    parser.add_argument("--op-policy-ckpt", type=str, default=None, help="Learned OP-SieveKV policy checkpoint")
+    parser.add_argument("--manifest", type=str, default=None, help="Fixed NIAH manifest to evaluate")
+    parser.add_argument("--create-manifest", type=str, default=None, help="Write a fixed NIAH manifest and exit")
+    parser.add_argument("--manifest-samples", type=int, default=90, help="Number of samples for --create-manifest")
+    parser.add_argument("--manifest-seed", type=int, default=42, help="Seed for --create-manifest")
     args = parser.parse_args()
 
+    if args.create_manifest:
+        manifest = make_niah_manifest(
+            num_samples=args.manifest_samples,
+            haystack_length=args.haystack_length,
+            seed=args.manifest_seed,
+        )
+        manifest_path = Path(args.create_manifest)
+        manifest_path.parent.mkdir(parents=True, exist_ok=True)
+        manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+        print(f"Wrote {len(manifest)} NIAH manifest samples to {manifest_path}")
+        return
+
     config = ExperimentConfig()
+    config.cache.op_policy_ckpt = args.op_policy_ckpt
     model, tokenizer = load_model(config.model)
     output_path = Path(args.output)
+
+    if args.manifest:
+        manifest_budgets = args.sweep_budgets or [args.budget]
+        manifest_policies = args.policies or [args.policy]
+        run_manifest(
+            model=model,
+            tokenizer=tokenizer,
+            manifest_path=Path(args.manifest),
+            output_path=output_path,
+            policies=manifest_policies,
+            budgets=manifest_budgets,
+            hot_ratio=args.hot_ratio,
+            warm_top_k=args.warm_top_k,
+            op_policy_ckpt=args.op_policy_ckpt,
+        )
+        return
 
     if args.sweep:
         run_sweep(
@@ -418,8 +563,11 @@ def main():
             tokenizer=tokenizer,
             output_path=output_path,
             haystack_length=args.haystack_length,
+            policies=args.policies,
+            budgets=args.sweep_budgets,
             hot_ratio=args.hot_ratio,
             warm_top_k=args.warm_top_k,
+            op_policy_ckpt=args.op_policy_ckpt,
         )
         return
 
@@ -427,6 +575,7 @@ def main():
     config.cache.cache_budget = args.budget
     config.cache.semantic_hot_ratio = args.hot_ratio
     config.cache.semantic_warm_top_k = args.warm_top_k
+    config.cache.op_policy_ckpt = args.op_policy_ckpt
 
     needle = NEEDLES[0]
     result = run_single_eval(

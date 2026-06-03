@@ -38,7 +38,18 @@ class ModelConfig:
 class CacheConfig:
     # Fraction of the prefill prompt length retained in the KV cache
     cache_budget: float = 0.5
-    policy: Literal["full", "window", "streaming", "h2o", "snapkv", "kvzip", "defensivekv", "semantic", "tiered_semantic"] = "full"
+    policy: Literal[
+        "full",
+        "window",
+        "streaming",
+        "h2o",
+        "snapkv",
+        "kvzip",
+        "defensivekv",
+        "semantic",
+        "tiered_semantic",
+        "op_sievekv_lite",
+    ] = "full"
 
     # StreamingLLM
     sink_tokens: int = 4
@@ -74,6 +85,13 @@ class CacheConfig:
     semantic_debug_tiers_top_n: int = 8
     semantic_debug_logits_top_n: int = 0
     semantic_follow_token_bias: float = 4.0
+
+    # OP-SieveKV-Lite semantic segment policy
+    op_max_segment_tokens: int = 32
+    op_min_segment_tokens: int = 4
+    op_recent_window: int = 16
+    op_uncertainty_weight: float = 0.15
+    op_policy_ckpt: str | None = None
 
     # Hard protection for semantic roles
     pin_system: bool = True

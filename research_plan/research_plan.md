@@ -30,7 +30,25 @@
 
 5. **confidence-blind 问题**：固定 heuristic 或普通 supervised distillation 可能只关注明显不确定的 segment，但容易漏掉另一类更危险的错误：policy 非常自信地 drop 了某个看似不相关、但实际上对 multi-hop / retrieval / planning 至关重要的 segment。这类 “confident but wrong eviction” 需要专门建模。
 
-因此，本研究计划提出一种新的 KV cache retention 学习框架：**OP-SieveKV**。它将原有 SieveKV 的多信号启发式方法升级为一种 **on-policy oracle-distilled adaptive semantic retention policy**。核心思想是：让当前 KV retention policy 在自己的 compressed-cache trajectory 上执行 eviction，然后用 full-KV / counterfactual oracle 纠正它在真实压缩状态下犯的错误；同时借鉴 on-policy distillation 中 entropy + divergence 的 token selection 思想，只训练最有信息量的 retention decisions，尤其关注 policy 自信但错误的 Q3-type eviction cases。
+因此，本研究计划提出一种新的 KV cache retention 学习框架：**OP-SieveKV**。它将原有 SieveKV 的多信号启发式方法升级为一种 **on-policy oracle-distilled adaptive semantic retention policy**。核心思想是：让当前 KV retention policy 在自己的 compressed-cache trajectory 上执行 eviction，然后用 full-KV / counterfactual oracle 纠正它在真实压缩状态下犯的错误；同时借鉴 on-policy distillation 中 entropy + divergence 的 token selection 思想，识别最有信息量的 retention decisions，尤其关注 policy 自信但错误的 Q3-type eviction cases。
+
+### 2.1 2026-06 方法修订：从 Soft-OR filtering 到 Trust-Region Oracle Reweighting
+
+阅读 TrOPD（Trust Region On-Policy Distillation）后，本计划对 Soft-OR/KV-TIP 的使用方式做一个重要修订：**Soft-OR 不再被视为最终训练集过滤器，而是用于识别 on-policy oracle outliers；最终方法保留完整 on-policy 数据分布，并对这些 outliers 做 reweighting。**
+
+这个修订来自一个更一般的判断：on-policy label 并不天然可靠。当前 policy 在自己的 compressed-cache state 上产生 retention decisions，其中一部分 decision 与 oracle 接近，可以视为 trust-region support；另一部分 decision 与 oracle 分歧很大，尤其是 missed-keep / Q3 confident-wrong cases，可以视为 oracle-outlier。直接过滤出 top-rho outliers 训练，会删除大量普通负类、teacher support 和稳定 aligned rows，容易破坏 policy calibration；而保留全量数据、只提高 outlier 权重，可以在纠正错删 evidence 的同时维持原始 retention 分布。
+
+因此，本计划中的完整训练路线更新为：
+
+1. 收集 on-policy compressed-cache oracle dataset；
+2. 对 oracle rows 计算 retention entropy、oracle-policy divergence 和 Soft-OR score；
+3. 每个 budget 内选择 top-rho oracle outliers；
+4. 不过滤训练集，而是在完整 dataset 上对 selected outliers 乘以额外权重；
+5. 对 Q3 confident-wrong 和 missed-keep restore positives 进一步加权；
+6. 使用 weighted BCE 训练轻量 retention policy；
+7. 将 filtering-only 版本保留为 ablation，用于证明 naive selection 会造成分布破坏。
+
+详细实现规范、命令和字段约定见 [`trust_region_reweighting_design.md`](trust_region_reweighting_design.md)。
 
 ---
 
@@ -125,8 +143,9 @@ OP-SieveKV 包含两个阶段：离线训练阶段和在线推理阶段。
 3. 对 policy 保留和删除的 candidate segments 进行 counterfactual drop / restore；
 4. 计算 oracle segment importance；
 5. 构造 retention entropy 和 oracle-policy divergence；
-6. 用 Soft-OR 选择最有训练价值的 segment decisions；
-7. 使用 BCE loss、ranking loss 和 budget-aware regularization 更新轻量 policy。
+6. 用 Soft-OR / KV-TIP 识别最有训练价值的 oracle-outlier decisions；
+7. 保留完整 on-policy dataset，对 selected outliers 做 trust-region reweighting；
+8. 使用 weighted BCE loss、ranking loss 和 budget-aware regularization 更新轻量 policy。
 
 #### 在线推理阶段
 
@@ -504,6 +523,36 @@ z_{j,l}
 
 同时跳过大量低 entropy、低 divergence 的 solved decisions，降低训练成本。
 
+### 5.6.5 Trust-Region Oracle Reweighting
+
+实验中需要区分 **diagnostic filtering** 和 **full-method reweighting**：
+
+* **Filtering**：只保留 support rows 与 Soft-OR top-rho oracle rows。它适合作为消融，用来回答“高 entropy / 高 divergence / Q3 是否包含有效训练信号”。但它会改变训练分布，容易使 policy 过度关注少数强 oracle rows，导致 multi-needle evidence coverage 下降。
+* **Reweighting**：保留完整 on-policy dataset，只对 Soft-OR top-rho oracle rows 提高权重。它对应完整方法，因为普通 rows 仍然提供 calibration、negative examples 和 heuristic support，而 oracle outliers 通过更高 loss weight 得到强化。
+
+借鉴 TrOPD 的 trust-region 思想，本研究将 oracle-policy divergence 低的 rows 视为 trust-region support，将 divergence 高的 rows 视为 oracle outliers。对这些 outliers 不直接丢弃，也不单独训练，而是在完整数据上乘以权重：
+
+[
+w'_{j,l}
+=
+w_{j,l}
+\cdot
+m_{selected}
+\cdot
+m_{Q3}^{\mathbb{1}[Q3]}
+\cdot
+m_{missed}^{\mathbb{1}[\text{missed-keep}]}
+]
+
+其中：
+
+* (m_{selected})：Soft-OR top-rho oracle row 的基础增强系数；
+* (m_{Q3})：policy 自信但 oracle 认为错误时的额外增强；
+* (m_{missed})：restore oracle 发现 missed-keep 时的额外增强；
+* 权重最终会被 (w_{max}) clamp，避免少数样本主导训练。
+
+这一设计对应当前代码中的 `select_op_oracle_dataset.py --method-preset trust_region_reweight`。它把 Soft-OR 从“训练集过滤规则”改成“oracle outlier weighting rule”，更符合 on-policy distillation 中“只在可靠区域直接学习、对 outlier 采取保守处理”的思想。
+
 ---
 
 ## 5.7 Training Objective
@@ -691,8 +740,11 @@ Input:
    l. Compute retention entropy h_{j,l}.
    m. Compute oracle-policy divergence δ_{j,l}.
    n. Compute Soft-OR score z_{j,l}.
-   o. Select top-ρ informative decisions.
-   p. Update πθ using distillation loss, ranking loss, and budget regularization.
+   o. Select top-ρ oracle outlier decisions within each budget.
+   p. Keep the full on-policy dataset and multiply weights for selected outliers.
+   q. Apply extra multipliers for Q3 confident-wrong and missed-keep rows.
+   r. Clamp weights to avoid a few oracle rows dominating optimization.
+   s. Update πθ using weighted distillation loss, ranking loss, and budget regularization.
 
 Output:
   Lightweight retention policy πθ.

@@ -45,7 +45,6 @@ from collections import Counter
 
 import numpy as np
 import torch
-from datasets import load_dataset
 from tqdm import tqdm
 
 # LongBench uses 'THUDM/LongBench' dataset
@@ -261,6 +260,68 @@ def run_single_longbench_eval(
 # Batch runner
 # ---------------------------------------------------------------------------
 
+def parse_labeled_ckpts(values: list[str]) -> list[tuple[str, str]]:
+    """Parse repeated LABEL=PATH learned OP checkpoint specs."""
+    parsed: list[tuple[str, str]] = []
+    for value in values:
+        if "=" not in value:
+            raise ValueError(f"Expected --op-ckpt as LABEL=PATH, got {value!r}")
+        label, path = value.split("=", 1)
+        label = label.strip()
+        path = path.strip()
+        if not label or not path:
+            raise ValueError(f"Invalid --op-ckpt value: {value!r}")
+        parsed.append((label, path))
+    return parsed
+
+
+def build_policy_specs(
+    policies: list[str],
+    budgets: list[float],
+    *,
+    op_policy_ckpt: str | None = None,
+    op_policy_label: str = "op_sievekv_lite",
+    op_ckpts: list[tuple[str, str]] | None = None,
+) -> list[dict]:
+    """Build concrete LongBench runs.
+
+    `full` is evaluated once at budget=1.0. Learned OP checkpoints are shown
+    under their labels while using `op_sievekv_lite` as the runtime policy.
+    """
+    specs: list[dict] = []
+    seen: set[tuple] = set()
+
+    def add(display_policy: str, base_policy: str, budget: float, ckpt: str | None) -> None:
+        key = (display_policy, base_policy, round(float(budget), 6), ckpt)
+        if key in seen:
+            return
+        seen.add(key)
+        specs.append(
+            {
+                "policy": display_policy,
+                "base_policy": base_policy,
+                "budget": float(budget),
+                "op_policy_ckpt": ckpt,
+            }
+        )
+
+    for policy in policies:
+        if policy == "full":
+            add("full", "full", 1.0, None)
+        elif policy == "op_sievekv_lite":
+            if op_ckpts:
+                for label, path in op_ckpts:
+                    for budget in budgets:
+                        add(label, "op_sievekv_lite", budget, path)
+            else:
+                for budget in budgets:
+                    add(op_policy_label, "op_sievekv_lite", budget, op_policy_ckpt)
+        else:
+            for budget in budgets:
+                add(policy, policy, budget, None)
+    return specs
+
+
 def run_longbench_suite(
     model,
     tokenizer,
@@ -274,6 +335,9 @@ def run_longbench_suite(
     output_path: Optional[str] = None,
     model_name: str = "Qwen/Qwen2.5-3B-Instruct",
     model_cfg=None,
+    op_policy_ckpt: str | None = None,
+    op_policy_label: str = "op_sievekv_lite",
+    op_ckpts: list[tuple[str, str]] | None = None,
 ):
     """Run LongBench evaluation grid.
 
@@ -292,11 +356,26 @@ def run_longbench_suite(
     """
     rng = random.Random(seed)
     results: list[dict] = []
+    try:
+        from datasets import load_dataset
+    except ModuleNotFoundError as exc:
+        raise ModuleNotFoundError(
+            "LongBench evaluation requires the `datasets` package. "
+            "Install it with: pip install datasets"
+        ) from exc
 
-    total = len(policies) * len(budgets) * len(tasks) * max_examples
+    policy_specs = build_policy_specs(
+        policies,
+        budgets,
+        op_policy_ckpt=op_policy_ckpt,
+        op_policy_label=op_policy_label,
+        op_ckpts=op_ckpts,
+    )
+
+    total = len(policy_specs) * len(tasks) * max_examples
     print(f"LongBench evaluation: {total} total runs")
     print(f"  policies: {policies}")
-    print(f"  budgets: {budgets}")
+    print(f"  concrete policy specs: {policy_specs}")
     print(f"  tasks: {tasks}")
     print(f"  max_examples per task: {max_examples}")
     print(f"  max_new_tokens: {max_new_tokens}")
@@ -329,9 +408,8 @@ def run_longbench_suite(
             sampled.append(ex)
         print(f"  Loaded {len(all_examples)}, using {len(sampled)}, skipped {skipped} (>{max_context_tokens} tokens)")
 
-        for policy in policies:
-            for budget in budgets:
-                for ex_idx, example in enumerate(sampled):
+        for spec in policy_specs:
+            for ex_idx, example in enumerate(sampled):
                     run_idx += 1
                     elapsed_total = time.time() - t0
                     eta = (elapsed_total / run_idx) * (total - run_idx) if run_idx > 1 else 0
@@ -339,13 +417,15 @@ def run_longbench_suite(
                     cfg = ExperimentConfig()
                     if model_cfg is not None:
                         cfg.model = model_cfg
-                    cfg.cache.policy = policy
-                    cfg.cache.cache_budget = budget
+                    cfg.cache.policy = spec["base_policy"]
+                    cfg.cache.cache_budget = float(spec["budget"])
+                    cfg.cache.op_policy_ckpt = spec.get("op_policy_ckpt")
                     cfg.model.do_sample = False
                     cfg.model.max_new_tokens = max_new_tokens
 
                     print(
-                        f"[{run_idx}/{total}] {task} {policy} b={budget:.0%} "
+                        f"[{run_idx}/{total}] {task} {spec['policy']} "
+                        f"({spec['base_policy']}) b={float(spec['budget']):.0%} "
                         f"ex={ex_idx+1}/{len(sampled)} "
                         f"(eta={eta:.0f}s)"
                     )
@@ -355,6 +435,11 @@ def run_longbench_suite(
                             model, tokenizer, cfg, task, example,
                             model_name, max_new_tokens
                         )
+                        if spec["policy"] != spec["base_policy"]:
+                            result["base_policy"] = spec["base_policy"]
+                            result["policy"] = spec["policy"]
+                        if spec.get("op_policy_ckpt"):
+                            result["op_policy_ckpt"] = spec["op_policy_ckpt"]
                     except torch.cuda.OutOfMemoryError:
                         torch.cuda.empty_cache()
                         print(f"  OOM — skipped, freed GPU cache")
@@ -363,8 +448,10 @@ def run_longbench_suite(
                         print(f"  ERROR: {e}")
                         result = {
                             "task": task,
-                            "policy": policy,
-                            "budget": budget,
+                            "policy": spec["policy"],
+                            "base_policy": spec["base_policy"],
+                            "budget": float(spec["budget"]),
+                            "op_policy_ckpt": spec.get("op_policy_ckpt"),
                             "context_len_chars": len(example.get("context", "")),
                             "score": 0.0,
                             "error": str(e),
@@ -390,20 +477,21 @@ def run_longbench_suite(
     print("-" * 65)
 
     for task in tasks:
-        for policy in policies:
-            for budget in budgets:
-                subset = [
-                    r for r in results
-                    if r.get("task") == task
-                    and r.get("policy") == policy
-                    and abs(r.get("budget", 0) - budget) < 0.001
-                ]
-                if not subset:
-                    continue
-                scores = [r.get("score", 0) for r in subset]
-                mean = float(np.mean(scores))
-                n = len(scores)
-                print(f"{task:<20} {policy:<16} {budget:>7.0%} {mean:>8.3f} {n:>5d}")
+        for spec in policy_specs:
+            policy = spec["policy"]
+            budget = float(spec["budget"])
+            subset = [
+                r for r in results
+                if r.get("task") == task
+                and r.get("policy") == policy
+                and abs(r.get("budget", 0) - budget) < 0.001
+            ]
+            if not subset:
+                continue
+            scores = [r.get("score", 0) for r in subset]
+            mean = float(np.mean(scores))
+            n = len(scores)
+            print(f"{task:<20} {policy:<16} {budget:>7.0%} {mean:>8.3f} {n:>5d}")
 
     print()
     return results
@@ -428,6 +516,14 @@ if __name__ == "__main__":
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--output", default="results/longbench/longbench_results.json")
     parser.add_argument("--model", type=str, default="Qwen/Qwen2.5-3B-Instruct")
+    parser.add_argument("--op-policy-ckpt", default=None, help="Single learned OP-SieveKV policy checkpoint")
+    parser.add_argument("--op-policy-label", default="op_sievekv_lite", help="Display label for --op-policy-ckpt")
+    parser.add_argument(
+        "--op-ckpt",
+        action="append",
+        default=[],
+        help="Learned OP checkpoint as LABEL=PATH. Can be supplied multiple times.",
+    )
 
     args = parser.parse_args()
 
@@ -436,6 +532,7 @@ if __name__ == "__main__":
 
     model_cfg = ModelConfig()
     model_cfg.model_name = args.model
+    op_ckpts = parse_labeled_ckpts(args.op_ckpt)
 
     print(f"Loading model: {model_cfg.model_name}")
     model, tokenizer = load_model(model_cfg)
@@ -454,4 +551,7 @@ if __name__ == "__main__":
         output_path=args.output,
         model_name=args.model,
         model_cfg=model_cfg,
+        op_policy_ckpt=args.op_policy_ckpt,
+        op_policy_label=args.op_policy_label,
+        op_ckpts=op_ckpts,
     )
