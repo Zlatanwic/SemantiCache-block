@@ -1,5 +1,7 @@
 # Research Plan: OP-SieveKV: On-Policy Oracle-Distilled Adaptive Semantic KV Retention for Memory-Efficient Long-Context LLM Serving
 
+> 2026-06 update: 本文件保留原始研究计划的完整展开。后续论文撰写和代码实现建议优先参考新增的综合蓝图 [`op_sievekv_research_story_and_system_plan.md`](op_sievekv_research_story_and_system_plan.md)。该蓝图整合了 TrOPD 启发的 trust-region oracle reweighting 和 SAS 启发的 Retention Plan / runtime profiling 系统视角。
+
 ## 1. 研究题目
 
 **OP-SieveKV: On-Policy Oracle-Distilled Adaptive Semantic KV Retention for Memory-Efficient Long-Context LLM Serving**
