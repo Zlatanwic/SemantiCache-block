@@ -337,6 +337,7 @@ def run_manifest(
     budgets: list[float],
     hot_ratio: float = 0.5,
     warm_top_k: int = 16,
+    eviction_block_size: int = 16,
     op_policy_ckpt: str | None = None,
 ) -> list[dict]:
     """Run a fixed NIAH manifest across policies and budgets."""
@@ -362,6 +363,7 @@ def run_manifest(
             config = ExperimentConfig()
             config.cache.policy = policy
             config.cache.cache_budget = budget
+            config.cache.eviction_block_size = eviction_block_size
             config.cache.semantic_hot_ratio = hot_ratio
             config.cache.semantic_warm_top_k = warm_top_k
             config.cache.op_policy_ckpt = op_policy_ckpt
@@ -423,6 +425,7 @@ def run_sweep(
     positions: list[float] | None = None,
     hot_ratio: float = 0.5,
     warm_top_k: int = 16,
+    eviction_block_size: int = 16,
     op_policy_ckpt: str | None = None,
 ) -> list[dict]:
     """Run the full sweep across policies, budgets and needle positions."""
@@ -448,6 +451,7 @@ def run_sweep(
         config = ExperimentConfig()
         config.cache.policy = policy
         config.cache.cache_budget = budget
+        config.cache.eviction_block_size = eviction_block_size
         config.cache.semantic_hot_ratio = hot_ratio
         config.cache.semantic_warm_top_k = warm_top_k
         config.cache.op_policy_ckpt = op_policy_ckpt
@@ -566,6 +570,7 @@ def main():
             budgets=manifest_budgets,
             hot_ratio=args.hot_ratio,
             warm_top_k=args.warm_top_k,
+            eviction_block_size=args.eviction_block_size,
             op_policy_ckpt=args.op_policy_ckpt,
         )
         return
@@ -580,6 +585,7 @@ def main():
             budgets=args.sweep_budgets,
             hot_ratio=args.hot_ratio,
             warm_top_k=args.warm_top_k,
+            eviction_block_size=args.eviction_block_size,
             op_policy_ckpt=args.op_policy_ckpt,
         )
         return
