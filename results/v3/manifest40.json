@@ -1,0 +1,322 @@
+[
+  {
+    "task": "niah",
+    "sample_id": 0,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.0,
+    "paragraph_offset": 10
+  },
+  {
+    "task": "niah",
+    "sample_id": 1,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.0,
+    "paragraph_offset": 1
+  },
+  {
+    "task": "niah",
+    "sample_id": 2,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.0,
+    "paragraph_offset": 0
+  },
+  {
+    "task": "niah",
+    "sample_id": 3,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.25,
+    "paragraph_offset": 11
+  },
+  {
+    "task": "niah",
+    "sample_id": 4,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.25,
+    "paragraph_offset": 4
+  },
+  {
+    "task": "niah",
+    "sample_id": 5,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.25,
+    "paragraph_offset": 3
+  },
+  {
+    "task": "niah",
+    "sample_id": 6,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.5,
+    "paragraph_offset": 3
+  },
+  {
+    "task": "niah",
+    "sample_id": 7,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.5,
+    "paragraph_offset": 2
+  },
+  {
+    "task": "niah",
+    "sample_id": 8,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.5,
+    "paragraph_offset": 11
+  },
+  {
+    "task": "niah",
+    "sample_id": 9,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.75,
+    "paragraph_offset": 1
+  },
+  {
+    "task": "niah",
+    "sample_id": 10,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.75,
+    "paragraph_offset": 10
+  },
+  {
+    "task": "niah",
+    "sample_id": 11,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.75,
+    "paragraph_offset": 11
+  },
+  {
+    "task": "niah",
+    "sample_id": 12,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 1.0,
+    "paragraph_offset": 14
+  },
+  {
+    "task": "niah",
+    "sample_id": 13,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 1.0,
+    "paragraph_offset": 8
+  },
+  {
+    "task": "niah",
+    "sample_id": 14,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 1.0,
+    "paragraph_offset": 1
+  },
+  {
+    "task": "niah",
+    "sample_id": 15,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.5905,
+    "paragraph_offset": 0
+  },
+  {
+    "task": "niah",
+    "sample_id": 16,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.0298,
+    "paragraph_offset": 3
+  },
+  {
+    "task": "niah",
+    "sample_id": 17,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.2327,
+    "paragraph_offset": 9
+  },
+  {
+    "task": "niah",
+    "sample_id": 18,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.0265,
+    "paragraph_offset": 3
+  },
+  {
+    "task": "niah",
+    "sample_id": 19,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.716,
+    "paragraph_offset": 11
+  },
+  {
+    "task": "niah",
+    "sample_id": 20,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.5449,
+    "paragraph_offset": 3
+  },
+  {
+    "task": "niah",
+    "sample_id": 21,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.4492,
+    "paragraph_offset": 4
+  },
+  {
+    "task": "niah",
+    "sample_id": 22,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.8094,
+    "paragraph_offset": 0
+  },
+  {
+    "task": "niah",
+    "sample_id": 23,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.7588,
+    "paragraph_offset": 2
+  },
+  {
+    "task": "niah",
+    "sample_id": 24,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.6981,
+    "paragraph_offset": 5
+  },
+  {
+    "task": "niah",
+    "sample_id": 25,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.2779,
+    "paragraph_offset": 3
+  },
+  {
+    "task": "niah",
+    "sample_id": 26,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.9572,
+    "paragraph_offset": 5
+  },
+  {
+    "task": "niah",
+    "sample_id": 27,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.1022,
+    "paragraph_offset": 6
+  },
+  {
+    "task": "niah",
+    "sample_id": 28,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.0967,
+    "paragraph_offset": 13
+  },
+  {
+    "task": "niah",
+    "sample_id": 29,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.344,
+    "paragraph_offset": 4
+  },
+  {
+    "task": "niah",
+    "sample_id": 30,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.8071,
+    "paragraph_offset": 11
+  },
+  {
+    "task": "niah",
+    "sample_id": 31,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.4594,
+    "paragraph_offset": 1
+  },
+  {
+    "task": "niah",
+    "sample_id": 32,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.9731,
+    "paragraph_offset": 6
+  },
+  {
+    "task": "niah",
+    "sample_id": 33,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.0788,
+    "paragraph_offset": 4
+  },
+  {
+    "task": "niah",
+    "sample_id": 34,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.8294,
+    "paragraph_offset": 9
+  },
+  {
+    "task": "niah",
+    "sample_id": 35,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.8855,
+    "paragraph_offset": 5
+  },
+  {
+    "task": "niah",
+    "sample_id": 36,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.5774,
+    "paragraph_offset": 11
+  },
+  {
+    "task": "niah",
+    "sample_id": 37,
+    "needle_index": 1,
+    "haystack_length": 2000,
+    "needle_position": 0.0696,
+    "paragraph_offset": 10
+  },
+  {
+    "task": "niah",
+    "sample_id": 38,
+    "needle_index": 2,
+    "haystack_length": 2000,
+    "needle_position": 0.2279,
+    "paragraph_offset": 4
+  },
+  {
+    "task": "niah",
+    "sample_id": 39,
+    "needle_index": 0,
+    "haystack_length": 2000,
+    "needle_position": 0.9852,
+    "paragraph_offset": 13
+  }
+]
