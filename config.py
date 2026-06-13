@@ -47,6 +47,7 @@ class CacheConfig:
         "kvzip",
         "defensivekv",
         "semantic",
+        "block_semantic",
         "tiered_semantic",
         "op_sievekv_lite",
     ] = "full"
@@ -67,6 +68,8 @@ class CacheConfig:
     # Always keep the newest generated tokens to preserve decode stability
     semantic_recent_window: int = 64
     semantic_block_size: int = 16
+    # BlockSemantiCache: paged-KV realistic whole-block eviction granularity
+    eviction_block_size: int = 16
     semantic_latest_user_tail_tokens: int = 16
     semantic_hot_ratio: float = 0.5
     semantic_hot_block_size: int = 6

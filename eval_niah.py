@@ -51,7 +51,7 @@ HAYSTACK_PARAGRAPHS = [
     "Data engineering pipelines transform raw data into actionable insights. ETL processes, stream processing, and data warehousing form the backbone of modern data infrastructure.",
 ]
 
-SWEEP_POLICIES = ["full", "window", "streaming", "h2o", "semantic", "tiered_semantic", "op_sievekv_lite"]
+SWEEP_POLICIES = ["full", "window", "streaming", "h2o", "semantic", "block_semantic", "tiered_semantic", "op_sievekv_lite"]
 SWEEP_BUDGETS = [1.0, 0.5, 0.3, 0.1]
 SWEEP_POSITIONS = [0.0, 0.25, 0.5, 0.75, 1.0]
 
@@ -491,6 +491,12 @@ def main():
     )
     parser.add_argument("--budget", type=float, default=0.5, help="Cache budget ratio")
     parser.add_argument(
+        "--eviction-block-size",
+        type=int,
+        default=16,
+        help="Whole-block eviction granularity for block_semantic policy (16/32/64)",
+    )
+    parser.add_argument(
         "--sweep-budgets",
         nargs="+",
         type=float,
@@ -573,6 +579,7 @@ def main():
 
     config.cache.policy = args.policy
     config.cache.cache_budget = args.budget
+    config.cache.eviction_block_size = args.eviction_block_size
     config.cache.semantic_hot_ratio = args.hot_ratio
     config.cache.semantic_warm_top_k = args.warm_top_k
     config.cache.op_policy_ckpt = args.op_policy_ckpt

@@ -9,6 +9,7 @@ import torch
 from attention_tracker import AttentionTracker
 from op_policy_model import FEATURE_DIM, load_policy_checkpoint
 from semantic_analyzer import RoleTag, SemanticAnalyzer
+from semserve.block_mapping import block_aligned_keep_indices
 
 
 @dataclass
@@ -947,6 +948,31 @@ class SemantiCachePolicy(EvictionPolicy):
             self.generated_assistant_mask = self.generated_assistant_mask[keep_mask]
         if self.prompt_token_ids is not None:
             self.prompt_token_ids = self.prompt_token_ids[keep_mask]
+
+
+class BlockSemantiCachePolicy(SemantiCachePolicy):
+    """SemantiCache scoring with paged-KV realistic whole-block eviction.
+
+    Signals, scoring and protection are identical to :class:`SemantiCachePolicy`;
+    the only difference is the *selection granularity*: eviction operates on
+    whole blocks of ``eviction_block_size`` tokens (e.g. 16/32/64), matching
+    what a paged KV cache (vLLM) can actually release. This isolates the
+    token-level vs block-level granularity variable for the Phase 1 gate.
+    """
+
+    def __init__(self, *args, eviction_block_size: int = 16, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.eviction_block_size = max(1, eviction_block_size)
+
+    def select_keep_indices(self, scores: torch.Tensor, budget: int) -> torch.Tensor:
+        seq_len = scores.shape[0]
+        if budget >= seq_len:
+            return torch.arange(seq_len, device=scores.device)
+        return block_aligned_keep_indices(
+            scores,
+            budget=budget,
+            block_size=self.eviction_block_size,
+        )
 
 
 class OPSieveKVLitePolicy(SemantiCachePolicy):

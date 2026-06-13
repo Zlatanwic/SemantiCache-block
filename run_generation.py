@@ -20,6 +20,7 @@ from transformers.cache_utils import DynamicCache
 from attention_tracker import AttentionTracker
 from config import CacheConfig, ExperimentConfig, ModelConfig
 from eviction_policies import (
+    BlockSemantiCachePolicy,
     DefensiveKVPolicy,
     FullCachePolicy,
     H2OPolicy,
@@ -142,6 +143,26 @@ def build_policy(cache_cfg: CacheConfig, tracker: AttentionTracker, analyzer: Se
             warm_promotable_reserve=cache_cfg.semantic_warm_promotable_reserve,
             latest_user_tail_tokens=cache_cfg.semantic_latest_user_tail_tokens,
             generated_retention_window=cache_cfg.semantic_generated_retention_window,
+        )
+    if cache_cfg.policy == "block_semantic":
+        return BlockSemantiCachePolicy(
+            tracker=tracker,
+            analyzer=analyzer,
+            alpha=cache_cfg.alpha,
+            beta=cache_cfg.beta,
+            gamma=cache_cfg.gamma,
+            query_weight=cache_cfg.query_weight,
+            factual_weight=cache_cfg.factual_weight,
+            pin_system=cache_cfg.pin_system,
+            pin_latest_user=cache_cfg.pin_latest_user,
+            recent_window_size=cache_cfg.semantic_recent_window,
+            hot_recent_window=cache_cfg.semantic_hot_recent_window,
+            hot_block_size=cache_cfg.semantic_hot_block_size,
+            block_size=cache_cfg.semantic_block_size,
+            warm_promotable_reserve=cache_cfg.semantic_warm_promotable_reserve,
+            latest_user_tail_tokens=cache_cfg.semantic_latest_user_tail_tokens,
+            generated_retention_window=cache_cfg.semantic_generated_retention_window,
+            eviction_block_size=cache_cfg.eviction_block_size,
         )
     if cache_cfg.policy == "op_sievekv_lite":
         return OPSieveKVLitePolicy(
