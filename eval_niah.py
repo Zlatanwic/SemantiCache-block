@@ -491,6 +491,11 @@ def main():
     )
     parser.add_argument("--budget", type=float, default=0.5, help="Cache budget ratio")
     parser.add_argument(
+        "--no-bnb-4bit",
+        action="store_true",
+        help="Disable BitsAndBytes 4-bit quantization (load full dtype; for large-VRAM GPUs)",
+    )
+    parser.add_argument(
         "--eviction-block-size",
         type=int,
         default=16,
@@ -544,6 +549,8 @@ def main():
 
     config = ExperimentConfig()
     config.cache.op_policy_ckpt = args.op_policy_ckpt
+    if args.no_bnb_4bit:
+        config.model.use_bnb_4bit = False
     model, tokenizer = load_model(config.model)
     output_path = Path(args.output)
 
